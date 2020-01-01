@@ -2,9 +2,13 @@ package com.zetta.afcs;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Point;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,15 +16,31 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.zetta.afcs.api.ApiHelper;
+import com.zetta.afcs.barcode.BarcodeCaptureActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 /**
@@ -31,18 +51,26 @@ public class LoginActivity extends AppCompatActivity {
     private EditText eUserName;
     private EditText ePassword;
     private Button bLogin;
+    private Button bQRLogin;
 
+    private String LOG_TAG = "";
     private String STATUS_MESSAGE = "";
     private User User;
+    private int BARCODE_READER_REQUEST_CODE = 1;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        this.bLogin = findViewById(R.id.bLogin);
         this.eUserName = findViewById(R.id.eUsername);
         this.ePassword = findViewById(R.id.ePassword);
+        this.bLogin = findViewById(R.id.bLogin);
+        this.bQRLogin = findViewById(R.id.bQRLogin);
 
         this.User = new User();
 
@@ -66,22 +94,38 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = findViewById(R.id.fabQRLogin);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-
         this.bLogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
             }
         });
+        this.bQRLogin.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptQRLogin(view);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == BARCODE_READER_REQUEST_CODE) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null) {
+                    Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
+                    Point[] points = barcode.cornerPoints;
+                    String qrResult = barcode.displayValue;
+
+                    //String user_hash = "95561D62-0BED-4E1D-B208-25721997F5BA"; gtabinas
+                    new LoginActivity.JsonTask().execute(ApiHelper.apiURL, ApiHelper.SqlCodeUsers, qrResult);
+                }
+            } else {
+                Log.e(LOG_TAG, String.format(getString(R.string.barcode_error_format), CommonStatusCodes.getStatusCodeString(resultCode)));
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     /**
@@ -131,12 +175,14 @@ public class LoginActivity extends AppCompatActivity {
                 // Store user info for global variable.
                 // Login the user and redirect to the main.
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("username", this.User.Username);
-                intent.putExtra("isAuthenticated", true);
+//                intent.putExtra("username", this.User.Username);
+//                intent.putExtra("isAuthenticated", true);
+                intent.putExtra(Common.BundleExtras.Username, this.User.Username);
+                intent.putExtra(Common.BundleExtras.IsAuthenticated, true);
                 startActivity(intent);
                 finish();
             } else {
-                Dialog dialog = CommonHelper.showDialog(this, "Error", Message.USER_NOT_FOUND);
+                Dialog dialog = CommonHelper.showDialog(this, Message.Title.ERROR, Message.USER_NOT_FOUND);
                 dialog.show();
             }
         }
@@ -187,5 +233,136 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-}
+    /**
+    Attempt login using the QR code.
+     */
+    private void attemptQRLogin(View view) {
+        Intent intent = new Intent(getApplicationContext(), BarcodeCaptureActivity.class);
+//        intent.putExtra("username", "");
+//        intent.putExtra("isAuthenticated", false);
+        intent.putExtra(Common.BundleExtras.Username, "");
+        intent.putExtra(Common.BundleExtras.IsAuthenticated, false);
+        startActivityForResult(intent, BARCODE_READER_REQUEST_CODE );
+    }
 
+    // --------------------- API calls -------------------------------------------------
+    private class JsonTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = new ProgressDialog(LoginActivity.this);
+            progressDialog.setMessage("Please wait");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HttpURLConnection connection = null;
+            StringBuilder response = new StringBuilder();
+
+            try {
+                URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setReadTimeout(10000);
+                connection.setConnectTimeout(15000);
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/json; utf-8");
+                connection.setRequestProperty("Accept", "application/json");
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.connect();
+
+                // Post data.
+                String jsonInputString = String.format("{ \"%s\": \"%s\", \"parameters\": {\"hash_key\": \"%s\"} }",
+                        ApiHelper.SqlCodeKey, params[1], params[2]);
+
+                try(OutputStream os = connection.getOutputStream()) {
+                    byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+                    os.write(input, 0, input.length);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                try(BufferedReader br = new BufferedReader(
+                        new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+                    String responseLine = null;
+                    while ((responseLine = br.readLine()) != null) {
+                        response.append(responseLine.trim());
+                    }
+
+                    //System.out.println(response.toString());
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+            }
+
+            return response.toString();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+
+            try {
+                if (result.trim().equals("")) {
+                    Dialog dialog = CommonHelper.showDialog(LoginActivity.this, Message.Title.ERROR, Message.CONNECTION_ERROR);
+                    dialog.show();
+                } else {
+                    JSONObject jObj = new JSONObject(result);
+                    String isSuccess = jObj.get("isSuccess").toString();
+                    if (isSuccess.equals("true")) {
+                        JSONArray rows = jObj.getJSONArray("rows");
+                        if (rows.length() > 0) {
+                            // Store user info for global variable.
+                            User.Username = rows.getJSONObject(0).get("logon").toString();
+                            User.FirstName = rows.getJSONObject(0).get("first_name").toString();
+                            User.LastName = rows.getJSONObject(0).get("last_name").toString();
+
+                            // Login the user and redirect to the main.
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                            intent.putExtra("username", User.Username);
+//                            intent.putExtra("firstName", User.FirstName);
+//                            intent.putExtra("lastName", User.LastName);
+//                            intent.putExtra("isAuthenticated", true);
+                            intent.putExtra(Common.BundleExtras.Username, User.Username);
+                            intent.putExtra(Common.BundleExtras.FirstName, User.FirstName);
+                            intent.putExtra(Common.BundleExtras.LastName, User.LastName);
+                            intent.putExtra(Common.BundleExtras.IsAuthenticated, true);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Dialog dialog = CommonHelper.showDialog(LoginActivity.this, Message.Title.ERROR, Message.USER_NOT_FOUND);
+                            dialog.show();
+                        }
+                    } else {
+                        Dialog dialog = CommonHelper.showDialog(LoginActivity.this, Message.Title.ERROR, Message.USER_NOT_FOUND);
+                        dialog.show();
+                    }
+                }
+            } catch (JSONException e) {
+                Dialog dialog = CommonHelper.showDialog(LoginActivity.this, Message.Title.ERROR, Message.ERROR_OCCURRED);
+                dialog.show();
+            }
+
+        }
+        // --------------------- API calls -------------------------------------------------
+    }
+}

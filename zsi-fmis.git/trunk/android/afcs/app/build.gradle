@@ -16,7 +16,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
+            aidl.srcDirs = ['src/main/aidl', 'src/main/aidl/']
+        }
+    }
 }
 
 dependencies {
@@ -30,4 +35,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.gms:play-services-vision:19.0.0'
     implementation 'com.google.android.gms:play-services-ads:18.3.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation files('libs/core-3.3.0.jar')
+    implementation 'com.sunmi:sunmiui:1.1.27'
 }

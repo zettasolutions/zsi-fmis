@@ -19,4 +19,11 @@ public class Common {
             return stringValue;
         }
     }
+
+    public static class BundleExtras {
+        public static String Username = "username";
+        public static String IsAuthenticated = "isAuthenticated";
+        public static String FirstName = "firstName";
+        public static String LastName = "lastName";
+    }
 }

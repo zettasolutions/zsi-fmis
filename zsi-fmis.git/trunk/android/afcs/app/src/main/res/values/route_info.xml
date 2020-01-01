@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="route_info">
-        <item>Route 001</item>
-        <item>Route 002</item>
-        <item>Route 003</item>
-        <item>Route 004</item>
-        <item>Route 005</item>
+        <item>-- Select route number --</item>
+        <item>1</item>
+        <item>2</item>
     </string-array>
 </resources>

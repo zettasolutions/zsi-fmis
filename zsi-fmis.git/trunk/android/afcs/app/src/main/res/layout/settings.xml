@@ -97,7 +97,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="eJeepney 101"
                     android:textColor="@android:color/holo_red_dark"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -125,7 +124,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="GWT 8888"
                     android:textColor="@android:color/holo_red_dark"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -147,20 +145,21 @@
                     android:textColor="@android:color/black"
                     android:textSize="18sp" />
 
-                <Spinner
-                    android:id="@+id/spinner_route_info"
+                <TextView
+                    android:id="@+id/txtVehicleRouteInfo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:entries="@array/route_info"
-                    android:minHeight="40dp" />
+                    android:gravity="center_vertical"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/vehicle_route_details_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
+                android:gravity="top|left"
                 android:orientation="horizontal">
 
                 <TextView
@@ -178,7 +177,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Ibabao, Highway, Mabolo, SM, Fuente, Colon"
                     android:textColor="#000000"
                     android:textSize="18sp" />
             </LinearLayout>

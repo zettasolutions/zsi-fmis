@@ -1,5 +1,5 @@
 // ICallback.aidl
-package com.zetta.afcs.service;
+package woyou.aidlservice.jiuiv5;
 
 // Declare any non-default types here with import statements
 

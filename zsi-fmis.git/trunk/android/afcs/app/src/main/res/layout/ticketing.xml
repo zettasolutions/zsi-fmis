@@ -12,45 +12,130 @@
     <include layout="@layout/app_bar" />
 
     <LinearLayout
-        android:id="@+id/container_from"
+        android:id="@+id/container_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="left"
         android:orientation="vertical"
         android:padding="10dp">
 
-        <TextView
-            android:id="@+id/lbl_from"
+        <LinearLayout
+            android:id="@+id/container_route_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="FROM" />
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:orientation="horizontal">
 
-        <Spinner
-            android:id="@+id/spinner_from"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:entries="@array/from_route"
-            android:minHeight="40dp" />
+            <LinearLayout
+                android:id="@+id/container_route_label"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/lbl_to"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TO" />
+                <TextView
+                    android:id="@+id/lbl_route"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ROUTE NO." />
+            </LinearLayout>
 
-        <Spinner
-            android:id="@+id/spinner_to"
+            <LinearLayout
+                android:id="@+id/container_route_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinner_route_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:entries="@array/route_info"
+                    android:minHeight="40dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container_from_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:entries="@array/to_route"
-            android:minHeight="40dp" />
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/container_from_label"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lbl_from"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="FROM" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_from_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinner_from"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:minHeight="40dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container_to_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/container_to_label"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lbl_to"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TO" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_to_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinner_to"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:minHeight="40dp" />
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/lbl_spacer_1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="10sp" />
 
         <LinearLayout
             android:id="@+id/container_sel_reg_sf"
@@ -380,18 +465,34 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_print"
+            android:id="@+id/btn_pay"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_primary"
+            android:text="CASH"
+            android:textColor="@android:color/background_light" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="OR"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btn_pay_qr"
             android:layout_width="188dp"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_primary"
-            android:text="PRINT"
+            android:text="PAY with QR"
             android:textColor="@android:color/background_light" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/container_vehicle"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:gravity="center|bottom"
         android:orientation="horizontal"
         android:padding="10dp">
@@ -400,7 +501,7 @@
             android:id="@+id/lbl_plate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="VEHICLE: GWT 8888"
+            android:text="VEHICLE"
             android:textAlignment="center" />
     </LinearLayout>
 </LinearLayout>

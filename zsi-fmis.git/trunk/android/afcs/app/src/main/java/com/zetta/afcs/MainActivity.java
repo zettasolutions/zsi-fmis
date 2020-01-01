@@ -1,6 +1,7 @@
 package com.zetta.afcs;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,18 +11,21 @@ import androidx.core.app.ActivityCompat;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 public class MainActivity extends AppCompatActivity {
     private FileHelper fileHelper;
     private User User;
     private AdView mAdView;
+
+    private TextView tFullname;
+
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
         this.fileHelper = new FileHelper(this);
         this.User = new User();
+        this.tFullname = findViewById(R.id.tFullname);
+
+        this.mContext = this;
 
         int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
         int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 2;
@@ -42,22 +49,25 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
 
-        // Display ads.
-//        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-//            @Override
-//            public void onInitializationComplete(InitializationStatus initializationStatus) {
-//            }
-//        });
-
+        // ----------- DISPLAY ADMOB ADS ------------------------------------------------------------------------------------
+        //
+        // NOTE:    Use the test admob when under development because Google might think of an auto-clicker for the ads
+        //          every time the android app is run in debug mode.
+        //
         // TODO: Update manifest.
         // Actual ID: ca-app-pub-2093465683432076~7329318157
         // Test ID: ca-app-pub-3940256099942544~3347511713
+
         // TODO: Update content_main
         //  ads:adUnitId="ca-app-pub-2093465683432076/4198907727"> -- actual admob
         //  ads:adUnitId="ca-app-pub-3940256099942544/6300978111"> -- google test admob
 
+        // TEST. Comment when building apk.
         MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        // ACTUAL. Uncomment when building apk.
         //MobileAds.initialize(this, "ca-app-pub-2093465683432076~7329318157");
+        //
+        // ----------- DISPLAY ADMOB ADS ------------------------------------------------------------------------------------
 
         this.mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -99,7 +109,13 @@ public class MainActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             this.User.setUsername(extras.getString("username"));
+            this.User.setFirstName(extras.getString("firstName"));
+            this.User.setLastName(extras.getString("lastName"));
             this.User.setIsAuthenticated(extras.getBoolean("isAuthenticated"));
+
+            if (this.User.FirstName != null || this.User.LastName != null) {
+                this.tFullname.setText(String.format("%s %s", this.User.FirstName, this.User.LastName));
+            }
         } else {
             this.User.IsAuthenticated = false;
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -139,11 +155,15 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_home) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             if (this.User.IsAuthenticated) {
-                intent.putExtra("username", this.User.Username);
-                intent.putExtra("isAuthenticated", true);
+//                intent.putExtra("username", this.User.Username);
+//                intent.putExtra("isAuthenticated", true);
+                intent.putExtra(Common.BundleExtras.Username, this.User.Username);
+                intent.putExtra(Common.BundleExtras.IsAuthenticated, true);
             } else {
-                intent.putExtra("username", "");
-                intent.putExtra("isAuthenticated", false);
+//                intent.putExtra("username", "");
+//                intent.putExtra("isAuthenticated", false);
+                intent.putExtra(Common.BundleExtras.Username, "");
+                intent.putExtra(Common.BundleExtras.IsAuthenticated, false);
             }
             startActivity(intent);
             finish();
@@ -152,14 +172,18 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             if (this.User.IsAuthenticated) {
                 Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-                intent.putExtra("username", this.User.Username);
-                intent.putExtra("isAuthenticated", true);
+//                intent.putExtra("username", this.User.Username);
+//                intent.putExtra("isAuthenticated", true);
+                intent.putExtra(Common.BundleExtras.Username, this.User.Username);
+                intent.putExtra(Common.BundleExtras.IsAuthenticated, true);
                 startActivity(intent);
                 finish();
             } else {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                intent.putExtra("username", "");
-                intent.putExtra("isAuthenticated", false);
+//                intent.putExtra("username", "");
+//                intent.putExtra("isAuthenticated", false);
+                intent.putExtra(Common.BundleExtras.Username, "");
+                intent.putExtra(Common.BundleExtras.IsAuthenticated, false);
                 startActivity(intent);
                 finish();
             }
@@ -167,16 +191,20 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.action_login) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            intent.putExtra("username", "");
-            intent.putExtra("isAuthenticated", false);
+//            intent.putExtra("username", "");
+//            intent.putExtra("isAuthenticated", false);
+            intent.putExtra(Common.BundleExtras.Username, "");
+            intent.putExtra(Common.BundleExtras.IsAuthenticated, false);
             startActivity(intent);
             finish();
         }
 
         if (id == R.id.action_logout) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.putExtra("username", "");
-            intent.putExtra("isAuthenticated", false);
+//            intent.putExtra("username", "");
+//            intent.putExtra("isAuthenticated", false);
+            intent.putExtra(Common.BundleExtras.Username, "");
+            intent.putExtra(Common.BundleExtras.IsAuthenticated, false);
             startActivity(intent);
             finish();
         }
@@ -184,14 +212,18 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_ticketing) {
             if (this.User.IsAuthenticated) {
                 Intent intent = new Intent(getApplicationContext(), TicketingActivity.class);
-                intent.putExtra("username", this.User.Username);
-                intent.putExtra("isAuthenticated", true);
+//                intent.putExtra("username", this.User.Username);
+//                intent.putExtra("isAuthenticated", true);
+                intent.putExtra(Common.BundleExtras.Username, this.User.Username);
+                intent.putExtra(Common.BundleExtras.IsAuthenticated, true);
                 startActivity(intent);
                 finish();
             } else {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                intent.putExtra("username", "");
-                intent.putExtra("isAuthenticated", false);
+//                intent.putExtra("username", "");
+//                intent.putExtra("isAuthenticated", false);
+                intent.putExtra(Common.BundleExtras.Username, "");
+                intent.putExtra(Common.BundleExtras.IsAuthenticated, false);
                 startActivity(intent);
                 finish();
             }
@@ -206,10 +238,13 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            intent.putExtra("username", "");
-            intent.putExtra("isAuthenticated", false);
+//            intent.putExtra("username", "");
+//            intent.putExtra("isAuthenticated", false);
+            intent.putExtra(Common.BundleExtras.Username, "");
+            intent.putExtra(Common.BundleExtras.IsAuthenticated, false);
             startActivity(intent);
             finish();
         }
     }
+
 }

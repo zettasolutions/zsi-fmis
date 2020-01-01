@@ -10,11 +10,27 @@
     tools:context=".TicketingActivity">
 
     <LinearLayout
+        android:id="@+id/container_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right|top"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tFullname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:textAlignment="textEnd" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/container_vehicle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center|bottom"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="10dp">
 
         <com.google.android.gms.ads.AdView

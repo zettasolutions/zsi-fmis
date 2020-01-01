@@ -8,25 +8,17 @@
     tools:context=".LoginActivity"
     android:orientation="vertical">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabQRLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|top"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/qrcode_login"
-        android:src="@drawable/qrcode_scan" />
-
     <LinearLayout
         android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:orientation="vertical">
 
         <EditText
             android:id="@+id/eUsername"
-            android:layout_width="282dp"
+            android:layout_width="350dp"
             android:layout_height="40dp"
             android:ems="10"
             android:hint="Username"
@@ -36,7 +28,7 @@
 
         <EditText
             android:id="@+id/ePassword"
-            android:layout_width="282dp"
+            android:layout_width="350dp"
             android:layout_height="40dp"
             android:ems="10"
             android:hint="Password"
@@ -50,14 +42,40 @@
             android:layout_height="wrap_content"
             android:text="" />
 
-        <Button
-            android:id="@+id/bLogin"
-            android:layout_width="173dp"
+        <LinearLayout
+            android:id="@+id/buttons_form"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_primary"
-            android:text="Login"
-            android:textColor="#FFFFFF"
-            tools:layout_editor_absoluteX="135dp"
-            tools:layout_editor_absoluteY="267dp" />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bLogin"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_primary"
+                android:text="Login"
+                android:textColor="#FFFFFF"
+                tools:layout_editor_absoluteX="135dp"
+                tools:layout_editor_absoluteY="267dp" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="63dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="OR "
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/bQRLogin"
+                android:layout_width="173dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_primary"
+                android:text="QR Login"
+                android:textColor="#FFFFFF"
+                tools:layout_editor_absoluteX="135dp"
+                tools:layout_editor_absoluteY="267dp" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

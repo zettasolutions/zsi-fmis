@@ -1,8 +1,8 @@
 // IWoyouService.aidl
-package com.zetta.afcs.service;
+package woyou.aidlservice.jiuiv5;
 
 // Declare any non-default types here with import statements
-import com.zetta.afcs.service.ICallback;
+import woyou.aidlservice.jiuiv5.ICallback;
 import android.graphics.Bitmap;
 import com.zetta.afcs.trans.TransBean;
 

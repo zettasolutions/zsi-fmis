@@ -34,8 +34,10 @@ public class BaseMenuActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            this.User.setUsername(extras.getString("username"));
-            this.User.setIsAuthenticated(extras.getBoolean("isAuthenticated"));
+//            this.User.setUsername(extras.getString("username"));
+//            this.User.setIsAuthenticated(extras.getBoolean("isAuthenticated"));
+            this.User.setUsername(extras.getString(Common.BundleExtras.Username));
+            this.User.setIsAuthenticated(extras.getBoolean(Common.BundleExtras.IsAuthenticated));
         } else {
             this.User.IsAuthenticated = false;
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
