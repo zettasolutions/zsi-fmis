@@ -1,0 +1,17 @@
+/* #THEME COLOR (variable overrides)
+========================================================================== */
+$color-primary:						#4679cc;
+
+/* #GLOBAL IMPORTS
+========================================================================== */
+@import './src/scss/_imports/_theme-modules-import';
+@import './src/scss/_imports/_zsi-themes-imports/_theme3/_zGrid';
+
+/* #Reset userselect
+========================================================================== */
+#myapp-0 {
+	box-shadow: none !important;
+}
+#myapp-3 {
+	box-shadow: 0 0 0 3px #000000;
+}

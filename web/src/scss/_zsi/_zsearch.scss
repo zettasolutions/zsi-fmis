@@ -1,0 +1,31 @@
+/*search panel*/
+
+.SearchPanel {
+   border: 1pt solid #a6a6a6;
+   height: 256px;
+   overflow-y: scroll;
+   width: 300px;
+   position: absolute;
+   display: none;
+   background: #fff;
+   table tr {
+     &.active td {
+       background-color: #4285F4;
+       color: #fff;
+       a {
+         color: #fff;
+       }
+     }
+     &:hover td {
+       background-color: #94bcff;
+     }
+   }
+   tbody tr {
+     &:nth-child(even) {
+       background: #E3E4E5;
+     }
+     &:nth-child(odd) {
+       background: #fff;
+     }
+   }
+ }

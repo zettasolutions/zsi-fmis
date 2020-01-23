@@ -1,0 +1,362 @@
+.row.no-gutters {
+	margin-right: 0;
+	margin-left: 0;
+
+	& > [class^="col-"],
+	& > [class*=" col-"] {
+		padding-right: 0;
+		padding-left: 0;
+	}
+}
+
+footer {
+	background-color: transparent;
+	font-size: 10px;
+    height: 15px;
+}
+
+.debugPanel {
+    left: unset;
+    font-size: 10px;
+}
+
+option {
+	color: black;
+}
+
+/* --------------- z-form-con STYLE --------------- */
+
+div.z-form-con {
+	position: relative;
+	margin: 15px 0 5px 0;
+}
+
+div.z-form-con label {
+	font-size: 10pt;
+	padding: 0 0 0 5px;
+	position: absolute;
+	top: -20px;
+}
+
+div.z-form-con i {
+	font-size: inherit;
+	position: absolute;
+	left: 8px;
+	top: 11px;
+}
+
+.z-form
+,.z-form:active
+,.z-form:focus {
+	border: none;
+	outline: none;
+	width: 100%;
+	color: inherit;
+	box-shadow: none;
+}
+
+div.z-form-con input.z-form {
+	background-color: transparent;
+	border: 1px solid rgba(240, 240, 240, 0.5);
+	padding: 0.30rem;
+}
+
+button.z-form {
+	background: #56CCF2;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #2F80ED 40%, #56CCF2);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #2F80ED 40%, #56CCF2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	border-radius: 0;
+	padding: 0.30rem;
+	cursor: pointer;
+}
+
+div.z-form-con select.z-form {
+	background-color: transparent;
+	padding: 0.30rem;
+	border: 1px solid rgba(240, 240, 240, 0.5);
+}
+
+div.z-form-con textarea.z-form {
+	background-color: transparent;
+	padding: 0.30rem;
+	border: 1px solid rgba(240, 240, 240, 0.5);
+}
+
+div.z-form-con.has-icon input.z-form {
+	padding: 0.30rem 0.30rem 0.30rem 30px;
+}
+
+div.z-form-con.has-icon select.z-form {
+	padding: 0.30rem 0.30rem 0.30rem 30px;
+}
+
+div.z-form-con.has-icon textarea.z-form {
+	padding: 0.30rem 0.30rem 0.30rem 30px;
+}
+
+/* --------------- END OF FORM STYLE --------------- */
+
+.z-bg {
+	background: #141E30;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #243B55 40%, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #243B55 40%, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.z-txt-white {
+	color : rgb(240, 240, 240);
+}
+
+.z-center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.transparent {
+    opacity: 0;
+}
+
+ 
+.tab-content {
+    border: solid #dee2e6;
+    border-width: 0 1px 1px 1px;
+}
+
+/* --------------- Loading CSS --------------- */
+
+.savedWindow
+,.progressWindow
+,.errorWindow {
+	z-index: 9999;
+	display: none;
+}
+
+.progressWindow {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background-color: rgba(0, 0, 0, 0.45);
+}
+
+.cube-container {
+	height:20px;
+	width:20px;
+	-webkit-perspective:40px;
+	perspective:40px;
+	float: left;
+	padding-top: 2px;
+}
+
+.cube {
+	height:20px;
+	widht:20px;
+	-webkit-transform-origin:50% 50%;
+	transform-origin:50% 50%;
+	-webkit-transform-style:preserve-3d;
+	transform-style:preserve-3d;
+	-webkit-animation:rotate 3s infinite ease-in-out;
+	animation:rotate 3s infinite ease-in-out;
+}
+
+.side {
+	position:absolute;
+	display:block;
+	height:20px;
+	width:20px;
+}
+.side1 {
+	background:#41C3AC;
+	-webkit-transform:translateZ(10px);
+	transform:translateZ(10px);
+}
+.side2 {
+	background:#FF884D;
+	-webkit-transform:rotateY(90deg) translateZ(10px);
+	transform:rotateY(90deg) translateZ(10px);
+}
+.side3 {
+	background:#32526E;
+	-webkit-transform:rotateY(180deg) translateZ(10px);
+	transform:rotateY(180deg) translateZ(10px);
+}
+.side4 {
+	background:#65A2C5;
+	-webkit-transform:rotateY(-90deg) translateZ(10px);
+	transform:rotateY(-90deg) translateZ(10px);
+}
+.side5 {
+	background:#FFCC5C;
+	-webkit-transform:rotateX(90deg) translateZ(10px);
+	transform:rotateX(90deg) translateZ(10px);
+}
+.side6 {
+	background:#FF6B57;
+	-webkit-transform:rotateX(-90deg) translateZ(10px);
+	transform:rotateX(-90deg) translateZ(10px);
+}
+
+@-webkit-keyframes rotate{
+	0%{
+		-webkit-transform:rotateX(0deg) rotateY(0deg);
+	}
+	40%{
+		-webkit-transform:rotateX(375deg) rotateY(0deg);
+	}
+	47%,50%{
+		-webkit-transform:rotateX(360deg) rotateY(0deg);    
+	}
+	90%{
+		-webkit-transform:rotateX(360deg) rotateY(375deg);
+	}
+	97%,100%{
+		-webkit-transform:rotateX(360deg) rotateY(360deg);
+	}
+}
+@keyframes rotate{
+	0%{
+		transform:rotateX(0deg) rotateY(0deg);
+	}
+	40%{
+		transform:rotateX(375deg) rotateY(0deg);
+	}
+	47%,50%{
+		transform:rotateX(360deg) rotateY(0deg);    
+	}
+	90%{
+		transform:rotateX(360deg) rotateY(375deg);
+	}
+	97%,100%{
+		transform:rotateX(360deg) rotateY(360deg);
+	}
+}
+
+/* ------------------ zform-group ------------------------- */
+
+.zform-group {
+    position: relative;
+    border: 1px solid #406693;
+    border-radius: 5px;
+    padding: 5px 10px;
+    height: 50px;
+    color: #ffffff;
+    margin: 0 0 5px 0;
+    transition: border  0.3s cubic-bezier(.25,.8,.25,1);
+    transform: translateZ(0);
+}
+
+.zform-group.textarea {
+    height: 165px;
+}
+
+.zform-group > label {
+    position: absolute;
+    top: 10px;
+    margin: 0;
+    color: inherit;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 95%;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    transform: translateZ(0);
+}
+
+.zform-group > label > i {
+    margin: 0 5px 0 0;
+    color: inherit;
+}
+
+.zform-group > input {
+    display: none;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    margin: 14px 0 0 0;
+    color: inherit;
+    width: 100%;
+}
+
+.zform-group > select {
+    display: none;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    margin: 14px 0 0 0;
+    color: inherit;
+    width: 100%;
+}
+
+.zform-group > textarea {
+    display: none;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    margin: 14px 0 0 0;
+    color: inherit;
+    width: 100%;
+}
+
+.zform-group > .error-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    padding: 0 0 0 5px;
+    border: 1px solid #c80000;
+    background-color: #ffffff;
+    color: #c80000;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.zform-group > .error-feedback > i {
+    padding: 0 5px;
+}
+
+/* ---------- active ---------- */
+
+.zform-group.active > label {
+    top: 0px;
+    font-size: 9pt;
+}
+
+.zform-group.active > input {
+    display: inline;
+}
+
+.zform-group.active > select {
+    display: inline;
+}
+
+.zform-group.active > textarea {
+    display: inline;
+}
+
+/* ---------- active ---------- */
+
+.zform-group.focused {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+}
+
+/* ---------- error ---------- */
+
+.zform-group.error > .error-feedback {
+    display: block;
+}
+
+/* ---------- no-label-icon ---------- */
+
+.zform-group.no-label-icon input {
+    margin: 5px 0 0 0;
+}
+
+.zform-group.no-label-icon select {
+    margin: 5px 0 0 0;
+}
+
+.zform-group.textarea.no-label-icon textarea {
+    margin: 0;
+}

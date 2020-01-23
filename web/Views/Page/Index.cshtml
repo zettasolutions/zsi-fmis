@@ -70,7 +70,7 @@
 			$("#grid").dataBind({
 			url			: base_url + "sql/exec?p=pages_sel" + params
 			,width          : $(".zContainer").width()
-			,height         : $(document).height() - 260
+			,height         : $(window).height() - 260
 			,selectorType   : "checkbox"
 			,blankRowsLimit :5
 			,dataRows       :[

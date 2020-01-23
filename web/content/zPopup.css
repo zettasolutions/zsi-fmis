@@ -1,0 +1,64 @@
+﻿.zPopup.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1px;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 100ms;
+  visibility: hidden;
+  opacity: 0;
+  border-radius: 5px;
+}
+
+.zPopup.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.zPopup > .panel {
+    background: #fff none repeat scroll 0 0;
+    border-radius: 5px;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+	overflow: hidden;
+    transition: all 1s ease-in-out 0s;
+}
+.zPopup > .panel h2 {
+  margin: 0;
+  font-size: 11pt;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.zPopup > .panel .close {
+  position: absolute;
+  top: 0px;
+  right: 3px;
+  transition: all 100ms;
+  font-size: 12.75pt;
+  font-weight: bold;
+  text-decoration: none;
+  opacity:1;
+  color: #fff;
+}
+
+.zPopup > .panel .close:hover {
+  color: #000;
+  opacity:1;
+}
+
+.zPopup > .panel .header {
+    background-color: red;
+    height: 20px;
+    position: relative;
+}
+ 
+.zPopup > .panel .content {
+    bottom: 4px;
+    overflow: auto;
+    position: absolute;
+    top: 20px;
+    width: 100%;
+}

@@ -93,7 +93,7 @@
         $("#grid").dataBind({
     	     url            : _url + _params	
     	    ,width          : $(".zContainer").width()
-    	    ,height         : $(document).height() - 250
+    	    ,height         : $(window).height() - 250
     	    ,selectorType   : "checkbox"
             //,blankRowsLimit:5
             ,isPaging : false
@@ -115,7 +115,7 @@
             		,{text  : "Updated Date" , name  : "updated_date"   	, width : 133          , style : "text-align:left;"}
     	    ] 
         	     ,onComplete: function(){
-                    $("#cbFilter1").setCheckEvent("#grid input[name='cb']");
+                    this.find("[name='cbFilter1']").setCheckEvent("#grid input[name='cb']");
             }  
         });     
     	

@@ -1,0 +1,143 @@
+
+  .zGrid .zHeaders {
+    background-image: linear-gradient(to bottom, #b56a9f 0px, #8a4a77 100%);
+    color: #fff;
+  }
+  
+  .modal-body div nav #nav-tab .nav-link{
+
+    color : #000000;
+    margin-left: 2px;
+  
+    &.active {
+      color: #fff;
+      background-image: linear-gradient(to bottom, #b56a9f 0px, #8a4a77 100%);
+    }
+  
+    &:hover {
+      color: #fff;
+      background-image: linear-gradient(to bottom, #b56a9f 0px, #8a4a77 100%);
+    }
+  
+  }
+  .zpage-title {
+    color : #b56a9f;
+  }
+  /* BACKGROUND TRANSITIONS */
+  /* Fade */
+  .hvr-fade:hover, .hvr-fade:focus, .hvr-fade:active {
+    background-color: #b56a9f;
+    color: white;
+    }
+    
+    /* Back Pulse */
+    @-webkit-keyframes hvr-back-pulse {
+    50% {
+      background-color: #b56a9f;
+    }
+    }
+    @keyframes hvr-back-pulse {
+    50% {
+      background-color: #8a4a77;
+    }
+    }
+    .hvr-back-pulse:hover, .hvr-back-pulse:focus, .hvr-back-pulse:active {
+    background-color: #b56a9f;
+    color: white;
+    }
+    
+    /* Sweep To Right */
+    .hvr-sweep-to-right:before {
+    content: "";
+    background: #b56a9f;
+    }
+    
+    /* Sweep To Left */
+    .hvr-sweep-to-left:before {
+    content: "";
+    background: #b56a9f;
+    }
+    
+    /* Sweep To Bottom */
+    .hvr-sweep-to-bottom:before {
+    content: "";
+    background: #b56a9f;
+    }
+    
+    /* Sweep To Top */
+    .hvr-sweep-to-top:before {
+    content: "";
+    background: #b56a9f;
+    }
+    
+    /* Bounce To Right */
+    .hvr-bounce-to-right:before {
+    content: "";
+    background: #b56a9f;
+    }
+    
+    /* Bounce To Left */
+    .hvr-bounce-to-left:before {
+    content: "";
+    background: #b56a9f;
+    }
+    
+    /* Bounce To Bottom */
+    .hvr-bounce-to-bottom:before {
+    content: "";
+    background: #b56a9f;
+    }
+    
+    /* Bounce To Top */
+    .hvr-bounce-to-top:before {
+    content: "";
+    background: #b56a9f;
+    }
+    
+    /* Radial Out */
+    .hvr-radial-out:before {
+    content: "";
+    background: #b56a9f;
+    }
+    
+    /* Radial In */
+    .hvr-radial-in:before {
+    content: "";
+    background: #b56a9f;
+    }
+    
+    /* Rectangle In */
+    .hvr-rectangle-in:before {
+    content: "";
+    background: #b56a9f;
+    }
+    
+    /* Rectangle Out */
+    .hvr-rectangle-out:before {
+    content: "";
+    background: #b56a9f;
+    }
+    
+    /* Shutter In Horizontal */
+    .hvr-shutter-in-horizontal:before {
+      content: "";
+      background: #b56a9f;
+    }
+    
+    /* Shutter Out Horizontal */
+    .hvr-shutter-out-horizontal:before {
+      content: "";
+      background: #b56a9f;
+    }
+    
+  /* Shutter In Vertical */
+    .hvr-shutter-in-vertical:before {
+    content: "";
+    background: #b56a9f;
+    }
+    
+    /* Shutter Out Vertical */
+    .hvr-shutter-out-vertical:before {
+      content: "";
+      background: #b56a9f;
+    }

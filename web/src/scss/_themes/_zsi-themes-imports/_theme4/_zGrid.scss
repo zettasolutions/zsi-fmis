@@ -1,0 +1,143 @@
+
+  .zGrid .zHeaders {
+    background-image: linear-gradient(to bottom, #2198F3 0px, rgb(25, 134, 218) 100%);
+    color: #fff;
+  }
+  
+  .modal-body div nav #nav-tab .nav-link{
+
+    color : #000000;
+    margin-left: 2px;
+  
+    &.active {
+      color: #fff;
+      background-image: linear-gradient(to bottom, #2198F3 0px, rgb(25, 134, 218) 100%);
+    }
+  
+    &:hover {
+      color: #fff;
+      background-image: linear-gradient(to bottom, #2198F3 0px, rgb(25, 134, 218) 100%);
+    }
+  
+  }
+  .zpage-title {
+    color : #2198F3;
+  }
+  /* BACKGROUND TRANSITIONS */
+  /* Fade */
+  .hvr-fade:hover, .hvr-fade:focus, .hvr-fade:active {
+    background-color: #2198F3;
+    color: white;
+    }
+    
+    /* Back Pulse */
+    @-webkit-keyframes hvr-back-pulse {
+    50% {
+      background-color: #2198F3;
+    }
+    }
+    @keyframes hvr-back-pulse {
+    50% {
+      background-color: rgb(25, 134, 218);
+    }
+    }
+    .hvr-back-pulse:hover, .hvr-back-pulse:focus, .hvr-back-pulse:active {
+    background-color: #2198F3;
+    color: white;
+    }
+    
+    /* Sweep To Right */
+    .hvr-sweep-to-right:before {
+    content: "";
+    background: #2198F3;
+    }
+    
+    /* Sweep To Left */
+    .hvr-sweep-to-left:before {
+    content: "";
+    background: #2198F3;
+    }
+    
+    /* Sweep To Bottom */
+    .hvr-sweep-to-bottom:before {
+    content: "";
+    background: #2198F3;
+    }
+    
+    /* Sweep To Top */
+    .hvr-sweep-to-top:before {
+    content: "";
+    background: #2198F3;
+    }
+    
+    /* Bounce To Right */
+    .hvr-bounce-to-right:before {
+    content: "";
+    background: #2198F3;
+    }
+    
+    /* Bounce To Left */
+    .hvr-bounce-to-left:before {
+    content: "";
+    background: #2198F3;
+    }
+    
+    /* Bounce To Bottom */
+    .hvr-bounce-to-bottom:before {
+    content: "";
+    background: #2198F3;
+    }
+    
+    /* Bounce To Top */
+    .hvr-bounce-to-top:before {
+    content: "";
+    background: #2198F3;
+    }
+    
+    /* Radial Out */
+    .hvr-radial-out:before {
+    content: "";
+    background: #2198F3;
+    }
+    
+    /* Radial In */
+    .hvr-radial-in:before {
+    content: "";
+    background: #2198F3;
+    }
+    
+    /* Rectangle In */
+    .hvr-rectangle-in:before {
+    content: "";
+    background: #2198F3;
+    }
+    
+    /* Rectangle Out */
+    .hvr-rectangle-out:before {
+    content: "";
+    background: #2198F3;
+    }
+    
+    /* Shutter In Horizontal */
+    .hvr-shutter-in-horizontal:before {
+      content: "";
+      background: #2198F3;
+    }
+    
+    /* Shutter Out Horizontal */
+    .hvr-shutter-out-horizontal:before {
+      content: "";
+      background: #2198F3;
+    }
+    
+  /* Shutter In Vertical */
+    .hvr-shutter-in-vertical:before {
+    content: "";
+    background: #2198F3;
+    }
+    
+    /* Shutter Out Vertical */
+    .hvr-shutter-out-vertical:before {
+      content: "";
+      background: #2198F3;
+    }

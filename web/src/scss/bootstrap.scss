@@ -1,0 +1,35 @@
+@import "./src/scss/_modules/variables";
+@import "./node_modules/bootstrap/scss/bootstrap"; 
+
+//Customized sytle code
+
+.modal-header {
+    padding: 0.5rem 1rem 0.5rem 1rem;
+}
+.modal-body {
+    padding: 0.5rem;
+}
+
+.nav-function-top .zpage-title {
+    color : #fff;
+  }
+.zpage-title {
+    color : #2198F3;
+  }
+
+.col-form-label {
+  padding-bottom: 0;
+}
+
+.form-control{
+  height: calc(1.5em + .2rem + 5px);
+  border: 1px solid #ced4da;
+}
+
+.btn-outline-default{
+  line-height: 0.5;
+
+  .fa-filter{
+    font-size: 9px;
+  }
+}

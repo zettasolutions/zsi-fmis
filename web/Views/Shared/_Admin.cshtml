@@ -143,6 +143,7 @@
 
          <!--BEGIN Page Wrapper -->
         <div class="page-wrapper">
+            @{ string role = (ViewBag.role == null ? "No Role" :  ViewBag.role ); }
             <div class="page-inner">
                 <!-- BEGIN Left Aside -->
                 <aside class="page-sidebar">
@@ -165,14 +166,14 @@
                             </div>
                         </div>
                         <div class="info-card">
-                            <img src='@Url.Content("~/")img/demo/avatars/avatar-admin.png' class="profile-image rounded-circle" alt="Dr. Codex Lantern">
+                            <img src='@Url.Content("~/")img/avatar-m.png' class="profile-image rounded-circle" alt="">
                             <div class="info-card-text">
                                 <a href="#" class="d-flex align-items-center text-white">
                                     <span class="text-truncate text-truncate-sm d-inline-block autoCaps">
-                                        @zsi.web.SessionHandler.CurrentUser.userFullName.ToUpper()
+                                        @zsi.web.SessionHandler.CurrentUser.userFullName.ToLower()
                                     </span>
                                 </a>
-                                <span class="d-inline-block text-truncate text-truncate-sm">Cebu City</span>
+                                <span class="d-inline-block text-truncate text-truncate-sm"><small>@role</small></span>
                             </div>
                             <img src='@Url.Content("~/")img/card-backgrounds/cover-2-lg.png' class="cover" alt="cover">
                             <!-- <a href="#" onclick="return false;" class="pull-trigger-btn" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar" data-focus="nav_filter_input"> -->
@@ -530,9 +531,8 @@
                             </div>
                             <!-- app user menu -->
                             <div>
-                                 @{ string role = (ViewBag.role == null ? "No Role" :  ViewBag.role ); }
                                 <a href="#" data-toggle="dropdown" title="zetta-solutions.net" class="header-icon d-flex align-items-center justify-content-center ml-2">
-                                    <img src="@Url.Content("~/")img/demo/avatars/avatar-admin.png" class="profile-image rounded-circle" alt="Dr. Codex Lantern">
+                                    <img src="@Url.Content("~/")img/avatar-m.png" class="profile-image rounded-circle" alt="">
                                     <!-- you can also add username next to the avatar with the codes below:
                                     <span class="ml-1 mr-1 text-truncate text-truncate-header hidden-xs-down">Me</span>
                                     <i class="ni ni-chevron-down hidden-xs-down"></i> -->
@@ -541,10 +541,10 @@
                                     <div class="dropdown-header bg-trans-gradient d-flex flex-row py-4 rounded-top">
                                         <div class="d-flex flex-row align-items-center mt-1 mb-1 color-white">
                                             <span class="mr-2">
-                                                <img src="@Url.Content("~/")img/demo/avatars/avatar-admin.png" class="rounded-circle profile-image" alt="Dr. Codex Lantern">
+                                                <img src="@Url.Content("~/")img/avatar-m.png" class="rounded-circle profile-image" alt="">
                                             </span>
                                             <div class="info-card-text">
-                                                <div class="fs-lg text-truncate text-truncate-lg autoCaps">@zsi.web.SessionHandler.CurrentUser.userFullName.ToUpper()</div>
+                                                <div class="fs-lg text-truncate text-truncate-lg autoCaps">@zsi.web.SessionHandler.CurrentUser.userFullName.ToLower()</div>
                                                 <span class="text-truncate text-truncate-md opacity-80">(@role)</span>
                                             </div>
                                         </div>
@@ -805,7 +805,7 @@
                                         <li>
                                             <a href="#" class="d-table w-100 px-2 py-2 text-dark hover-white" data-filter-tags="ali amdaney inactive">
                                                 <div class="d-table-cell align-middle">
-                                                    <span class="profile-image-md rounded-circle d-block" style="background-image:url('@Url.Content("~/")img/demo/avatars/avatar-m.png'); background-size: cover;"></span>
+                                                    <span class="profile-image-md rounded-circle d-block" style="background-image:url('@Url.Content("~/")img/avatar-m.png'); background-size: cover;"></span>
                                                 </div>
                                                 <div class="d-table-cell w-100 align-middle pl-2 pr-2">
                                                     <div class="text-truncate text-truncate-md">
