@@ -1,1 +1,0 @@
- window.location.replace(base_url + "docs");  
