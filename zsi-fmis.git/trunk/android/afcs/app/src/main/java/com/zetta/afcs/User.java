@@ -1,11 +1,5 @@
 package com.zetta.afcs;
 
-import android.util.Log;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 public class User {
     public String FirstName;
     public String LastName;
@@ -13,6 +7,10 @@ public class User {
     public String Username;
     public String Password;
     public Boolean IsAuthenticated;
+    public String Position;
+    public String Driver;
+    public String Pao;
+
 
     public User() {
     }
@@ -57,12 +55,29 @@ public class User {
         return this.Password;
     }
 
-    public void setIsAuthenticated(Boolean isAuthenticated) {
-        this.IsAuthenticated = isAuthenticated;
-    }
-
+    public void setIsAuthenticated(Boolean isAuthenticated) { this.IsAuthenticated = isAuthenticated; }
     public Boolean getIsAuthenticated() {
         return this.IsAuthenticated;
     }
 
+    public void setPosition(String position) {
+        this.Position = position;
+    }
+    public String getPosition() {
+        return this.Position;
+    }
+
+    public void setDriver(String driver) {
+        this.Driver = driver;
+    }
+    public String getDriver() {
+        return this.Driver;
+    }
+
+    public void setPao(String pao) {
+        this.Pao = pao;
+    }
+    public String getPao() {
+        return this.Pao;
+    }
 }

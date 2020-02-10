@@ -14,6 +14,8 @@ public class Receipt {
     private double totalAmount;
     private String seriesNumber;
     private String vehiclePlate;
+    private String companyName;
+    private String tin;
 
     public Receipt() {}
 
@@ -88,5 +90,15 @@ public class Receipt {
         return formatter.format(date);
     }
 
+    public void setCompanyName(String companyName) {this.companyName = companyName; }
 
+    public String getCompanyName() {
+        return this.companyName;
+    }
+
+    public void setTin(String tin) {this.tin = tin; }
+
+    public String getTin() {
+        return this.tin;
+    }
 }

@@ -4,29 +4,39 @@
     tools:context="com.zetta.afcs.MainActivity">
     <item
         android:id="@+id/action_ticketing"
-        android:icon="@drawable/ic_directions_bus_black_24dp"
+        android:icon="@mipmap/zfare"
         android:orderInCategory="100"
         android:title="Checklist"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_home"
         android:icon="@drawable/home"
-        android:orderInCategory="100"
+        android:orderInCategory="110"
         android:title="Home"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="120"
         android:title="@string/action_settings"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_login"
-        android:orderInCategory="100"
-        android:title="@string/action_login"
+        android:id="@+id/action_driver_pao"
+        android:orderInCategory="130"
+        android:title="@string/action_driver_pao"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_logout"
-        android:orderInCategory="100"
-        android:title="Logout"
+        android:id="@+id/action_reloader"
+        android:orderInCategory="140"
+        android:title="Buy QR Code"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_load_qr"
+        android:orderInCategory="150"
+        android:title="Load QR Code"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_scan_qr_balance"
+        android:orderInCategory="160"
+        android:title="Scan QR Balance"
         app:showAsAction="never" />
 </menu>

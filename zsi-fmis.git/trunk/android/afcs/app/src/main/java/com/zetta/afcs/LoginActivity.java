@@ -276,7 +276,7 @@ public class LoginActivity extends AppCompatActivity {
                 connection.connect();
 
                 // Post data.
-                String jsonInputString = String.format("{ \"%s\": \"%s\", \"parameters\": {\"hash_key\": \"%s\"} }",
+                String jsonInputString = String.format("{ \"%s\": \"%s\", \"parameters\": {\"email\": \"%s\"} }",
                         ApiHelper.SqlCodeKey, params[1], params[2]);
 
                 try(OutputStream os = connection.getOutputStream()) {
@@ -335,16 +335,14 @@ public class LoginActivity extends AppCompatActivity {
                             User.Username = rows.getJSONObject(0).get("logon").toString();
                             User.FirstName = rows.getJSONObject(0).get("first_name").toString();
                             User.LastName = rows.getJSONObject(0).get("last_name").toString();
+                            User.Position = rows.getJSONObject(0).get("position").toString();
 
                             // Login the user and redirect to the main.
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                            intent.putExtra("username", User.Username);
-//                            intent.putExtra("firstName", User.FirstName);
-//                            intent.putExtra("lastName", User.LastName);
-//                            intent.putExtra("isAuthenticated", true);
                             intent.putExtra(Common.BundleExtras.Username, User.Username);
                             intent.putExtra(Common.BundleExtras.FirstName, User.FirstName);
                             intent.putExtra(Common.BundleExtras.LastName, User.LastName);
+                            intent.putExtra(Common.BundleExtras.Position, User.Position);
                             intent.putExtra(Common.BundleExtras.IsAuthenticated, true);
                             startActivity(intent);
                             finish();

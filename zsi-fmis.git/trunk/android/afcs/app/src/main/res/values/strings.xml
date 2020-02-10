@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">AFCS</string>
+    <string name="app_name">ZFare</string>
     <string name="action_settings">Settings</string>
     <string name="action_login">Login</string>
+    <string name="action_sync_configurations">Sync Configurations</string>
+    <string name="action_driver_pao">Driver / PAO</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

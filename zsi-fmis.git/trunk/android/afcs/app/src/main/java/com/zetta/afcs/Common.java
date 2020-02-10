@@ -25,5 +25,8 @@ public class Common {
         public static String IsAuthenticated = "isAuthenticated";
         public static String FirstName = "firstName";
         public static String LastName = "lastName";
+        public static String Position = "position";
+        public static String Driver = "driver";
+        public static String Pao = "pao";
     }
 }
