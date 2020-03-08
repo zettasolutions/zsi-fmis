@@ -30,9 +30,9 @@
         android:name=".BaseApp"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/zfare"
+        android:icon="@mipmap/zfare_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/zfare"
+        android:roundIcon="@mipmap/zfare_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data

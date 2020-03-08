@@ -9,6 +9,7 @@ import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,14 +18,11 @@ import androidx.core.app.ActivityCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.zetta.afcs.api.ApiHelper;
 import com.zetta.afcs.api.SettingsModel;
 import com.zetta.afcs.barcode.BarcodeCaptureActivity;
@@ -49,16 +47,15 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     private FileHelper fileHelper;
     private User User;
-    private AdView mAdView;
-    private TextView tFullname;
-    private TextView tPosition;
     private Context mContext;
 
     private boolean hasSettings = false;
     private boolean hasConfig = false;
 
     private String LOG_TAG = "";
+    private int gRequestCode = 0;
     private int BARCODE_READER_REQUEST_CODE = 1;
+    private int BARCODE_READER_CANCEL_PAYMENT_CODE = 2;
     private DeviceHelper deviceHelper;
     private ProgressDialog progressDialog;
 
@@ -71,9 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
         this.fileHelper = new FileHelper(this);
         this.User = new User();
-        this.tFullname = findViewById(R.id.tFullname);
-        this.tPosition = findViewById(R.id.tPosition);
-
         this.mContext = this;
         this.deviceHelper = new DeviceHelper();
 
@@ -85,65 +79,6 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-
-        // ----------- DISPLAY ADMOB ADS ------------------------------------------------------------------------------------
-        //
-        // NOTE:    Use the test admob when under development because Google might think of an auto-clicker for the ads
-        //          every time the android app is run in debug mode.
-        //
-        // TODO: Update manifest.
-        // ca-app-pub-2093465683432076~7329318157 -- ACTUAL ID
-        // ca-app-pub-3940256099942544~3347511713 -- TEST ID
-
-        // TODO: Update content_main.
-        //  ads:adUnitId="ca-app-pub-2093465683432076/4198907727"> -- actual admob
-        //  ads:adUnitId="ca-app-pub-3940256099942544/6300978111"> -- google test admob
-
-        // TODO:
-        //  TEST. Comment when building apk.
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
-        // TODO:
-        //  ACTUAL. Uncomment when building apk.
-        //MobileAds.initialize(this, "ca-app-pub-2093465683432076~7329318157");
-        //
-        // ----------- DISPLAY ADMOB ADS ------------------------------------------------------------------------------------
-
-        this.mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        this.mAdView.loadAd(adRequest);
-        this.mAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                // Code to be executed when an ad request fails.
-            }
-
-            @Override
-            public void onAdOpened() {
-                // Code to be executed when an ad opens an overlay that
-                // covers the screen.
-            }
-
-            @Override
-            public void onAdClicked() {
-                // Code to be executed when the user clicks on an ad.
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-            }
-
-            @Override
-            public void onAdClosed() {
-                // Code to be executed when the user is about to return
-                // to the app after tapping on an ad.
-            }
-        });
 
         List<SettingsModel> settings = this.fileHelper.getSettingsList(this);
         if (settings != null && !settings.isEmpty())
@@ -158,6 +93,41 @@ public class MainActivity extends AppCompatActivity {
                     , Message.INCOMPLETE_SETTINGS);
             dialog.show();
         }
+
+        // Bottom navigation
+        BottomNavigationView bottomNavigationView = findViewById(R.id.navigationView);
+        bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+
+                switch (item.getItemId()) {
+                    case R.id.navigation_ticketing:
+                        intent = new Intent(getApplicationContext(), TicketingActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.navigation_reloader:
+                        intent = new Intent(getApplicationContext(), ReloaderActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.navigation_load_qr:
+                        intent = new Intent(getApplicationContext(), ReloadQRActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case R.id.navigation_scan_qr_balance:
+                        intent = new Intent(getApplicationContext(), BarcodeCaptureActivity.class);
+                        startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
+                        break;
+                }
+
+                return true;
+            }
+        });
+        // Bottom navigation
     }
 
     @Override
@@ -165,9 +135,9 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        MenuItem ticketing_menu = menu.findItem(R.id.action_ticketing);
+        //MenuItem ticketing_menu = menu.findItem(R.id.action_ticketing);
 
-        ticketing_menu.setVisible(true);
+        //ticketing_menu.setVisible(true);
 
         return true;
     }
@@ -197,27 +167,9 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
-        if (id == R.id.action_ticketing) {
-            Intent intent = new Intent(getApplicationContext(), TicketingActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
-        if (id == R.id.action_reloader) {
-            Intent intent = new Intent(getApplicationContext(), ReloaderActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
-        if (id == R.id.action_load_qr) {
-            Intent intent = new Intent(getApplicationContext(), ReloadQRActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
-        if (id == R.id.action_scan_qr_balance) {
+        if (id == R.id.action_cancel_payment) {
             Intent intent = new Intent(getApplicationContext(), BarcodeCaptureActivity.class);
-            startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
+            startActivityForResult(intent, BARCODE_READER_CANCEL_PAYMENT_CODE);
         }
 
         return super.onOptionsItemSelected(item);
@@ -230,16 +182,31 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        gRequestCode = requestCode;
         if (requestCode == BARCODE_READER_REQUEST_CODE) {
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (data != null) {
                     Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
-                    Point[] points = barcode.cornerPoints;
                     String qrResult = barcode.displayValue;
 
                     String serial_no = this.deviceHelper.getSerial();
                     new MainActivity.JsonTask().execute(ApiHelper.apiURL
                             , ApiHelper.SqlCodeScanQRBalance
+                            , serial_no
+                            , qrResult);
+                }
+            } else {
+                Log.e(LOG_TAG, String.format(getString(R.string.barcode_error_format), CommonStatusCodes.getStatusCodeString(resultCode)));
+            }
+        } else if (requestCode == BARCODE_READER_CANCEL_PAYMENT_CODE) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null) {
+                    Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
+                    String qrResult = barcode.displayValue;
+
+                    String serial_no = this.deviceHelper.getSerial();
+                    new MainActivity.JsonTask().execute(ApiHelper.apiURL
+                            , ApiHelper.SqlCodeCancelPayment
                             , serial_no
                             , qrResult);
                 }
@@ -279,8 +246,15 @@ public class MainActivity extends AppCompatActivity {
                 connection.connect();
 
                 // Post data.
-                String jsonInputString = String.format("{ \"%s\": \"%s\", \"parameters\": {\"serial_no\": \"%s\", \"hash_key\": \"%s\"} }"
+                String jsonInputString = "";
+                if (gRequestCode == BARCODE_READER_REQUEST_CODE) {
+                    jsonInputString = String.format("{ \"%s\": \"%s\", \"parameters\": {\"serial_no\": \"%s\", \"hash_key\": \"%s\"} }"
                             , ApiHelper.SqlCodeKey, params[1], params[2], params[3]);
+                }
+                if (gRequestCode == BARCODE_READER_CANCEL_PAYMENT_CODE) {
+                    jsonInputString = String.format("{ \"%s\": \"%s\", \"parameters\": {\"serial_no\": \"%s\", \"hash_key\": \"%s\"} }"
+                            , ApiHelper.SqlCodeKey, params[1], params[2], params[3]);
+                }
 
                 try(OutputStream os = connection.getOutputStream()) {
                     byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
@@ -341,16 +315,32 @@ public class MainActivity extends AppCompatActivity {
                             String current_balance = rows.getJSONObject(0).get("current_balance").toString();
                             Double balance = Double.parseDouble(current_balance);
 
-                            if (isValid.toUpperCase().equals("Y")) {
-                                Dialog dialog = CommonHelper.showDialog(MainActivity.this
-                                        , Message.Title.INFO
-                                        , String.format(Locale.ENGLISH, "Current balance is %.2f.", balance));
-                                dialog.show();
-                            } else {
-                                Dialog dialog = CommonHelper.showDialog(MainActivity.this
-                                        , Message.Title.ERROR
-                                        , msg);
-                                dialog.show();
+                            if (gRequestCode == BARCODE_READER_REQUEST_CODE) {
+                                if (isValid.toUpperCase().equals("Y")) {
+                                    Dialog dialog = CommonHelper.showDialog(MainActivity.this
+                                            , Message.Title.INFO
+                                            , String.format(Locale.ENGLISH, "Current balance is %.2f.", balance));
+                                    dialog.show();
+                                } else {
+                                    Dialog dialog = CommonHelper.showDialog(MainActivity.this
+                                            , Message.Title.ERROR
+                                            , msg);
+                                    dialog.show();
+                                }
+                            }
+
+                            if (gRequestCode == BARCODE_READER_CANCEL_PAYMENT_CODE) {
+                                if (isValid.toUpperCase().equals("Y")) {
+                                    Dialog dialog = CommonHelper.showDialog(MainActivity.this
+                                            , Message.Title.INFO
+                                            , msg);
+                                    dialog.show();
+                                } else {
+                                    Dialog dialog = CommonHelper.showDialog(MainActivity.this
+                                            , Message.Title.ERROR
+                                            , msg);
+                                    dialog.show();
+                                }
                             }
                         } else {
                             Dialog dialog = CommonHelper.showDialog(MainActivity.this

@@ -29,6 +29,7 @@ public class Message {
     public static String SUCCESS_LOAD = "Load QR generated successfully.";
     public static String INVALID_TRANSACTION = "Invalid transaction. Please try again.";
     public static String INVALID_QR = "Invalid QR Code. Please try again.";
+    public static String INVALID_LOAD_AMOUNT = "Load amount must not be less than 5.00 and not greater than 1,000.00.";
 
 
     public static void show(String msg, Context context) {

@@ -51,4 +51,9 @@ public class ApiHelper {
      */
     public static String SqlCodeScanQRBalance = "A222"; //afcs_scan_qr_balance_sel
 
+    /**
+     * The name of the sql command for the cancellation of the payment exposed by the api.
+     */
+    public static String SqlCodeCancelPayment = "A229"; //afcs_cancel_payment_upd
+
 }

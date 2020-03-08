@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.zetta.afcs.api.ApiHelper;
 import com.zetta.afcs.printerhelper.utils.AidlUtil;
 import com.zetta.afcs.barcode.BarcodeCaptureActivity;
@@ -41,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -93,6 +96,7 @@ public class TicketingActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private DeviceHelper deviceHelper;
     private ConnectionHelper connectionHelper;
+    private Receipt receipt = new Receipt();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +147,7 @@ public class TicketingActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 clearRoutesSpinner();
+                resetDetails();
                 if (position > 0) {
                     populateRoutes(position);
                 }
@@ -178,81 +183,97 @@ public class TicketingActivity extends AppCompatActivity {
         this.bRegularPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                counterRegular++;
-                tRegularCounter.setText(String.valueOf(counterRegular));
-                tPassengerCount.setText(String.valueOf(getTotalPassengers()));
-                double totalFare = getTotalFare();
-                tFare.setText(String.format(Locale.ENGLISH, "%.2f", totalFare));
+                if (isValidRouteNo()) {
+                    counterRegular++;
+                    tRegularCounter.setText(String.valueOf(counterRegular));
+                    tPassengerCount.setText(String.valueOf(getTotalPassengers()));
+                    double totalFare = getTotalFare();
+                    tFare.setText(String.format(Locale.ENGLISH, "%.2f", totalFare));
+                }
             }
         });
         this.bRegularMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (counterRegular > 0) counterRegular--;
-                tRegularCounter.setText(String.valueOf(counterRegular));
-                tPassengerCount.setText(String.valueOf(getTotalPassengers()));
-                double totalFare = getTotalFare();
-                tFare.setText(String.format(Locale.ENGLISH, "%.2f", totalFare));
+                if (isValidRouteNo()) {
+                    if (counterRegular > 0) counterRegular--;
+                    tRegularCounter.setText(String.valueOf(counterRegular));
+                    tPassengerCount.setText(String.valueOf(getTotalPassengers()));
+                    double totalFare = getTotalFare();
+                    tFare.setText(String.format(Locale.ENGLISH, "%.2f", totalFare));
+                }
             }
         });
         this.bStudentPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                counterStudent++;
-                tStudentCounter.setText(String.valueOf(counterStudent));
-                tPassengerCount.setText(String.valueOf(getTotalPassengers()));
-                double totalFare = getTotalFare();
-                tFare.setText(String.format(Locale.ENGLISH, "%.2f", totalFare));
+                if (isValidRouteNo()) {
+                    counterStudent++;
+                    tStudentCounter.setText(String.valueOf(counterStudent));
+                    tPassengerCount.setText(String.valueOf(getTotalPassengers()));
+                    double totalFare = getTotalFare();
+                    tFare.setText(String.format(Locale.ENGLISH, "%.2f", totalFare));
+                }
             }
         });
         this.bStudentMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (counterStudent > 0) counterStudent--;
-                tStudentCounter.setText(String.valueOf(counterStudent));
-                tPassengerCount.setText(String.valueOf(getTotalPassengers()));
-                double totalFare = getTotalFare();
-                tFare.setText(String.format(Locale.ENGLISH, "%.2f", totalFare));
+                if (isValidRouteNo()) {
+                    if (counterStudent > 0) counterStudent--;
+                    tStudentCounter.setText(String.valueOf(counterStudent));
+                    tPassengerCount.setText(String.valueOf(getTotalPassengers()));
+                    double totalFare = getTotalFare();
+                    tFare.setText(String.format(Locale.ENGLISH, "%.2f", totalFare));
+                }
             }
         });
         this.bSeniorPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                counterSenior++;
-                tSeniorCounter.setText(String.valueOf(counterSenior));
-                tPassengerCount.setText(String.valueOf(getTotalPassengers()));
-                double totalFare = getTotalFare();
-                tFare.setText(String.format(Locale.ENGLISH, "%.2f", totalFare));
+                if (isValidRouteNo()) {
+                    counterSenior++;
+                    tSeniorCounter.setText(String.valueOf(counterSenior));
+                    tPassengerCount.setText(String.valueOf(getTotalPassengers()));
+                    double totalFare = getTotalFare();
+                    tFare.setText(String.format(Locale.ENGLISH, "%.2f", totalFare));
+                }
             }
         });
         this.bSeniorMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (counterSenior > 0) counterSenior--;
-                tSeniorCounter.setText(String.valueOf(counterSenior));
-                tPassengerCount.setText(String.valueOf(getTotalPassengers()));
-                double totalFare = getTotalFare();
-                tFare.setText(String.format(Locale.ENGLISH, "%.2f", totalFare));
+                if (isValidRouteNo()) {
+                    if (counterSenior > 0) counterSenior--;
+                    tSeniorCounter.setText(String.valueOf(counterSenior));
+                    tPassengerCount.setText(String.valueOf(getTotalPassengers()));
+                    double totalFare = getTotalFare();
+                    tFare.setText(String.format(Locale.ENGLISH, "%.2f", totalFare));
+                }
             }
         });
         this.bPWDPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                counterPWD++;
-                tPWDCounter.setText(String.valueOf(counterPWD));
-                tPassengerCount.setText(String.valueOf(getTotalPassengers()));
-                double totalFare = getTotalFare();
-                tFare.setText(String.format(Locale.ENGLISH, "%.2f", totalFare));
+                if (isValidRouteNo()) {
+                    counterPWD++;
+                    tPWDCounter.setText(String.valueOf(counterPWD));
+                    tPassengerCount.setText(String.valueOf(getTotalPassengers()));
+                    double totalFare = getTotalFare();
+                    tFare.setText(String.format(Locale.ENGLISH, "%.2f", totalFare));
+                }
             }
         });
         this.bPWDMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (counterPWD > 0) counterPWD--;
-                tPWDCounter.setText(String.valueOf(counterPWD));
-                tPassengerCount.setText(String.valueOf(getTotalPassengers()));
-                double totalFare = getTotalFare();
-                tFare.setText(String.format(Locale.ENGLISH, "%.2f", totalFare));
+                if (isValidRouteNo()) {
+                    if (counterPWD > 0) counterPWD--;
+                    tPWDCounter.setText(String.valueOf(counterPWD));
+                    tPassengerCount.setText(String.valueOf(getTotalPassengers()));
+                    double totalFare = getTotalFare();
+                    tFare.setText(String.format(Locale.ENGLISH, "%.2f", totalFare));
+                }
             }
         });
         this.bPay.setOnClickListener(new View.OnClickListener() {
@@ -317,9 +338,6 @@ public class TicketingActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        MenuItem scan_qr = menu.findItem(R.id.action_scan_qr_balance);
-        scan_qr.setVisible(false);
-
         return true;
     }
 
@@ -329,40 +347,6 @@ public class TicketingActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        if (id == R.id.action_home) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
-        if (id == R.id.action_ticketing) {
-            return true;
-        }
-
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
-        if (id == R.id.action_driver_pao) {
-            Intent intent = new Intent(getApplicationContext(), DriverPaoActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
-        if (id == R.id.action_reloader) {
-            Intent intent = new Intent(getApplicationContext(), ReloaderActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
-        if (id == R.id.action_load_qr) {
-            Intent intent = new Intent(getApplicationContext(), ReloadQRActivity.class);
-            startActivity(intent);
-            finish();
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -454,6 +438,14 @@ public class TicketingActivity extends AppCompatActivity {
     }
 
     /**
+     * Determines whether the selected route number is valid or not.
+     * @return True or false.
+     */
+    private boolean isValidRouteNo() {
+        return this.sRouteNo.getSelectedItemPosition() > 0;
+    }
+
+    /**
      * Determines whether the selected route is valid or not.
      * @return True or false.
      */
@@ -535,27 +527,27 @@ public class TicketingActivity extends AppCompatActivity {
     }
 
     private void printReceipt() {
-        Receipt receipt = new Receipt();
+        // Instantiate the global receipt variable.
+        this.receipt = new Receipt();
 
-        receipt.setFrom(this.sFrom.getSelectedItem().toString());
-        receipt.setTo(this.sTo.getSelectedItem().toString());
-        receipt.setRegular(this.counterRegular);
-        receipt.setStudent(this.counterStudent);
-        receipt.setSenior(this.counterSenior);
-        receipt.setPwd(this.counterPWD);
-        receipt.setTotalAmount(this.getTotalFare());
-        receipt.setPaymentType(this.paymentType);
-        receipt.setVehiclePlate(this.tPlate.getText().toString());
-        receipt.setCompanyName(this.companyName);
-        receipt.setTin(this.tin);
+        this.receipt.setFrom(this.sFrom.getSelectedItem().toString());
+        this.receipt.setTo(this.sTo.getSelectedItem().toString());
+        this.receipt.setRegular(this.counterRegular);
+        this.receipt.setStudent(this.counterStudent);
+        this.receipt.setSenior(this.counterSenior);
+        this.receipt.setPwd(this.counterPWD);
+        this.receipt.setTotalAmount(this.getTotalFare());
+        this.receipt.setPaymentType(this.paymentType);
+        this.receipt.setVehiclePlate(this.tPlate.getText().toString());
+        this.receipt.setCompanyName(this.companyName);
+        this.receipt.setTin(this.tin);
 
         // TODO: Test. Generate series number.
-        receipt.setSeriesNumber("000999");
+        this.receipt.setSeriesNumber("000999");
 
-        AidlUtil.getInstance().printReceipt(receipt);
-
-        // Saves the payments to the database.
-        this.savePayments(receipt);
+        // Saves the payments to the database first and return the payment_key
+        // to be included om the receipt as qr code.
+        this.savePayments(this.receipt);
     }
 
     /**
@@ -764,13 +756,16 @@ public class TicketingActivity extends AppCompatActivity {
                                             , String.format(Locale.ENGLISH, "%s Current balance: %.2f", msg, Double.parseDouble(current_balance_amount)));
                                     dialog.show();
                                 }
-                            }
-
-                            if (processCode == SAVE_PAYMENT_CODE) {
+                            } else if (processCode == SAVE_PAYMENT_CODE) {
                                 String isValid = rows.getJSONObject(0).get("is_valid").toString();
                                 String msg = rows.getJSONObject(0).get("msg").toString();
+                                String payment_key = rows.getJSONObject(0).get("payment_key").toString();
 
-                                if (!isValid.toUpperCase().equals("Y")) {
+                                if (isValid.toUpperCase().equals("Y")) {
+                                    // Print the receipt.
+                                    receipt.setQrCode(payment_key);
+                                    AidlUtil.getInstance().printReceipt(receipt);
+                                } else {
                                     Dialog dialog = CommonHelper.showDialog(TicketingActivity.this
                                             , Message.Title.ERROR
                                             , msg);

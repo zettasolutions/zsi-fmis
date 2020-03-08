@@ -16,6 +16,7 @@ public class Receipt {
     private String vehiclePlate;
     private String companyName;
     private String tin;
+    private String qrCode;
 
     public Receipt() {}
 
@@ -100,5 +101,11 @@ public class Receipt {
 
     public String getTin() {
         return this.tin;
+    }
+
+    public void setQrCode(String qrCode) {this.qrCode = qrCode; }
+
+    public String getQrCode() {
+        return this.qrCode;
     }
 }

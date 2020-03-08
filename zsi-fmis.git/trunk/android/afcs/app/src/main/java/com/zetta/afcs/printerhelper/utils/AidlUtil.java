@@ -375,11 +375,11 @@ public class AidlUtil {
             woyouService.printText(formatText("Total Passengers:", String.format("%s", receipt.getTotalPassengers())), null);
             woyouService.lineWrap(1, null);
             woyouService.printText(formatText("Total Amount:", String.format(Locale.ENGLISH, "%.2f", receipt.getTotalAmount())), null);
-            woyouService.lineWrap(2, null);
+            woyouService.lineWrap(1, null);
             woyouService.sendRAWData(ESCUtil.boldOff(), null);
 
             woyouService.printText(formatText("Payment Type:", String.format("%s", receipt.getPaymentType())), null);
-            woyouService.lineWrap(2, null);
+            woyouService.lineWrap(1, null);
 
             woyouService.printText("--------------------------------", null);
             woyouService.lineWrap(1, null);
@@ -390,6 +390,11 @@ public class AidlUtil {
             woyouService.lineWrap(1, null);
             woyouService.printText(receipt.getVehiclePlate(), null);
             woyouService.lineWrap(2, null);
+
+            // QR payment code.
+            woyouService.printQRCode(receipt.getQrCode(), 5, 0, null);
+            woyouService.lineWrap(1, null);
+
             woyouService.printText("KEEP TICKET FOR INSPECTION", null);
             woyouService.lineWrap(1, null);
             woyouService.printText("Thank you and have a safe trip!", null);

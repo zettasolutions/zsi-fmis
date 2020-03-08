@@ -1,18 +1,22 @@
 package com.zetta.afcs;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
@@ -39,12 +43,15 @@ import java.util.Locale;
 
 public class ReloadQRActivity extends AppCompatActivity {
     // UI References
+    private Button bLoad5;
+    private Button bLoad10;
+    private Button bLoad20;
     private Button bLoad50;
     private Button bLoad100;
-    private Button bLoad200;
-    private Button bLoad300;
     private Button bLoad500;
     private Button bLoad1000;
+    private EditText eReloadAmount;
+    private Button bGO;
 
     private String QRHashKey = "";
     private String RefTrans = "";
@@ -63,49 +70,116 @@ public class ReloadQRActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        this.bLoad5 = findViewById(R.id.button_reload_5);
+        this.bLoad10 = findViewById(R.id.button_reload_10);
+        this.bLoad20 = findViewById(R.id.button_reload_20);
         this.bLoad50 = findViewById(R.id.button_reload_50);
         this.bLoad100 = findViewById(R.id.button_reload_100);
-        this.bLoad200 = findViewById(R.id.button_reload_200);
-        this.bLoad300 = findViewById(R.id.button_reload_300);
         this.bLoad500 = findViewById(R.id.button_reload_500);
         this.bLoad1000 = findViewById(R.id.button_reload_1000);
+        this.eReloadAmount = findViewById(R.id.reload_amount);
+        this.bGO = findViewById(R.id.button_reload_go);
 
         this.deviceHelper = new DeviceHelper();
 
+        this.bLoad5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                eReloadAmount.setError(null);
+                eReloadAmount.setText("5.00");
+            }
+        });
+        this.bLoad10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                eReloadAmount.setError(null);
+                eReloadAmount.setText("10.00");
+            }
+        });
+        this.bLoad20.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                eReloadAmount.setError(null);
+                eReloadAmount.setText("20.00");
+            }
+        });
         this.bLoad50.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                load(view, 50);
+                eReloadAmount.setError(null);
+                eReloadAmount.setText("50.00");
             }
         });
         this.bLoad100.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                load(view, 100);
-            }
-        });
-        this.bLoad200.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                load(view, 200);
-            }
-        });
-        this.bLoad300.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                load(view,300);
+                eReloadAmount.setError(null);
+                eReloadAmount.setText("100.00");
             }
         });
         this.bLoad500.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                load(view, 500);
+                eReloadAmount.setError(null);
+                eReloadAmount.setText("500.00");
             }
         });
         this.bLoad1000.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                load(view,1000);
+                eReloadAmount.setError(null);
+                eReloadAmount.setText("1000.00");
+            }
+        });
+
+        this.bGO.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                eReloadAmount.setError(null);
+                boolean cancel = false;
+                View focusView = null;
+                String eAmount = eReloadAmount.getText().toString().trim();
+                Double amount = 0.00;
+
+                if (TextUtils.isEmpty(eAmount)) {
+                    eReloadAmount.setError(getString(R.string.error_field_required));
+                    focusView = eReloadAmount;
+                    cancel = true;
+                }
+
+                if (!TextUtils.isEmpty(eAmount)) {
+                    amount = Double.parseDouble(eAmount);
+                    if (amount < 5 || amount > 1000) {
+                        eReloadAmount.setError(Message.INVALID_LOAD_AMOUNT);
+                        focusView = eReloadAmount;
+                        cancel = true;
+                    }
+                }
+
+                if (cancel) {
+                    focusView.requestFocus();
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ReloadQRActivity.this);
+                    final Double finalAmount = amount;
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            load(view, finalAmount);
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Stuff to do
+                        }
+                    });
+
+                    builder.setMessage("Entered amount is correct?");
+                    builder.setTitle("Confirm");
+
+                    AlertDialog d = builder.create();
+                    d.show();
+                }
             }
         });
 

@@ -1,42 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.zetta.afcs.MainActivity">
-    <item
-        android:id="@+id/action_ticketing"
-        android:icon="@mipmap/zfare"
-        android:orderInCategory="100"
-        android:title="Checklist"
-        app:showAsAction="ifRoom" />
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/action_home"
         android:icon="@drawable/home"
-        android:orderInCategory="110"
+        android:orderInCategory="100"
         android:title="Home"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="120"
+        android:orderInCategory="110"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
     <item
         android:id="@+id/action_driver_pao"
-        android:orderInCategory="130"
+        android:orderInCategory="120"
         android:title="@string/action_driver_pao"
         app:showAsAction="never" />
+
     <item
-        android:id="@+id/action_reloader"
-        android:orderInCategory="140"
-        android:title="Buy QR Code"
+        android:id="@+id/action_cancel_payment"
+        android:orderInCategory="130"
+        android:title="@string/action_cancel_payment"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_load_qr"
-        android:orderInCategory="150"
-        android:title="Load QR Code"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_scan_qr_balance"
-        android:orderInCategory="160"
-        android:title="Scan QR Balance"
-        app:showAsAction="never" />
+
 </menu>
