@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="colorPrimary">#2E3191</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#03AAEC</color>
-    <color name="colorBase">#FF0000</color>
-    <color name="QRCodeBlackColor">#000000</color>
-    <color name="QRCodeWhiteColor">#FFFFFF</color>
-</resources>
