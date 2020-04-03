@@ -1,4 +1,4 @@
- (function(){
+(function(){
         
     var  bs         = zsi.bs.ctrl
         ,svn        = zsi.setValIfNull
@@ -13,17 +13,7 @@
         gActiveTab = "asset-type";
         
         $("#assetId").select2();
-        $("#assetId").dataBind({
-             sqlCode    : "A163" 
-            ,text       : "asset_type"
-            ,value      : "id" 
-            ,required   : true
-            ,onChange   : function(){ 
-                gAssetId = this.val();  
-            }
-        });
-        
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
             var target = $(e.target).attr("href"); 
             switch(target){
                 case "#nav-asset-type":
@@ -40,10 +30,22 @@
                     $("#dummyDiv").addClass("hide");
                     $("#assetId").val(gAssetId).trigger('change');
                     break;
-              default:break; 
+              default:break;
             } 
         }); 
     }; 
+    
+    function displaySelects(){
+        $("#assetId").dataBind({
+             sqlCode    : "A163" 
+            ,text       : "asset_type"
+            ,value      : "id" 
+            ,required   : true
+            ,onChange   : function(){ 
+                gAssetId = this.val();  
+            }
+        });
+    }
     
     function displayAssetType(searchVal){  
         var cb = app.bs({name:"cbFilter1",type:"checkbox"}); 
@@ -63,12 +65,12 @@
                     ,{text:"Asset Code"             ,type:"input"       ,name:"asset_code"              ,width:100          ,style:"text-align:left"}
                     ,{text:"Asset Type"             ,type:"input"       ,name:"asset_type"              ,width:400          ,style:"text-align:left"}
                     
-                    
                   ]
                   ,onComplete : function(o){
                     var _dRows = o.data.rows;
                     var _this  = this;
         	        var _zRow  = _this.find(".zRow");
+        	        if(_dRows.length < 1) $("#nav-tab").find("[aria-controls='nav-assets']").hide();
         	        _zRow.unbind().click(function(){
         	            var _self=this;
         	            setTimeout(function(){ 
@@ -76,8 +78,11 @@
             	            var _data   = _dRows[_i];
             	            var _assetId  = _data.id;
             	            gAssetId = _assetId;
+            	            displaySelects();
             	            $("#nav-tab").find("[aria-controls='nav-assets']").show();
-            	            $("#assetId").val(_assetId).trigger('change');
+            	            setTimeout(function(){
+            	                $("#assetId").val(_assetId).trigger('change');
+            	            }, 200);
                             displayAssets(_assetId);
 
         	            }, 200);
@@ -173,14 +178,14 @@
         });    
     }
     
-    $("#btnInactive").click(function () {
+    $("#btnInactive").click(function(){
         $(".modal-title").text("Inactive Asset(s)");
         $('#modalInactive').modal({ show: true, keyboard: false, backdrop: 'static' });
         displayInactiveAssets(gAssetId);
         
     });
     
-    $("#btnSaveInactive").click(function () {
+    $("#btnSaveInactive").click(function(){
        $("#gridInactiveAssets").jsonSubmit({
                  procedure: "assets_upd"
                 ,optionalItems: ["is_active"]
@@ -193,7 +198,7 @@
         });
     });
         
-    $("#btnSaveAssetType").click(function (){
+    $("#btnSaveAssetType").click(function(){
         $("#gridAssetType").jsonSubmit({
             procedure:"asset_type_upd"
             ,onComplete:function(data){
@@ -203,7 +208,7 @@
         });
     });
     
-    $("#btnDeleteAssetType").click(function (){
+    $("#btnDeleteAssetType").click(function(){
         zsi.form.deleteData({ 
                 code:"ref-00010"
                ,onComplete:function(data){
@@ -212,7 +217,7 @@
         });
     });
             
-    $("#btnSaveAssets").click(function () { 
+    $("#btnSaveAssets").click(function(){ 
         $("#gridAssets").jsonSubmit({
              procedure: "assets_upd"
             ,optionalItems: ["is_active"] 
@@ -223,7 +228,7 @@
         }); 
     });
     
-    $("#btnDeleteAssets").click(function (){ 
+    $("#btnDeleteAssets").click(function(){ 
         zsi.form.deleteData({ 
             code:"ref-00011"
            ,onComplete:function(data){
@@ -244,7 +249,7 @@
         else displayAssets(gAssetId,_searchVal);
         
     }); 
-   $("#searchVal").on('keypress',function(e) {
+   $("#searchVal").on('keypress',function(e){
         var _searchVal = $.trim($("#searchVal").val()); 
         if(e.which == 13) {
            if(gActiveTab === "asset-type") displayAssetType(_searchVal);
@@ -264,6 +269,4 @@
         $("#nav-tab").find("[aria-controls='nav-assets']").hide();
     });
     
-})();
-
-                      
+})(); 
