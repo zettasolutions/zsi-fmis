@@ -47,6 +47,8 @@ AS
 	   , GETDATE()
 	FROM @tt 
 	WHERE asset_id IS NULL
+	AND asset_no IS NOT NULL
+	AND date_acquired IS NOT NULL
  
 
 

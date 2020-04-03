@@ -6,6 +6,7 @@ CREATE PROCEDURE [dbo].[users_sel]
   ,@searchOption VARCHAR(50) = NULL
   ,@searchValue VARCHAR(50) = NULL
   ,@role_id INT = NULL
+  ,@client_id INT = NULL
   ,@is_active VARCHAR(1)='Y'
   ,@is_contact varchar(1)='N'
   ,@col_no INT = 3
@@ -28,7 +29,7 @@ IF ISNULL(@user_id,0) <> 0
 IF ISNULL(@logon,'')<>''
 SELECT @is_dev = is_developer FROM dbo.users where logon=@logon;
  
-SET @stmt = 'SELECT user_id, userFullName, logon, first_name, middle_name, last_name, name_suffix, password,  is_admin, role_id, is_developer, plant_id, warehouse_id, img_filename  FROM users_v WHERE is_active = ''' + CAST(@is_active AS VARCHAR(1)) + '''';  
+SET @stmt = 'SELECT user_id, userFullName, logon, first_name, middle_name, last_name, name_suffix, password,  is_admin, role_id, is_developer, client_id, img_filename  FROM users_v WHERE is_active = ''' + CAST(@is_active AS VARCHAR(1)) + '''';  
    SET @order = ' ORDER BY ' + CAST(@col_no + 1 AS VARCHAR(1)) + ' ' + IIF(@order_no=0,'ASC','DESC');  
    SELECT @count = COUNT(*) FROM dbo.users_v WHERE is_active = @is_active;
 

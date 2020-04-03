@@ -7,10 +7,9 @@ user_id	INT IDENTITY(1,1)	NOT NULL
 ,middle_name	NVARCHAR(2)	NULL
 ,full_name	NVARCHAR(404)	NOT NULL
 ,role_id	INT	NULL
-,plant_id	NVARCHAR(100)	NULL
-,warehouse_id	NVARCHAR(100)	NULL
 ,password	NVARCHAR(100)	NULL
 ,name_suffix	NVARCHAR(100)	NULL
+,client_id	INT	NULL
 ,is_admin	VARCHAR(1)	NULL
 ,is_active	VARCHAR(1)	NULL
 ,img_filename	VARCHAR(200)	NULL

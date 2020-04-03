@@ -1,7 +1,8 @@
 
+
 CREATE PROCEDURE [dbo].[vehicle_daily_checklist_upd]
 (
-    @tt    vehicle_daily_checklist_tt READONLY
+    @tt vehicle_daily_checklist_tt READONLY
    ,@user_id int
 )
 AS
