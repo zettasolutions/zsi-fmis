@@ -235,7 +235,7 @@
     
     $("#btnDeleteVehicleMaker").click(function(){
         zsi.form.deleteData({ 
-                code:"ref-00011" 
+                code:"ref-00011"
                ,onComplete:function(data){
                      displayVehicleMaker();
                }

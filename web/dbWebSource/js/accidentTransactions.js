@@ -44,8 +44,8 @@ var accident = (function(){
                         this.find("[name='cbFilter1']").setCheckEvent("#gridAccident input[name='cb']");   
                         _zRow.find("[name='accident_date']").datepicker({pickTime  : false , autoclose : true , todayHighlight: true}); 
                         _zRow.find("[name='vehicle_id']").dataBind({
-                             sqlCode    : "V229" // vehicle_sel
-                            ,text   : "vehicle_plate_no"
+                             sqlCode    : "D231" // dd_vehicle_sel
+                            ,text   : "plate_no"
                             ,value  : "vehicle_id"
                         });
                         _zRow.find("[name='driver_id']").dataBind({
@@ -85,4 +85,4 @@ var accident = (function(){
     
 })();
 
-                     
+                      
