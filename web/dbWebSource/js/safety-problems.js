@@ -1,18 +1,17 @@
-   var refuel = (function(){
+    var safetyproblems = (function(){
     var  _public            = {}
         ,bs                 = zsi.bs.ctrl
         ,svn                = zsi.setValIfNull 
     ;
     zsi.ready = function(){
-        $(".page-title").html("Refuel");
+        $(".page-title").html("Safety Problems");
         $(".panel-container").css("min-height", $(window).height() - 160);
         validations();
-        $('#pao_id').select2({placeholder: "SELECT PAO",allowClear: true});
-        $('#driver_id').select2({placeholder: "SELECT DRIVER",allowClear: true});
+        $('#reported_by').select2({placeholder: "",allowClear: true});
+        $('#safety_id').select2({placeholder: "SELECT SAFETY",allowClear: true});
         $('#vehicle_id').select2({placeholder: "SELECT VEHICLE",allowClear: true});
-        $('#gas_station').select2({placeholder: "SELECT GAS STATION",allowClear: true});
         //$("#client_phone_no").inputmask({"mask": "(99) 9999 - 9999"});
-        $("#doc_date").datepicker({todayHighlight:true}).datepicker("setDate",new Date());
+        $("#safety_report_date").datepicker({todayHighlight:true}).datepicker("setDate",new Date());
         $("#pms_type_id").dataBind({
             sqlCode      : "D235" //dd_pms_type_sel
            ,text         : "pms_desc"
@@ -34,7 +33,7 @@
            }
         });
         
-        $("#driver_id").dataBind({
+        $("#reported_by").dataBind({
             sqlCode      : "D227" //drivers_sel
            ,text         : "full_name"
            ,value        : "user_id"
@@ -45,41 +44,30 @@
            }
         });
         
-        $("#pao_id").dataBind({
-            sqlCode      : "P228" //pao_sel
-           ,text         : "full_name"
-           ,value        : "user_id"
-           ,onChange     : function(d){
-               var _info           = d.data[d.index - 1]
-                   _driver_id         = isUD(_info) ? "" : _info.user_id;
-                //gDriverId = _driver_id;
-           }
-        });
-        
-        $("#gas_station").dataBind({
-             sqlCode    : "G215" // gas_station_sel
-            ,text   : "gas_station_name"
-            ,value  : "gas_station_id"
+        $("#safety_id").dataBind({
+             sqlCode    : "D246" // dd_safety_list_sel
+            ,text       : "safety_name"
+            ,value      : "safety_id"
         });
         
     };
     
-    $("#btnSaveRefuel").click(function () {
-        $("#formRefuel").jsonSubmit({
-             procedure: "refuel_upd"
+    $("#btnSaveSafetyProblem").click(function () {
+        $("#formSafetyProblem").jsonSubmit({
+             procedure: "safety_problems_upd"
             ,isSingleEntry: true
             ,onComplete: function (data) {
                 if(data.isSuccess){
                    if(data.isSuccess===true) zsi.form.showAlert("alert");
                    $("form").removeClass('was-validated');
-                   $("#formRefuel").find("input").val("");
-                   $("#formRefuel").find("textarea").val("");
-                   $("#formRefuel").find("select").val(null).trigger('change');
+                   $("#formSafetyProblem").find("input").val("");
+                   $("#formSafetyProblem").find("textarea").val("");
+                   $("#formSafetyProblem").find("select").val(null).trigger('change');
                    $("#myModal").find("#msg").text("Data successfully saved.");
                    $("#myModal").find("#msg").css("color","green");
                    setTimeout(function(){
                        $("#myModal").modal('toggle');
-                       $("#formRefuel").find("#doc_date").val(new Date());
+                       $("#formSafetyProblem").find("#safety_report_date").val(new Date());
                        modalTxt();
                    },1000);
                 }else{
@@ -96,7 +84,7 @@
            $("#myModal").find("#msg").css("color","#000");
         },1000);
     }
-    
+
     function validations(){
         var forms = document.getElementsByClassName('needs-validation');
     	// Loop over them and prevent submission
@@ -115,11 +103,10 @@
 		}, false);
 	});
   }
-
    
     
     return _public;
     
     
     
-})();            
+})();             

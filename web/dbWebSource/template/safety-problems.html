@@ -1,0 +1,72 @@
+<style>
+    .was-validated .custom-select:invalid + .select2 .select2-selection{
+    border-color: #f30000!important;
+    }
+    .was-validated .custom-select:valid + .select2 .select2-selection{
+        border-color: #1dc9b7!important;
+    }
+    *:focus{
+      outline:0px;
+    }
+</style>
+<div class="panel">
+    <div class="panel-container">
+        <div class="panel-content">  
+            <div role="content" id="tablePSN" >  
+                <div class="widget-body"  id="panel-1"> 
+                    <form id="formSafetyProblem" class="needs-validation" novalidate>  
+            			<input type="hidden" name="safety_report_id" id="safety_report_id">
+                        <div class="row mb-2"> 
+                        	<div class="col-sm-6 col-md-4 col-xs-12">
+                    		    <label for="" class="col-form-label control-label"><b>Safety Report Date</b></label>  
+                                <input type="text" class="form-control form-control-sm pl-2" id="safety_report_date" required  name="safety_report_date" autocomplete="off"/>
+                    		</div>
+                    		<div class="col-sm-6 col-md-4 col-xs-12">
+                    		    <label for="" class="col-form-label control-label"><b>Vehicle</b></label>
+                                <select type="text" class="form-control form-control-sm custom-select select" id="vehicle_id" required  name="vehicle_id" autocomplete="off"></select>
+                    		</div>
+                    		<div class="col-sm-6 col-md-4 col-xs-12">
+                    		    <label for="" class="col-form-label control-label"><b>Safety</b></label>
+                                <select type="text" class="form-control form-control-sm custom-select select" id="safety_id" required  name="safety_id" autocomplete="off"></select>
+                    		</div>
+                    		<div class="col-sm-6 col-md-4 col-xs-12">
+                    		    <label for="" class="col-form-label control-label"><b>Comment</b></label>
+                                <textarea type="text" class="form-control form-control-sm pl-2" id="comments" required  name="comments" autocomplete="off"></textarea>
+                    		</div>
+                    		<div class="col-sm-6 col-md-4 col-xs-12">
+                    		    <label for="" class="col-form-label control-label"><b>Reported By</b></label>
+                                <select type="text" class="form-control form-control-sm custom-select select" id="reported_by" required  name="reported_by" autocomplete="off"></select>
+                    		</div>
+                    	</div>
+                    	<div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">   
+                                <button id="submit" type="submit" class="btn btn-primary btn-sm waves-effect waves-themed" title="Save">
+                                    <i class="far fa-save"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>  
+            </div>     
+        </div>
+    </div>
+</div> 
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body panel" style="margin-bottom:0">
+                <p id="msg">Are you sure you want to save this data?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSaveSafetyProblem" class="btn btn-primary btn-sm">Yes</button>
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>

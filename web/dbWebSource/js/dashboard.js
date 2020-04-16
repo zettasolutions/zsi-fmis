@@ -63,6 +63,16 @@
                     $("#dummyDivSearch").removeClass("hide");
                     displayRepairs(gVehicleId);
                     break;
+                case "#nav-safety-problems":
+                    gActiveTab = "safety-problems";
+                    $("#searchVal").val("");
+                    $("#vehicleDiv").removeClass("hide");
+                    $("#dummyDiv").addClass("hide");
+                    $("#vehicleId").val(gVehicleId).trigger('change');
+                    $("#searchDiv").addClass("hide");
+                    $("#dummyDivSearch").removeClass("hide");
+                    displaySafetyProblems(gVehicleId);
+                    break;
               default:break;
             } 
         }); 
@@ -106,6 +116,7 @@
             	            $("#nav-tab").find("[aria-controls='nav-pms']").hide();
             	            $("#nav-tab").find("[aria-controls='nav-accidents']").hide();
             	            $("#nav-tab").find("[aria-controls='nav-repairs']").hide();
+            	            $("#nav-tab").find("[aria-controls='nav-safety-problems']").hide();
         	            }
         	        _zRow.unbind().click(function(){
         	            var _self=this;
@@ -119,6 +130,7 @@
             	            $("#nav-tab").find("[aria-controls='nav-pms']").show();
             	            $("#nav-tab").find("[aria-controls='nav-accidents']").show();
             	            $("#nav-tab").find("[aria-controls='nav-repairs']").show();
+            	            $("#nav-tab").find("[aria-controls='nav-safety-problems']").show();
             	            setTimeout(function(){
             	                $("#vehicleId").val(_vehicleId).trigger('change');
             	            }, 200);
@@ -141,7 +153,7 @@
              sqlCode            : "R216" //refuel_transactions_sel
             ,parameters         : {vehicle_id: vehicle_id,search_val:(searchVal ? searchVal : "")}
             ,height             : $(window).height() - 235
-            ,blankRowsLimit     : 5
+            //,blankRowsLimit     : 5
             ,dataRows           : [
                     {text:cb        ,width:25              ,style : "text-align:left"
                         ,onRender  :  function(d){ return app.bs({name:"refuel_id"   ,type:"hidden"      ,value: app.svn(d,"refuel_id")}) 
@@ -221,7 +233,7 @@
              sqlCode            : "A221" //accident_transactions_sel
             ,parameters         : {vehicle_id: vehicle_id,search_val:(searchVal ? searchVal : "")}
             ,height             : $(window).height() - 235
-            ,blankRowsLimit     : 5
+            //,blankRowsLimit     : 5
             ,dataRows           : [
                     {text:cb        ,width:25              ,style : "text-align:left"
                         ,onRender  :  function(d){ return app.bs({name:"accident_id"   ,type:"hidden"      ,value: svn (d,"accident_id")}) 
@@ -326,7 +338,7 @@
              sqlCode            : "V240" //vehicle_repairs_sel
             ,parameters         : {vehicle_id: vehicle_id}
             ,height             : $(window).height() - 235
-            ,blankRowsLimit     : 5
+            //,blankRowsLimit     : 5
             ,dataRows           : [
                     {text:cb                                                            ,width:25           ,style : "text-align:left"
                         ,onRender  :  function(d){ return app.bs({name:"repair_id"      ,type:"hidden"      ,value: svn (d,"repair_id")}) 
@@ -352,6 +364,58 @@
                     ,{text:"Repair Location"                ,type:"input"            ,name:"repair_location"            ,width:250       ,style:"text-align:left"}
                     ,{text:"Comment"                        ,type:"input"            ,name:"comment"                    ,width:150       ,style:"text-align:left"}
                     ,{text:"Status"                         ,type:"select"           ,name:"status_id"                  ,width:150       ,style:"text-align:left"}
+                ] 
+            ,onComplete : function(d){ 
+                var _zRow = this.find(".zRow");
+                this.find("[name='cbFilter1']").setCheckEvent("#gridAccident input[name='cb']");   
+                _zRow.find("[name='repair_date']").datepicker({pickTime  : false , autoclose : true , todayHighlight: true}); 
+                _zRow.find("[name='pms_type_id']").dataBind({
+                     sqlCode      : "D235" //dd_pms_type_sel
+                    ,text         : "pms_desc"
+                    ,value        : "pms_type_id"
+                });
+                
+                _zRow.find("[name='status_id']").dataBind({
+                     sqlCode      : "S122" //statuses_sel
+                    ,text         : "status_desc"
+                    ,value        : "status_code"
+                });
+                 
+            } 
+        });
+    }
+    
+    function displaySafetyProblems(vehicle_id,searchVal){  
+        var cb = app.bs({name:"cbFilter1",type:"checkbox"}); 
+        $("#gridSafetyProblems").dataBind({
+             sqlCode            : "S247" //safety_problems_sel
+            ,parameters         : {vehicle_id: vehicle_id}
+            ,height             : $(window).height() - 235
+            //,blankRowsLimit     : 5
+            ,dataRows           : [
+                    {text:cb                                                            ,width:25           ,style : "text-align:left"
+                        ,onRender  :  function(d){ return app.bs({name:"safety_report_id"      ,type:"hidden"      ,value: svn (d,"safety_report_id")}) 
+                                        + app.bs({name:"is_edited"                      ,type:"hidden"      ,value: svn(d,"is_edited")}) 
+                                        +  (d !==null ? app.bs({name:"cb",type:"checkbox"}) : "" );
+                                        
+                        }
+                    
+                    }    
+                    ,{text:"Safety Report Date"                       ,width:120       ,style:"text-align:left"
+                        ,onRender   : function(d){ 
+                            return app.bs({name:"safety_report_date"     ,type:"input"      ,value: svn(d,"safety_report_date").toShortDate()})
+                                 + app.bs({name:"vehicle_id"             ,type:"hidden"      ,value: vehicle_id});
+                        }
+                    }
+                    ,{text:"Safety"                         ,type:"input"            ,name:"safety_id"                  ,width:100       ,style:"text-align:left"}
+                    ,{text:"Comment"                        ,type:"input"            ,name:"comments"                   ,width:150       ,style:"text-align:left"}
+                    ,{text:"Reported By"                    ,type:"select"           ,name:"reported_by"                ,width:150       ,style:"text-align:left"}
+                    ,{text:"Active?"                        ,type:"yesno"            ,name:"is_active"                  ,width:60        ,style:"text-align:left"     ,defaultValue:"Y"}
+                    ,{text:"Closed Date"                    ,width:100               ,style:"text-align:left"
+                        ,onRender   : function(d){ 
+                            return app.bs({name:"closed_date"     ,type:"input"      ,value: svn(d,"closed_date").toShortDate()});
+                        }
+                    }
                 ] 
             ,onComplete : function(d){ 
                 var _zRow = this.find(".zRow");
@@ -567,4 +631,4 @@
         $("#nav-tab").find("[aria-controls='nav-vehicles']").hide();
     });
     
-})();       
+})();        
