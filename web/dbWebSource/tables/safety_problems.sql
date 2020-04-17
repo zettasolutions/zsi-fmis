@@ -1,5 +1,5 @@
 CREATE TABLE safety_problems(
-safety_report_id	INT	NOT NULL
+safety_report_id	INT IDENTITY(1,1)	NOT NULL
 ,safety_report_date	DATE	NULL
 ,vehicle_id	INT	NULL
 ,safety_id	INT	NULL
