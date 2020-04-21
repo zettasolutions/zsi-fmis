@@ -2,7 +2,7 @@
     <div class="panel-container">
         <div class="panel-content">
             <div class="row">
-                <div class="col-12 col-xl-7 col-md-7 col-sm-7">
+                <div class="col-12 col-xl-12 col-md-12 col-sm-12">
                     <nav>
                       <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active"      data-toggle="tab" href="#nav-vehicles" role="tab" aria-controls="nav-vehicles">Vehicles</a>
@@ -11,11 +11,12 @@
                         <a class="nav-item nav-link hide"        data-toggle="tab" href="#nav-accidents" role="tab" aria-controls="nav-accidents">Accidents</a>
                         <a class="nav-item nav-link hide"        data-toggle="tab" href="#nav-repairs" role="tab" aria-controls="nav-repairs">Repairs</a>
                         <a class="nav-item nav-link hide"        data-toggle="tab" href="#nav-safety-problems" role="tab" aria-controls="nav-safety-problems">Safety Problems</a>
+                        <a class="nav-item nav-link hide"        data-toggle="tab" href="#nav-parts-replacements" role="tab" aria-controls="nav-parts-replacements">Parts Replacements</a>
                       </div>
                     </nav>
                 </div>
-                <div id="dummyDiv" class="col-sm-1 col-md-1 col-xl-1"></div>
-                <div id="dummyDivSearch" class="col-md-2 col-xl-2 col-sm-2 hide"></div>
+                <div id="dummyDiv" class="col-sm-8 col-md-8 col-xl-8"></div>
+                <div id="dummyDivSearch" class="col-md-9 col-xl-10 col-sm-2 hide"></div>
                 <div id="vehicleDiv" class="col-sm-3 col-md-3 col-xl-2 col-12 mt-1 hide"> 
                     <div class="input-group" style="flex-wrap: inherit !important;">
                         <select class="form-control form-control-sm filter-oem" name="vehicleId" id="vehicleId"></select>
@@ -148,6 +149,25 @@
                                         <i class="far fa-save"></i> Save
                                     </button>-->
                                      <button type="button" class="btn btn-primary btn-sm" id="btnDeleteSafetyProblems" data-toggle="tooltip" title="Delete">
+                                    	  <i class="fas fa-trash"></i> Delete
+                                    </button>      
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="nav-parts-replacements">
+                    <div class="zContainer">
+                        <div class="row"> 
+                            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+                                <div id="gridPartsReplacements" class="zGrid mb-1"></div> 
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+                                <div class="button-group">   
+                                    <!--<button type="button" class="btn btn-primary btn-sm" id="btnSaveRepairs" title="Save">
+                                        <i class="far fa-save"></i> Save
+                                    </button>-->
+                                     <button type="button" class="btn btn-primary btn-sm" id="btnDeletePartsReplacements" data-toggle="tooltip" title="Delete">
                                     	  <i class="fas fa-trash"></i> Delete
                                     </button>      
                                 </div>

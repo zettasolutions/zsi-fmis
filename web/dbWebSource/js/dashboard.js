@@ -73,6 +73,16 @@
                     $("#dummyDivSearch").removeClass("hide");
                     displaySafetyProblems(gVehicleId);
                     break;
+                case "#nav-parts-replacements":
+                    gActiveTab = "parts-replacements";
+                    $("#searchVal").val("");
+                    $("#vehicleDiv").removeClass("hide");
+                    $("#dummyDiv").addClass("hide");
+                    $("#vehicleId").val(gVehicleId).trigger('change');
+                    $("#searchDiv").addClass("hide");
+                    $("#dummyDivSearch").removeClass("hide");
+                    displayPartsReplacements(gVehicleId);
+                    break;
               default:break;
             } 
         }); 
@@ -95,7 +105,7 @@
         $("#gridVehicles").dataBind({
              sqlCode            : "T237" //transaction_vehicles_sel
             ,parameters         : {search_val:(searchVal ? searchVal : "")}
-	        ,height             : $(window).height() - 241 
+	        ,height             : $(window).height() - 271 
             //,blankRowsLimit     : 5
             ,dataRows           : [
                     {text:"Plate No"                                                                                    ,width:200       ,style:"text-align:left"
@@ -117,6 +127,7 @@
             	            $("#nav-tab").find("[aria-controls='nav-accidents']").hide();
             	            $("#nav-tab").find("[aria-controls='nav-repairs']").hide();
             	            $("#nav-tab").find("[aria-controls='nav-safety-problems']").hide();
+            	            $("#nav-tab").find("[aria-controls='nav-parts-replacements']").hide();
         	            }
         	        _zRow.unbind().click(function(){
         	            var _self=this;
@@ -131,6 +142,7 @@
             	            $("#nav-tab").find("[aria-controls='nav-accidents']").show();
             	            $("#nav-tab").find("[aria-controls='nav-repairs']").show();
             	            $("#nav-tab").find("[aria-controls='nav-safety-problems']").show();
+            	            $("#nav-tab").find("[aria-controls='nav-parts-replacements']").show();
             	            setTimeout(function(){
             	                $("#vehicleId").val(_vehicleId).trigger('change');
             	            }, 200);
@@ -152,7 +164,7 @@
         $("#gridRefuel").dataBind({
              sqlCode            : "R216" //refuel_transactions_sel
             ,parameters         : {vehicle_id: vehicle_id,search_val:(searchVal ? searchVal : "")}
-            ,height             : $(window).height() - 235
+            ,height             : $(window).height() - 301
             //,blankRowsLimit     : 5
             ,dataRows           : [
                     {text:cb        ,width:25              ,style : "text-align:left"
@@ -232,7 +244,7 @@
         $("#gridAccidents").dataBind({
              sqlCode            : "A221" //accident_transactions_sel
             ,parameters         : {vehicle_id: vehicle_id,search_val:(searchVal ? searchVal : "")}
-            ,height             : $(window).height() - 235
+            ,height             : $(window).height() - 301
             //,blankRowsLimit     : 5
             ,dataRows           : [
                     {text:cb        ,width:25              ,style : "text-align:left"
@@ -285,7 +297,7 @@
         $("#gridPMS").dataBind({
              sqlCode            : "V239" //vehicle_pms_sel
             ,parameters         : {vehicle_id: vehicle_id}
-            ,height             : $(window).height() - 241
+            ,height             : $(window).height() - 271
             ,dataRows           : [
                     {text:cb                                                            ,width:25           ,style : "text-align:left"
                         ,onRender  :  function(d){ return app.bs({name:"pms_id"         ,type:"hidden"      ,value: svn (d,"repair_id")}) 
@@ -337,7 +349,7 @@
         $("#gridRepairs").dataBind({
              sqlCode            : "V240" //vehicle_repairs_sel
             ,parameters         : {vehicle_id: vehicle_id}
-            ,height             : $(window).height() - 235
+            ,height             : $(window).height() - 301
             //,blankRowsLimit     : 5
             ,dataRows           : [
                     {text:cb                                                            ,width:25           ,style : "text-align:left"
@@ -390,7 +402,7 @@
         $("#gridSafetyProblems").dataBind({
              sqlCode            : "S247" //safety_problems_sel
             ,parameters         : {vehicle_id: vehicle_id}
-            ,height             : $(window).height() - 235
+            ,height             : $(window).height() - 301
             //,blankRowsLimit     : 5
             ,dataRows           : [
                     {text:cb                                                            ,width:25           ,style : "text-align:left"
@@ -432,6 +444,43 @@
                     ,text         : "status_desc"
                     ,value        : "status_code"
                 });
+                 
+            } 
+        });
+    }
+    
+    function displayPartsReplacements(vehicle_id){  
+        var cb = app.bs({name:"cbFilter1",type:"checkbox"}); 
+        $("#gridPartsReplacements").dataBind({
+             sqlCode            : "P249" //part_replacements_sel
+            ,parameters         : {vehicle_id: vehicle_id}
+            ,height             : $(window).height() - 301
+            //,blankRowsLimit     : 5
+            ,dataRows           : [
+                    {text:cb                                                            ,width:25           ,style : "text-align:left"
+                        ,onRender  :  function(d){ return app.bs({name:"replacement_id"      ,type:"hidden"      ,value: svn (d,"replacement_id")}) 
+                                        + app.bs({name:"is_edited"                      ,type:"hidden"      ,value: svn(d,"is_edited")}) 
+                                        +  (d !==null ? app.bs({name:"cb",type:"checkbox"}) : "" );
+                                        
+                        }
+                    
+                    }    
+                    ,{text:"Replacement Date"                       ,width:120       ,style:"text-align:left"
+                        ,onRender   : function(d){ 
+                            return app.bs({name:"replacement_date"     ,type:"input"      ,value: svn(d,"replacement_date").toShortDate()})
+                                 + app.bs({name:"vehicle_id"             ,type:"hidden"      ,value: vehicle_id});
+                        }
+                    }
+                    ,{text:"Part"                           ,type:"select"           ,name:"part_id"                    ,width:100       ,style:"text-align:left"}
+                    ,{text:"Part Quantity"                  ,type:"input"            ,name:"part_qty"                   ,width:150       ,style:"text-align:left"}
+                    ,{text:"Unit"                           ,type:"select"           ,name:"unit_id"                    ,width:150       ,style:"text-align:left"}
+                    
+                ] 
+            ,onComplete : function(d){ 
+                var _zRow = this.find(".zRow");
+                this.find("[name='cbFilter1']").setCheckEvent("#gridPartsReplacements input[name='cb']");   
+                _zRow.find("[name='repair_date']").datepicker({pickTime  : false , autoclose : true , todayHighlight: true}); 
+                
                  
             } 
         });
@@ -631,4 +680,4 @@
         $("#nav-tab").find("[aria-controls='nav-vehicles']").hide();
     });
     
-})();        
+})();         
