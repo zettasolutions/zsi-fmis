@@ -29,7 +29,7 @@
                     $("#vehicleDiv").removeClass("hide");
                     $("#dummyDiv").addClass("hide");
                     $("#vehicleId").val(gVehicleId).trigger('change');
-                    $("#searchDiv").addClass("hide");
+                    //$("#searchDiv").addClass("hide");
                     $("#dummyDivSearch").removeClass("hide");
                     displayRefuelTransactions(gVehicleId);
                     break;
@@ -39,7 +39,7 @@
                     $("#vehicleDiv").removeClass("hide");
                     $("#dummyDiv").addClass("hide");
                     $("#vehicleId").val(gVehicleId).trigger('change');
-                    $("#searchDiv").addClass("hide");
+                    //$("#searchDiv").addClass("hide");
                     $("#dummyDivSearch").removeClass("hide");
                     displayPMS(gVehicleId);
                     break;
@@ -49,7 +49,7 @@
                     $("#vehicleDiv").removeClass("hide");
                     $("#dummyDiv").addClass("hide");
                     $("#vehicleId").val(gVehicleId).trigger('change');
-                    $("#searchDiv").addClass("hide");
+                    //$("#searchDiv").addClass("hide");
                     $("#dummyDivSearch").removeClass("hide");
                     displayAccidentTransactions(gVehicleId);
                     break;
@@ -59,7 +59,7 @@
                     $("#vehicleDiv").removeClass("hide");
                     $("#dummyDiv").addClass("hide");
                     $("#vehicleId").val(gVehicleId).trigger('change');
-                    $("#searchDiv").addClass("hide");
+                    //$("#searchDiv").addClass("hide");
                     $("#dummyDivSearch").removeClass("hide");
                     displayRepairs(gVehicleId);
                     break;
@@ -69,7 +69,7 @@
                     $("#vehicleDiv").removeClass("hide");
                     $("#dummyDiv").addClass("hide");
                     $("#vehicleId").val(gVehicleId).trigger('change');
-                    $("#searchDiv").addClass("hide");
+                    //$("#searchDiv").addClass("hide");
                     $("#dummyDivSearch").removeClass("hide");
                     displaySafetyProblems(gVehicleId);
                     break;
@@ -79,7 +79,7 @@
                     $("#vehicleDiv").removeClass("hide");
                     $("#dummyDiv").addClass("hide");
                     $("#vehicleId").val(gVehicleId).trigger('change');
-                    $("#searchDiv").addClass("hide");
+                    //$("#searchDiv").addClass("hide");
                     $("#dummyDivSearch").removeClass("hide");
                     displayPartsReplacements(gVehicleId);
                     break;
@@ -162,9 +162,9 @@
     function displayRefuelTransactions(vehicle_id,searchVal){  
         var cb = app.bs({name:"cbFilter1",type:"checkbox"}); 
         $("#gridRefuel").dataBind({
-             sqlCode            : "R216" //refuel_transactions_sel
+             sqlCode            : "D260" //dashboard_refuel_transactions_sel
             ,parameters         : {vehicle_id: vehicle_id,search_val:(searchVal ? searchVal : "")}
-            ,height             : $(window).height() - 301
+            ,height             : $(window).height() - 271
             //,blankRowsLimit     : 5
             ,dataRows           : [
                     {text:cb        ,width:25              ,style : "text-align:left"
@@ -175,17 +175,17 @@
                         }
                     
                     }   
-                    ,{text:"Doc No"                         ,type:"input"          ,name:"doc_no"                    ,width:100       ,style:"text-align:left"}
-                    ,{text:"Doc Date"                       ,width:100       ,style:"text-align:left"
+                    ,{text:"Document No"                         ,type:"input"          ,name:"doc_no"                    ,width:100       ,style:"text-align:left"}
+                    ,{text:"Document Date"                       ,width:100       ,style:"text-align:left"
                         ,onRender   : function(d){ 
                             return app.bs({name:"doc_date"     ,type:"input"      ,value: app.svn(d,"doc_date").toShortDate()})
                                  + app.bs({name:"vehicle_id"   ,type:"hidden"     ,value: vehicle_id}); 
                         }
                     } 
-                    ,{text:"Driver"                         ,type:"select"          ,name:"driver_id"                 ,width:150       ,style:"text-align:left"}
-                    ,{text:"Pao"                            ,type:"select"          ,name:"pao_id"                    ,width:150       ,style:"text-align:left"}
-                    ,{text:"Odo Reading"                    ,type:"input"           ,name:"odo_reading"               ,width:150       ,style:"text-align:left"}
-                    ,{text:"Gas Station"                    ,type:"select"          ,name:"gas_station_id"            ,width:100       ,style:"text-align:left"}
+                    ,{text:"Driver"                         ,type:"input"           ,name:"driver"                    ,width:150       ,style:"text-align:left"}
+                    ,{text:"Pao"                            ,type:"input"           ,name:"pao"                       ,width:150       ,style:"text-align:left"}
+                    ,{text:"Odo Reading"                    ,type:"input"           ,name:"odo_reading"               ,width:100       ,style:"text-align:left"}
+                    ,{text:"Gas Station"                    ,type:"input"           ,name:"gas_station_name"          ,width:100       ,style:"text-align:left"}
                     ,{text:"Number of Liters"                                                                         ,width:100       ,style:"text-align:center"
                         ,onRender: function(d){
                             return app.bs({name: "no_liters"             ,type: "input"     ,value: app.svn(d,"no_liters")         ,style : "text-align:center;"});
@@ -212,29 +212,8 @@
             ,onComplete : function(d){ 
                 var _zRow = this.find(".zRow");
                 /*_zRow.find("input").prop('required',true);*/
-                this.find("[name='cbFilter1']").setCheckEvent("#gridRefuel input[name='cb']");   
-                _zRow.find("[name='posted_date']").datepicker({pickTime  : false , autoclose : true , todayHighlight: true});
-                _zRow.find("[name='doc_date']").datepicker({pickTime  : false, autoclose : true, todayHighlight: true});
-                _zRow.find("[name='gas_station_id']").dataBind({
-                     sqlCode    : "G215" // gas_station_sel
-                    ,text   : "gas_station_name"
-                    ,value  : "gas_station_id"
-                });
-                _zRow.find("[name='vehicle_id']").dataBind({
-                     sqlCode    : "D231" // dd_vehicle_sel
-                    ,text   : "plate_no"
-                    ,value  : "vehicle_id"
-                });
-                _zRow.find("[name='driver_id']").dataBind({
-                     sqlCode    : "D227" // drivers_sel
-                    ,text   : "full_name"
-                    ,value  : "user_id"
-                });
-                _zRow.find("[name='pao_id']").dataBind({
-                     sqlCode    : "P228" // pao_sel
-                    ,text   : "full_name"
-                    ,value  : "user_id"
-                });
+                this.find("[name='cbFilter1']").setCheckEvent("#gridRefuel input[name='cb']");
+                this.find("input").attr("readonly", true);
             } 
         });
     }
@@ -242,9 +221,9 @@
     function displayAccidentTransactions(vehicle_id,searchVal){  
         var cb = app.bs({name:"cbFilter1",type:"checkbox"}); 
         $("#gridAccidents").dataBind({
-             sqlCode            : "A221" //accident_transactions_sel
+             sqlCode            : "D258" //dashboard_accident_transactions_sel
             ,parameters         : {vehicle_id: vehicle_id,search_val:(searchVal ? searchVal : "")}
-            ,height             : $(window).height() - 301
+            ,height             : $(window).height() - 271
             //,blankRowsLimit     : 5
             ,dataRows           : [
                     {text:cb        ,width:25              ,style : "text-align:left"
@@ -261,33 +240,17 @@
                                  + app.bs({name:"vehicle_id"        ,type:"hidden"     ,value: vehicle_id});
                         }
                     } 
-                    ,{text:"Driver"                         ,type:"select"           ,name:"driver_id"                  ,width:150       ,style:"text-align:left"}
-                    ,{text:"Pao"                            ,type:"select"           ,name:"pao_id"                     ,width:150       ,style:"text-align:left"}
-                    ,{text:"Accident Type"                  ,type:"input"            ,name:"accident_type_id"           ,width:150       ,style:"text-align:left"}
+                    ,{text:"Driver"                         ,type:"input"            ,name:"driver"                     ,width:150       ,style:"text-align:left"}
+                    ,{text:"Pao"                            ,type:"input"            ,name:"pao"                        ,width:150       ,style:"text-align:left"}
+                    ,{text:"Accident Type"                  ,type:"input"            ,name:"accident_type"              ,width:150       ,style:"text-align:left"}
                     ,{text:"Accident Level"                 ,type:"input"            ,name:"accident_level"             ,width:150       ,style:"text-align:left"}
-                    ,{text:"Error Type"                     ,type:"input"            ,name:"error_type_id"              ,width:150       ,style:"text-align:left"}
+                    ,{text:"Error Type"                     ,type:"input"            ,name:"error_type"                 ,width:150       ,style:"text-align:left"}
                     ,{text:"Comments"                       ,type:"input"            ,name:"comments"                   ,width:150       ,style:"text-align:left"} 
                 ] 
             ,onComplete : function(d){ 
                 var _zRow = this.find(".zRow");
                 this.find("[name='cbFilter1']").setCheckEvent("#gridAccident input[name='cb']");   
-                _zRow.find("[name='accident_date']").datepicker({pickTime  : false , autoclose : true , todayHighlight: true}); 
-                _zRow.find("[name='vehicle_id']").dataBind({
-                     sqlCode    : "D231" // dd_vehicle_sel
-                    ,text   : "plate_no"
-                    ,value  : "vehicle_id"
-                });
-                _zRow.find("[name='driver_id']").dataBind({
-                     sqlCode    : "D227" // drivers_sel
-                    ,text   : "full_name"
-                    ,value  : "user_id"
-                });
-                _zRow.find("[name='pao_id']").dataBind({
-                     sqlCode    : "P228" // pao_sel
-                    ,text   : "full_name"
-                    ,value  : "user_id"
-                });
-                 
+                this.find("input").attr("readonly", true);
             } 
         });
     }
@@ -295,8 +258,8 @@
     function displayPMS(vehicle_id,searchVal){  
         var cb = app.bs({name:"cbFilter1",type:"checkbox"}); 
         $("#gridPMS").dataBind({
-             sqlCode            : "V239" //vehicle_pms_sel
-            ,parameters         : {vehicle_id: vehicle_id}
+             sqlCode            : "D262" //dashboard_vehicle_pms_sel
+            ,parameters         : {vehicle_id: vehicle_id,search_val:(searchVal ? searchVal : "")}
             ,height             : $(window).height() - 271
             ,dataRows           : [
                     {text:cb                                                            ,width:25           ,style : "text-align:left"
@@ -314,7 +277,7 @@
                     }
                     ,{text:"PMS Type"                                                   ,width:120       ,style:"text-align:left"
                         ,onRender   : function(d){ 
-                            return app.bs({name:"pms_type_id"       ,type:"select"      ,value: svn(d,"pms_type_id")})
+                            return app.bs({name:"pms_desc"          ,type:"input"      ,value: svn(d,"pms_desc")})
                                  + app.bs({name:"vehicle_id"        ,type:"hidden"      ,value: vehicle_id});
                         }
                     }
@@ -322,23 +285,12 @@
                     ,{text:"PM Amount"                      ,type:"input"            ,name:"pm_amount"                  ,width:90        ,style:"text-align:right"}
                     ,{text:"PM Location"                    ,type:"input"            ,name:"pm_location"                ,width:250       ,style:"text-align:left"}
                     ,{text:"Comment"                        ,type:"input"            ,name:"comment"                    ,width:150       ,style:"text-align:left"}
-                    ,{text:"Status"                         ,type:"select"           ,name:"status_id"                  ,width:150       ,style:"text-align:left"}
+                    ,{text:"Status"                         ,type:"input"            ,name:"status_id"                  ,width:150       ,style:"text-align:left"}
                 ] 
             ,onComplete : function(d){ 
                 var _zRow = this.find(".zRow");
                 this.find("[name='cbFilter1']").setCheckEvent("#gridAccident input[name='cb']");   
-                _zRow.find("[name='pms_date']").datepicker({pickTime  : false , autoclose : true , todayHighlight: true}); 
-                _zRow.find("[name='pms_type_id']").dataBind({
-                     sqlCode      : "D235" //dd_pms_type_sel
-                    ,text         : "pms_desc"
-                    ,value        : "pms_type_id"
-                });
-                
-                _zRow.find("[name='status_id']").dataBind({
-                     sqlCode      : "S122" //statuses_sel
-                    ,text         : "status_desc"
-                    ,value        : "status_code"
-                });
+                this.find("input").attr("readonly", true);
                  
             } 
         });
@@ -347,9 +299,9 @@
     function displayRepairs(vehicle_id,searchVal){  
         var cb = app.bs({name:"cbFilter1",type:"checkbox"}); 
         $("#gridRepairs").dataBind({
-             sqlCode            : "V240" //vehicle_repairs_sel
-            ,parameters         : {vehicle_id: vehicle_id}
-            ,height             : $(window).height() - 301
+             sqlCode            : "D263" //dashboard_vehicle_repairs_sel
+            ,parameters         : {vehicle_id: vehicle_id,search_val:(searchVal ? searchVal : "")}
+            ,height             : $(window).height() - 271
             //,blankRowsLimit     : 5
             ,dataRows           : [
                     {text:cb                                                            ,width:25           ,style : "text-align:left"
@@ -367,7 +319,7 @@
                     }
                     ,{text:"PMS Type"                                                   ,width:120       ,style:"text-align:left"
                         ,onRender   : function(d){ 
-                            return app.bs({name:"pms_type_id"       ,type:"select"      ,value: svn(d,"pms_type_id")})
+                            return app.bs({name:"pms_desc"          ,type:"input"       ,value: svn(d,"pms_desc")})
                                  + app.bs({name:"vehicle_id"        ,type:"hidden"      ,value: vehicle_id});
                         }
                     }
@@ -375,23 +327,12 @@
                     ,{text:"Repair Amount"                  ,type:"input"            ,name:"repair_amount"              ,width:90        ,style:"text-align:right"}
                     ,{text:"Repair Location"                ,type:"input"            ,name:"repair_location"            ,width:250       ,style:"text-align:left"}
                     ,{text:"Comment"                        ,type:"input"            ,name:"comment"                    ,width:150       ,style:"text-align:left"}
-                    ,{text:"Status"                         ,type:"select"           ,name:"status_id"                  ,width:150       ,style:"text-align:left"}
+                    ,{text:"Status"                         ,type:"input"            ,name:"status_id"                  ,width:150       ,style:"text-align:left"}
                 ] 
             ,onComplete : function(d){ 
                 var _zRow = this.find(".zRow");
                 this.find("[name='cbFilter1']").setCheckEvent("#gridAccident input[name='cb']");   
-                _zRow.find("[name='repair_date']").datepicker({pickTime  : false , autoclose : true , todayHighlight: true}); 
-                _zRow.find("[name='pms_type_id']").dataBind({
-                     sqlCode      : "D235" //dd_pms_type_sel
-                    ,text         : "pms_desc"
-                    ,value        : "pms_type_id"
-                });
-                
-                _zRow.find("[name='status_id']").dataBind({
-                     sqlCode      : "S122" //statuses_sel
-                    ,text         : "status_desc"
-                    ,value        : "status_code"
-                });
+                this.find("input").attr("readonly", true);
                  
             } 
         });
@@ -400,9 +341,9 @@
     function displaySafetyProblems(vehicle_id,searchVal){  
         var cb = app.bs({name:"cbFilter1",type:"checkbox"}); 
         $("#gridSafetyProblems").dataBind({
-             sqlCode            : "S247" //safety_problems_sel
-            ,parameters         : {vehicle_id: vehicle_id}
-            ,height             : $(window).height() - 301
+             sqlCode            : "D261" //dashboard_safety_problems_sel
+            ,parameters         : {vehicle_id: vehicle_id,search_val:(searchVal ? searchVal : "")}
+            ,height             : $(window).height() - 271
             //,blankRowsLimit     : 5
             ,dataRows           : [
                     {text:cb                                                            ,width:25           ,style : "text-align:left"
@@ -419,10 +360,10 @@
                                  + app.bs({name:"vehicle_id"             ,type:"hidden"      ,value: vehicle_id});
                         }
                     }
-                    ,{text:"Safety"                         ,type:"input"            ,name:"safety_id"                  ,width:100       ,style:"text-align:left"}
+                    ,{text:"Safety"                         ,type:"input"            ,name:"safety_name"                ,width:100       ,style:"text-align:left"}
                     ,{text:"Comment"                        ,type:"input"            ,name:"comments"                   ,width:150       ,style:"text-align:left"}
-                    ,{text:"Reported By"                    ,type:"select"           ,name:"reported_by"                ,width:150       ,style:"text-align:left"}
-                    ,{text:"Active?"                        ,type:"yesno"            ,name:"is_active"                  ,width:60        ,style:"text-align:left"     ,defaultValue:"Y"}
+                    ,{text:"Reported By"                    ,type:"input"            ,name:"reported_by"                ,width:150       ,style:"text-align:left"}
+                    //,{text:"Active?"                        ,type:"input"            ,name:"is_active"                  ,width:60        ,style:"text-align:left"     ,defaultValue:"Y"}
                     ,{text:"Closed Date"                    ,width:100               ,style:"text-align:left"
                         ,onRender   : function(d){ 
                             return app.bs({name:"closed_date"     ,type:"input"      ,value: svn(d,"closed_date").toShortDate()});
@@ -432,18 +373,8 @@
             ,onComplete : function(d){ 
                 var _zRow = this.find(".zRow");
                 this.find("[name='cbFilter1']").setCheckEvent("#gridAccident input[name='cb']");   
-                _zRow.find("[name='repair_date']").datepicker({pickTime  : false , autoclose : true , todayHighlight: true}); 
-                _zRow.find("[name='pms_type_id']").dataBind({
-                     sqlCode      : "D235" //dd_pms_type_sel
-                    ,text         : "pms_desc"
-                    ,value        : "pms_type_id"
-                });
+                this.find("input").attr("readonly", true); 
                 
-                _zRow.find("[name='status_id']").dataBind({
-                     sqlCode      : "S122" //statuses_sel
-                    ,text         : "status_desc"
-                    ,value        : "status_code"
-                });
                  
             } 
         });
@@ -452,9 +383,9 @@
     function displayPartsReplacements(vehicle_id){  
         var cb = app.bs({name:"cbFilter1",type:"checkbox"}); 
         $("#gridPartsReplacements").dataBind({
-             sqlCode            : "P249" //part_replacements_sel
-            ,parameters         : {vehicle_id: vehicle_id}
-            ,height             : $(window).height() - 301
+             sqlCode            : "D259" //dashboard_part_replacements_sel
+            ,parameters         : {vehicle_id: vehicle_id,search_val:(searchVal ? searchVal : "")}
+            ,height             : $(window).height() - 271
             //,blankRowsLimit     : 5
             ,dataRows           : [
                     {text:cb                                                            ,width:25           ,style : "text-align:left"
@@ -467,91 +398,26 @@
                     }    
                     ,{text:"Replacement Date"                       ,width:120       ,style:"text-align:left"
                         ,onRender   : function(d){ 
-                            return app.bs({name:"replacement_date"     ,type:"input"      ,value: svn(d,"replacement_date").toShortDate()})
+                            return app.bs({name:"replacement_date"       ,type:"input"       ,value: svn(d,"replacement_date").toShortDate()})
                                  + app.bs({name:"vehicle_id"             ,type:"hidden"      ,value: vehicle_id});
                         }
                     }
-                    ,{text:"Part"                           ,type:"select"           ,name:"part_id"                    ,width:100       ,style:"text-align:left"}
+                    ,{text:"Part"                           ,type:"select"           ,name:"part_desc"                  ,width:100       ,style:"text-align:left"}
                     ,{text:"Part Quantity"                  ,type:"input"            ,name:"part_qty"                   ,width:150       ,style:"text-align:left"}
-                    ,{text:"Unit"                           ,type:"select"           ,name:"unit_id"                    ,width:150       ,style:"text-align:left"}
+                    ,{text:"Unit"                           ,type:"select"           ,name:"unit_name"                  ,width:150       ,style:"text-align:left"}
                     
                 ] 
             ,onComplete : function(d){ 
                 var _zRow = this.find(".zRow");
                 this.find("[name='cbFilter1']").setCheckEvent("#gridPartsReplacements input[name='cb']");   
-                _zRow.find("[name='repair_date']").datepicker({pickTime  : false , autoclose : true , todayHighlight: true}); 
+                this.find("input").attr("readonly", true); 
                 
                  
             } 
         });
     }
         
-    function displayInactiveVehicles(vehicle_maker_id){
-         var cb = app.bs({name:"cbFilter2",type:"checkbox"});
-         $("#gridInactiveVehicles").dataBind({
-    	     sqlCode            : "V232" //vehicles_sel
-            ,parameters         : {vehicle_maker_id: vehicle_maker_id,is_active: "N"}
-	        ,height             : 360 
-            ,dataRows           : [
-                    {text:cb        ,width:25              ,style : "text-align:left"
-                        ,onRender  :  function(d){ 
-                                    return app.bs({name:"vehicle_id"               ,type:"hidden"      ,value: app.svn(d,"vehicle_id")}) 
-                                         + app.bs({name:"is_edited"              ,type:"hidden"      ,value: app.svn(d,"is_edited")})
-                                         + (d !==null ? app.bs({name:"cb",type:"checkbox"}) : "" );
-                                        
-                        }
-                    
-                    } 
-                    ,{text:"Plate No"                                                           ,width:240       ,style:"text-align:left"
-                        ,onRender: function(d){ 
-                            return app.bs({name:"plate_no"                  ,type:"input"       ,value: app.svn(d,"plate_no")})
-                                 + app.bs({name:"conduction_no"             ,type:"hidden"      ,value: app.svn(d,"conduction_no")})
-                                 + app.bs({name:"chassis_no"                ,type:"hidden"      ,value: app.svn(d,"chassis_no")})
-                                 + app.bs({name:"engine_no"                 ,type:"hidden"      ,value: app.svn(d,"engine_no")})
-                                 + app.bs({name:"date_acquired"             ,type:"hidden"      ,value: app.svn(d,"date_acquired").toShortDate()})
-                                 + app.bs({name:"exp_registration_date"     ,type:"hidden"      ,value: app.svn(d,"exp_registration_date").toShortDate()})
-                                 + app.bs({name:"exp_insurance_date"        ,type:"hidden"      ,value: app.svn(d,"exp_insurance_date").toShortDate()})
-                                 + app.bs({name:"vehicle_maker_id"          ,type:"hidden"      ,value: app.svn(d,"vehicle_maker_id")})
-                                 + app.bs({name:"odometer_reading"          ,type:"hidden"      ,value: app.svn(d,"odometer_reading")});
-                
-                        }
-                    }
-                    ,{text:"Active?"                                                            ,width:60        ,style:"text-align:left"     ,defaultValue:"N"
-                        ,onRender: function(d){ 
-                            return app.bs({name:"is_active"                 ,type:"yesno"       ,value: app.svn(d,"is_active")})
-                                 + app.bs({name:"status_id"                 ,type:"hidden"      ,value: app.svn(d,"status_id")})
-                                 + app.bs({name:"hash_key"                  ,type:"hidden"      ,value: app.svn(d,"hash_key")})
-                                 + app.bs({name:"client_id"                 ,type:"hidden"      ,value: app.userInfo.client_id});
-                
-                        }
-                    }
-                ] 
-            ,onComplete : function(d){    
-                this.find("[name='cbFilter2']").setCheckEvent("#gridInactiveVehicles input[name='cb']");  
-            }
-        });    
-    }
-    
-    $("#btnInactive").click(function(){
-        $(".modal-title").text("Inactive Vehicle(s)");
-        $('#modalInactive').modal({ show: true, keyboard: false, backdrop: 'static' });
-        displayInactiveVehicles(gVehicleId);
-        
-    });
-    
-    $("#btnSaveInactive").click(function(){
-       $("#gridInactiveVehicles").jsonSubmit({
-                 procedure: "vehicles_upd"
-                ,optionalItems: ["is_active","status_id"]
-                ,onComplete: function (data) {
-                    if(data.isSuccess===true) zsi.form.showAlert("alert");
-                    displayInactiveVehicles(gVehicleId);
-                    displayVehicles();
-                    $('#modalInactive').modal('toggle');
-                }
-        });
-    });
-        
+   
     $("#btnSaveVehicleMaker").click(function(){
         $("#gridVehicleMaker").jsonSubmit({
             procedure:"vehicle_maker_upd"
@@ -650,34 +516,53 @@
         });
     });
     
-    $("#btnFilterAsset").click(function(){ 
-        displayVehicles(gVehicleId);
+    $("#btnFilterVehicle").click(function(){ 
+        displayRefuelTransactions(gVehicleId);
+        displayPMS(gVehicleId);
+        displayAccidentTransactions(gVehicleId);
+        displayRepairs(gVehicleId);
+        displaySafetyProblems(gVehicleId);
+        displayPartsReplacements(gVehicleId);
     });
     
     $("#btnSearchVal").click(function(){ 
         var _searchVal = $.trim($("#searchVal").val()); 
-        if(gActiveTab === "nav-vehicles") displayVehicleMaker(_searchVal);
-        else displayVehicles(gVehicleId,_searchVal);
+        if(gActiveTab === "fuel") displayRefuelTransactions(gVehicleId,_searchVal);
+        else if(gActiveTab === "pms") displayPMS(gVehicleId,_searchVal);
+        else if(gActiveTab === "accidents") displayAccidentTransactions(gVehicleId,_searchVal);
+        else if(gActiveTab === "repairs") displayRepairs(gVehicleId,_searchVal);
+        else if(gActiveTab === "safety-problems") displaySafetyProblems(gVehicleId,_searchVal);
+        else if(gActiveTab === "parts-replacements") displayPartsReplacements(gVehicleId,_searchVal);
+        else displayVehicles(_searchVal);
         
     }); 
    $("#searchVal").on('keypress',function(e){
         var _searchVal = $.trim($("#searchVal").val()); 
         if(e.which == 13) {
-           if(gActiveTab === "nav-vehicles") displayVehicleMaker(_searchVal);
-           else displayVehicles(gVehicleId,_searchVal);
+            if(gActiveTab === "fuel") displayRefuelTransactions(gVehicleId,_searchVal);
+            else if(gActiveTab === "pms") displayPMS(gVehicleId,_searchVal);
+            else if(gActiveTab === "accidents") displayAccidentTransactions(gVehicleId,_searchVal);
+            else if(gActiveTab === "repairs") displayRepairs(gVehicleId,_searchVal);
+            else if(gActiveTab === "safety-problems") displaySafetyProblems(gVehicleId,_searchVal);
+            else if(gActiveTab === "parts-replacements") displayPartsReplacements(gVehicleId,_searchVal);
+            else displayVehicles(_searchVal);
         }
     });
 
     $("#searchVal").keyup(function(){
         if($(this).val() === "") {
-            if(gActiveTab === "nav-vehicles") displayVehicleMaker();
-            else displayVehicles(gVehicleId);
+            if(gActiveTab === "fuel") displayRefuelTransactions(gVehicleId);
+            if(gActiveTab === "pms") displayPMS(gVehicleId);
+            if(gActiveTab === "accidents") displayAccidentTransactions(gVehicleId);
+            if(gActiveTab === "repairs") displayRepairs(gVehicleId);
+            if(gActiveTab === "safety-problems") displaySafetyProblems(gVehicleId);
+            if(gActiveTab === "parts-replacements") displayPartsReplacements(gVehicleId);
+            else displayVehicles();
         }
     });
     
     $("#btnResetVal").click(function(){
         $("#searchVal").val("");
-        $("#nav-tab").find("[aria-controls='nav-vehicles']").hide();
     });
     
-})();         
+})();            

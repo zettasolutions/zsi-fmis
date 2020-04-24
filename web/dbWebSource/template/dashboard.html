@@ -16,12 +16,12 @@
                     </nav>
                 </div>
                 <div id="dummyDiv" class="col-sm-8 col-md-8 col-xl-8"></div>
-                <div id="dummyDivSearch" class="col-md-9 col-xl-10 col-sm-2 hide"></div>
+                <div id="dummyDivSearch" class="col-sm-5 col-md-5 col-xl-7 hide"></div>
                 <div id="vehicleDiv" class="col-sm-3 col-md-3 col-xl-2 col-12 mt-1 hide"> 
                     <div class="input-group" style="flex-wrap: inherit !important;">
-                        <select class="form-control form-control-sm filter-oem" name="vehicleId" id="vehicleId"></select>
+                        <select class="form-control form-control-sm" name="vehicleId" id="vehicleId"></select>
                         <div class="input-group-append">
-                            <button id="btnFilterAsset" class="btn-sm btn btn-primary btn-outline-default text-white" type="button" title="Filter"><i class="fas fa-filter"></i></button>
+                            <button id="btnFilterVehicle" class="btn-sm btn btn-primary btn-outline-default text-white" type="button" title="Filter"><i class="fas fa-filter"></i></button>
                         </div> 
                     </div>
                 </div>
@@ -72,9 +72,9 @@
                                     <!--<button type="button" class="btn btn-primary btn-sm" id="btnSaveFuel" title="Save">
                                         <i class="far fa-save"></i> Save
                                     </button>-->
-                                     <button type="button" class="btn btn-primary btn-sm" id="btnDeleteRefuel" data-toggle="tooltip" title="Delete">
+                                     <!--<button type="button" class="btn btn-primary btn-sm" id="btnDeleteRefuel" data-toggle="tooltip" title="Delete">
                                     	  <i class="fas fa-trash"></i> Delete
-                                    </button> 
+                                    </button>--> 
                                 </div>
                             </div>
                         </div>
@@ -110,9 +110,9 @@
                                     <!--<button type="button" class="btn btn-primary btn-sm" id="btnSaveAccidents" title="Save">
                                         <i class="far fa-save"></i> Save
                                     </button>-->
-                                     <button type="button" class="btn btn-primary btn-sm" id="btnDeleteAccidents" data-toggle="tooltip" title="Delete">
+                                     <!--<button type="button" class="btn btn-primary btn-sm" id="btnDeleteAccidents" data-toggle="tooltip" title="Delete">
                                     	  <i class="fas fa-trash"></i> Delete
-                                    </button>   
+                                    </button>  --> 
                                 </div>
                             </div>
                         </div>
@@ -129,9 +129,9 @@
                                     <!--<button type="button" class="btn btn-primary btn-sm" id="btnSaveRepairs" title="Save">
                                         <i class="far fa-save"></i> Save
                                     </button>-->
-                                     <button type="button" class="btn btn-primary btn-sm" id="btnDeleteRepairs" data-toggle="tooltip" title="Delete">
+                                     <!--<button type="button" class="btn btn-primary btn-sm" id="btnDeleteRepairs" data-toggle="tooltip" title="Delete">
                                     	  <i class="fas fa-trash"></i> Delete
-                                    </button>      
+                                    </button>-->      
                                 </div>
                             </div>
                         </div>
@@ -148,9 +148,9 @@
                                     <!--<button type="button" class="btn btn-primary btn-sm" id="btnSaveRepairs" title="Save">
                                         <i class="far fa-save"></i> Save
                                     </button>-->
-                                     <button type="button" class="btn btn-primary btn-sm" id="btnDeleteSafetyProblems" data-toggle="tooltip" title="Delete">
+                                     <!--<button type="button" class="btn btn-primary btn-sm" id="btnDeleteSafetyProblems" data-toggle="tooltip" title="Delete">
                                     	  <i class="fas fa-trash"></i> Delete
-                                    </button>      
+                                    </button>-->      
                                 </div>
                             </div>
                         </div>
@@ -167,9 +167,9 @@
                                     <!--<button type="button" class="btn btn-primary btn-sm" id="btnSaveRepairs" title="Save">
                                         <i class="far fa-save"></i> Save
                                     </button>-->
-                                     <button type="button" class="btn btn-primary btn-sm" id="btnDeletePartsReplacements" data-toggle="tooltip" title="Delete">
+                                     <!--<button type="button" class="btn btn-primary btn-sm" id="btnDeletePartsReplacements" data-toggle="tooltip" title="Delete">
                                     	  <i class="fas fa-trash"></i> Delete
-                                    </button>      
+                                    </button>-->      
                                 </div>
                             </div>
                         </div>
@@ -178,31 +178,4 @@
             </div>
         </div>
     </div> 
-</div>
-<div class="modal" id="modalInactive" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content">
-            <form id="frm_modalInactive">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalInactive"> Title </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-1">
-                            <div id="gridInactiveVehicles" class="zGrid"> </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                            <button type="button" id="btnSaveInactive" class="btn btn-primary btn-sm"><i class="far fa-save"></i> Save</button>
-                            <button type="button" class="btn btn-primary btn-sm" id="btnDeleteVehicles" data-toggle="tooltip" title="Delete">
-                            	<i class="fas fa-trash-alt"></i> Delete
-                            </button>   
-                        </div>
-                   </div>
-                </div>
-            </form>
-        </div>
-    </div>
 </div>
