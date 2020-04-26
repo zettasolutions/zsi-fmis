@@ -5,7 +5,7 @@ CREATE PROCEDURE [dbo].[drivers_sel]
 )
 AS
 BEGIN
-      SELECT * FROM zsi_afcs.dbo.drivers_v WHERE 1=1; 
+      SELECT user_id, full_name FROM zsi_afcs.dbo.drivers_v WHERE 1=1; 
 END
 
 

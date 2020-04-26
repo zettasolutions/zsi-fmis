@@ -5,7 +5,7 @@ CREATE PROCEDURE [dbo].[pao_sel]
 )
 AS
 BEGIN
-      SELECT * FROM zsi_afcs.dbo.pao_v WHERE 1=1; 
+      SELECT user_id, full_name FROM zsi_afcs.dbo.pao_v WHERE 1=1; 
 END
 
 
