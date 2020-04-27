@@ -24,19 +24,19 @@ BEGIN
 	IF @date_type = 'yearly'
 	BEGIN
 		IF ISNULL(@date_frm,'') <> '' AND ISNULL(@date_to,'') <> ''
-			SET @stmt = @stmt + ' AND  YEAR(load_date) BETWEEN '''+@date_frm+''' AND '''+@date_to+''''  ;
+			SET @stmt = @stmt + ' AND  YEAR(accident_date) BETWEEN '''+@date_frm+''' AND '''+@date_to+''''  ;
 	END
 
 	ELSE
 	BEGIN
 		IF ISNULL(@date_frm,'') <> '' AND ISNULL(@date_to,'') <> ''
-			SET @stmt = @stmt + ' AND  MONTH(load_date) BETWEEN '''+@date_frm+''' AND '''+@date_to+''''  ;
+			SET @stmt = @stmt + ' AND  MONTH(accident_date) BETWEEN '''+@date_frm+''' AND '''+@date_to+''''  ;
 	END
 
 	--ELSE
 	--BEGIN
 	--	IF ISNULL(@date_frm,'') <> '' AND ISNULL(@date_to,'') <> ''
-	--		SET @stmt = @stmt + ' AND  WEEK(load_date) BETWEEN '''+@date_frm+''' AND '''+@date_to+''''  ;
+	--		SET @stmt = @stmt + ' AND  WEEK(accident_date) BETWEEN '''+@date_frm+''' AND '''+@date_to+''''  ;
 	--END
 
 	exec(@stmt);
