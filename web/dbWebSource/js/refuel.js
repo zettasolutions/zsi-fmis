@@ -64,6 +64,29 @@
         
     };
     
+     // FOR ODO READING INPUT TYPE.
+    function setInputFilter(textbox, inputFilter) {
+      ["input", "keydown"].forEach(function(event) {
+        textbox.addEventListener(event, function() {
+          if (inputFilter(this.value)) {
+            this.oldValue = this.value;
+            this.oldSelectionStart = this.selectionStart;
+            this.oldSelectionEnd = this.selectionEnd;
+          } else if (this.hasOwnProperty("oldValue")) {
+            this.value = this.oldValue;
+            this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+          } else {
+            this.value = "";
+          }
+        });
+      });
+    } 
+    setInputFilter(document.getElementById("odo_reading"), function(value) {
+      return /^-?\d*$/.test(value);  
+    }); 
+      
+    
+    
     $("#btnSaveRefuel").click(function () {
         $("#formRefuel").jsonSubmit({
              procedure: "refuel_upd"
@@ -79,7 +102,7 @@
                    $("#myModal").find("#msg").css("color","green");
                    setTimeout(function(){
                        $("#myModal").modal('toggle');
-                       $("#formRefuel").find("#doc_date").val(new Date());
+                       $("#doc_date").datepicker({todayHighlight:true}).datepicker("setDate",new Date());
                        modalTxt();
                    },1000);
                 }else{
@@ -122,4 +145,4 @@
     
     
     
-})();            
+})();              

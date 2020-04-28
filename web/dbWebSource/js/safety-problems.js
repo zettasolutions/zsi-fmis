@@ -67,7 +67,7 @@
                    $("#myModal").find("#msg").css("color","green");
                    setTimeout(function(){
                        $("#myModal").modal('toggle');
-                       $("#formSafetyProblem").find("#safety_report_date").val(new Date());
+                       $("#safety_report_date").datepicker({todayHighlight:true}).datepicker("setDate",new Date());
                        modalTxt();
                    },1000);
                 }else{
@@ -109,4 +109,4 @@
     
     
     
-})();             
+})();              
