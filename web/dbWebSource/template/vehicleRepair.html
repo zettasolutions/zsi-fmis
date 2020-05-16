@@ -1,11 +1,18 @@
 <style>
     .modal-body {
-    position: relative;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    padding: 1rem;
-    box-sizing: border-box;
-}
+        position: relative;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1rem;
+        box-sizing: border-box;
+    }
+    .panel-container-grid{
+        min-height: 200px !important;
+    }
+    .panel-container-grid .panel-content{
+        padding: 0 !important;
+        margin: 0 -1px;
+    }
 </style>
 
 <div class="panel">
@@ -15,48 +22,77 @@
                 <div class="widget-body"  id="panel-1"> 
                     <form id="formVehicleRepair" class="needs-validation" novalidate>  
             			<input type="hidden" name="repair_id" id="repair_id">
-                        <div class="row mb-2"> 
-                        	<div class="col-sm-6 col-md-4 col-xs-12">
+                        <div class="row mb-2" id="divVehicleRepair"> 
+                        	<div class="col-sm-4 col-md-2 col-xs-12">
                     		    <label for="" class="col-form-label control-label"><b>Repair Date</b></label>  
                                 <input type="text" class="form-control form-control-sm pl-2" id="repair_date" required  name="repair_date" autocomplete="off"/>
-                                
                     		</div>
-                        	<div class="col-sm-6 col-md-4 col-xs-12">
+                        	<div class="col-sm-4 col-md-3 col-xs-12">
                     		    <label for="" class="col-form-label control-label"><b>PMS Type</b></label>  
                                 <select type="text" class="form-control form-control-sm pl-2" id="pms_type_id" required  name="pms_type_id" autocomplete="off"></select> 
                     		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
+                    		<div class="col-sm-4 col-md-3 col-xs-12">
                     		    <label for="" class="col-form-label control-label"><b>Vehicle</b></label>
                                 <select type="text" class="form-control form-control-sm pl-2" id="vehicle_id" required  name="vehicle_id" autocomplete="off"></select>
                     		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
+                    		<div class="col-sm-6 col-md-2 col-xs-12">
                     		    <label for="" class="col-form-label control-label"><b>ODO Reading</b></label>
-                                <input type="text" class="form-control form-control-sm pl-2" id="odo_reading" required  name="odo_reading" autocomplete="off"/>
+                                <input type="text" class="form-control form-control-sm pl-2 integer" id="odo_reading" required  name="odo_reading" autocomplete="off"/>
                     		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
+                    		<div class="col-sm-6 col-md-2 col-xs-12">
                     		    <label for="" class="col-form-label control-label"><b>Repair Amount</b></label>
-                                <input type="text" class="form-control form-control-sm pl-2" id="repair_amount" required  name="repair_amount" autocomplete="off"/>
+                                <input type="text" class="form-control form-control-sm pl-2 numeric" id="repair_amount" required  name="repair_amount" autocomplete="off"/>
                     		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Status</b></label>
-                                <input type="text" class="form-control form-control-sm pl-2" id="status_id" required  name="status_id" autocomplete="off"/>
-                    		</div>
-                    		<div class="col-sm-12 col-md-6 col-xs-12">
+                    		<div class="col-sm-6 col-md-5 col-xs-12">
                     		    <label for="" class="col-form-label control-label"><b>Repair Location</b></label>  
                                 <textarea type="text" class="form-control form-control-sm pl-2" id="repair_location" name="repair_location" required autocomplete="off"></textarea>
-                                    
                                 <small>Building No, Street, Barangay</small>
                     		</div>
-                    		<div class="col-sm-12 col-md-6 col-xs-12">
+                    		<div class="col-sm-6 col-md-5 col-xs-12">
                     		    <label for="" class="col-form-label control-label"><b>Comment</b></label>  
                                 <textarea type="text" class="form-control form-control-sm pl-2" id="comment" name="comment" required autocomplete="off"></textarea>
                         	</div>
+                        	<div class="col-sm-4 col-md-2 col-xs-12">
+                    		    <label for="" class="col-form-label control-label"><b>Status</b></label>
+                    		    <select type="text" class="form-control form-control-sm pl-2" id="status_id" required  name="status_id" autocomplete="off"></select>
+                    		</div>
                     	</div>
                     	<div class="row">
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">   
-                                <button id="submit" type="submit" class="btn btn-primary btn-sm waves-effect waves-themed" title="Save">
+                            <div class="col-12 col-sm-12">   
+                                <div class="panel mb-2">
+                                    <div class="panel-hdr">
+                                        <h2>
+                                            Replacement <span class="fw-300"><i>Parts</i></span>
+                                        </h2>
+                                        <div class="panel-toolbar">
+                                            <button class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                                            <!--<button class="btn btn-panel waves-effect waves-themed" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>-->
+                                            <!--<button class="btn btn-panel waves-effect waves-themed" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>-->
+                                        </div>
+                                    </div>
+                                    <div class="panel-container show panel-container-grid">
+                                        <div class="panel-content">
+                                            <div class="row" id="divReplacementParts">
+                                                <div class="col-12 col-sm-12"> 
+                                                    <div id="gridReplacementParts" class="zGrid"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-12">   
+                                <button type="button" class="btn btn-primary btn-sm waves-effect waves-themed hide" title="Save" id="btnNew">
+                                    <i class="far fa-plus"></i> New
+                                </button>
+                                <button type="button" class="btn btn-primary btn-sm waves-effect waves-themed" title="Save" id="btnSave">
                                     <i class="far fa-save"></i> Save
                                 </button>
+                                <!--<button id="submit" type="submit" class="btn btn-primary btn-sm waves-effect waves-themed" title="Save">-->
+                                <!--    <i class="far fa-save"></i> Save-->
+                                <!--</button>-->
                             </div>
                         </div>
                     </form>
