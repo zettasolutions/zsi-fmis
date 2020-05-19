@@ -6,6 +6,7 @@ repair_id	INT IDENTITY(1,1)	NOT NULL
 ,odo_reading	INT	NULL
 ,repair_amount	DECIMAL(12)	NULL
 ,repair_location	NVARCHAR(100)	NULL
+,service_amount	DECIMAL(12)	NULL
 ,comment	NTEXT(2147483646)	NULL
 ,status_id	INT	NULL
 ,created_by	INT	NULL

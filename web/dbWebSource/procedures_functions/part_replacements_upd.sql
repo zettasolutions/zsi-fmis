@@ -8,45 +8,56 @@ AS
 -- Update Process
 	UPDATE a 
 		   SET 
-	 		  replacement_date		= b.replacement_date	
-			,vehicle_id				= b.vehicle_id
+		     seq_no                 = b.seq_no
 			,part_id				= b.part_id
 			,part_qty				= b.part_qty
 			,unit_id				= b.unit_id	
+			,unit_cost              = b.unit_cost
+			,is_replacement         = b.is_replacement
+			,is_bnew                = b.is_bnew
 			,updated_by				= @user_id
 			,updated_date			= GETDATE()
         FROM dbo.part_replacements a INNER JOIN @tt b
 	     ON a.replacement_id = b.replacement_id 
-		WHERE b.replacement_date IS NOT NULL
-	    AND isnull(b.is_edited,'N')='Y'
+		WHERE ISNULL(b.part_id,0) <> 0
+	      AND (isnull(b.repair_id,0)<> 0 OR ISNULL(b.pms_id,0) <> 0)
+	      AND isnull(b.part_qty,0) > 0
+	      AND isnull(b.is_edited,'N')='Y'
 
 
 -- Insert Process
 	INSERT INTO part_replacements (
-		 replacement_date
-		,vehicle_id
+		 pms_id 
+		,repair_id
+		,seq_no
 		,part_id
-		,part_qty
-		,unit_id	
-		,created_by
-		,created_date
-    )
-	SELECT 
-		  replacement_date
-		,vehicle_id
-		,part_id
-		,part_qty
+	    ,part_qty
 		,unit_id
+		,unit_cost
+		,is_replacement
+		,is_bnew
+        ,created_by
+		,created_date
+		)
+     SELECT 
+		 pms_id 
+		,repair_id
+		,seq_no
+		,part_id
+	    ,part_qty
+		,unit_id
+		,unit_cost
+		,is_replacement
+		,is_bnew
 		,@user_id
-	    ,GETDATE()
+		,GETDATE()
 	FROM @tt 
-	WHERE replacement_id IS NULL
-	AND replacement_date IS NOT NULL
-	AND part_id IS NOT NULL
-	AND part_qty IS NOT NULL
-	AND vehicle_id IS NOT NULL;
+    WHERE ISNULL(replacement_id,0) = 0
+	AND ISNULL(part_id,0) <> 0
+	AND (isnull(repair_id,0)<> 0 OR ISNULL(pms_id,0) <> 0)
+	AND isnull(part_qty,0) > 0
  
-
+ 
 
 
 
