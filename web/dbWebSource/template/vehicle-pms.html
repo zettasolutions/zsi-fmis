@@ -6,47 +6,56 @@
         padding: 0 !important;
         margin: 0 -1px;
     }
+    .zRow.zTotal {
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
 </style>
 <div class="panel">
     <div class="panel-container">
         <div class="panel-content">  
-            <div role="content" id="tablePSN" >  
+            <div role="content">  
                 <div class="widget-body"  id="panel-1"> 
                     <form id="formPMS" class="needs-validation" novalidate>  
             			<input type="hidden" name="pms_id" id="pms_id">
                         <div class="row mb-2" id="divVehiclePMS"> 
                         	<div class="col-sm-4 col-md-2 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Repair Date</b></label>  
+                    		    <label for="" class="col-form-label control-label"><b>PM Date</b><span class="text-danger">*</span></label>  
                                 <input type="text" class="form-control form-control-sm pl-2" id="pms_date" required  name="pms_date" autocomplete="off"/>
                     		</div>
                         	<div class="col-sm-4 col-md-3 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>PMS Type</b></label>  
-                                <select type="text" class="form-control form-control-sm pl-2" id="pms_type_id" required  name="pms_type_id" autocomplete="off"></select> 
+                    		    <label for="" class="col-form-label control-label"><b>PMS Type</b><span class="text-danger">*</span></label>  
+                                <select class="form-control form-control-sm pl-2" id="pms_type_id" required  name="pms_type_id" autocomplete="off"></select> 
                     		</div>
                     		<div class="col-sm-4 col-md-3 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Vehicle</b></label>
-                                <select type="text" class="form-control form-control-sm pl-2" id="vehicle_id" required  name="vehicle_id" autocomplete="off"></select>
+                    		    <label for="" class="col-form-label control-label"><b>Vehicle</b><span class="text-danger">*</span></label>
+                                <select class="form-control form-control-sm pl-2" id="vehicle_id" required  name="vehicle_id" autocomplete="off"></select>
                     		</div>
                     		<div class="col-sm-6 col-md-2 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>ODO Reading</b></label>
+                    		    <label for="" class="col-form-label control-label"><b>ODO Reading</b><span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm pl-2 integer" id="odo_reading" required  name="odo_reading" autocomplete="off"/>
                     		</div>
                     		<div class="col-sm-6 col-md-2 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Repair Amount</b></label>
-                                <input type="text" class="form-control form-control-sm pl-2 numeric" id="pm_amount" required  name="pm_amount" autocomplete="off"/>
+                    		    <label for="" class="col-form-label control-label"><b>PM Amount</b></label>
+                                <input type="text" class="form-control form-control-sm pl-2 numeric" id="pm_amount" name="pm_amount" autocomplete="off"/>
                     		</div>
-                    		<div class="col-sm-6 col-md-5 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Repair Location</b></label>  
-                                <textarea type="text" class="form-control form-control-sm pl-2" id="pm_location" name="pm_location" required autocomplete="off"></textarea>
+                    		<div class="col-sm-6 col-md-6 col-xs-12">
+                    		    <label for="" class="col-form-label control-label"><b>PM Location</b></label>  
+                                <textarea type="text" class="form-control form-control-sm pl-2" id="pm_location" name="pm_location" autocomplete="off"></textarea>
                                 <small>Building No, Street, Barangay</small>
                     		</div>
-                    		<div class="col-sm-6 col-md-5 col-xs-12">
+                    		<div class="col-sm-6 col-md-6 col-xs-12">
                     		    <label for="" class="col-form-label control-label"><b>Comment</b></label>  
-                                <textarea type="text" class="form-control form-control-sm pl-2" id="comment" name="comment" required autocomplete="off"></textarea>
+                                <textarea type="text" class="form-control form-control-sm pl-2" id="comment" name="comment" autocomplete="off"></textarea>
                         	</div>
-                        	<div class="col-sm-4 col-md-2 col-xs-12">
+                        	<div class="col-sm-6 col-md-3 col-xs-12">
+                    		    <label for="" class="col-form-label control-label"><b>Service Amount</b></label>
+                    		    <input type="text" class="form-control form-control-sm pl-2 numeric" id="service_amount" name="service_amount" autocomplete="off"/>
+                    		</div>
+                        	<div class="col-sm-6 col-md-3 col-xs-12 hide">
                     		    <label for="" class="col-form-label control-label"><b>Status</b></label>
-                    		    <select type="text" class="form-control form-control-sm pl-2" id="status_id" required  name="status_id" autocomplete="off"></select>
+                    		    <select class="form-control form-control-sm pl-2" id="status_id" name="status_id" autocomplete="off"></select>
                     		</div>
                     	</div>
                     	<div class="row">

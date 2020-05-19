@@ -2904,6 +2904,16 @@ var  ud='undefined'
             String.prototype.nl2br = function(){
                 return this.replace(/\n/g, "<br />");
             };
+            String.prototype.toCommaSeparatedNo = function(){
+                var _res = "";
+                if($.isNumeric(this)) _res = parseFloat(this).toCommaSeparatedNo();
+                return _res;
+            };
+            String.prototype.toCommaSeparatedDecimal = function(){
+                var _res = "";
+                if($.isNumeric(this)) _res = parseFloat(this).toCommaSeparatedDecimal();
+                return _res;
+            };
             //Array Prototypes : 
             Array.prototype.createNewCopy = function(){
                 return $.extend(true,{}, this);
@@ -2985,6 +2995,13 @@ var  ud='undefined'
             //Number Prototypes : 
             Number.prototype.toMoney = function(){
                 return this.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+            };
+            Number.prototype.toCommaSeparatedNo = function(){
+                return this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            };
+            Number.prototype.toCommaSeparatedDecimal = function(){
+                var _num = this.toFixed(2).toString().split(".");
+                return _num[0].toCommaSeparatedNo() + (!isUD(_num[1]) ? "." + _num[1] : "");
             };
        }
         ,bs                         : {
@@ -3697,9 +3714,17 @@ var  ud='undefined'
             },5000);   
          }
         ,initInputTypesAndFormats   : function(){
+            $(".integer").keypress(function(event){
+                return zsi.form.checkNumber(event,'');
+            }).focusout(function(){
+                this.value = this.value.replace(/,/g, "").toCommaSeparatedNo();
+            });
+           
            $(".numeric").keypress(function(event){
-              return zsi.form.checkNumber(event,'.,');
-           });
+                return zsi.form.checkNumber(event,'.,');
+           }).focusout(function(){
+                this.value = this.value.replace(/,/g, "").toCommaSeparatedDecimal();
+            });
             
            $(".format-decimal").blur(function(){
               var obj= this;
@@ -3719,4 +3744,4 @@ var  ud='undefined'
     }
 ;  
 
-                                  
+                                    

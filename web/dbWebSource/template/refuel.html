@@ -8,64 +8,105 @@
     *:focus{
       outline:0px;
     }
+    .zRow.zTotal {
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
 </style>
 <div class="panel">
     <div class="panel-container">
-        <div class="panel-content">  
-            <div role="content" id="tablePSN" >  
-                <div class="widget-body"  id="panel-1"> 
-                    <form id="formRefuel" class="needs-validation" novalidate>  
-            			<input type="hidden" name="refuel_id" id="refuel_id">
-                        <div class="row mb-2"> 
-                            <div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Document #</b></label>  
-                                <input type="text" class="form-control form-control-sm pl-2" id="doc_no" required  name="doc_no" autocomplete="off"/>
-                    		</div>
-                        	<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Document Date</b></label>  
-                                <input type="text" class="form-control form-control-sm pl-2" id="doc_date" required  name="doc_date" autocomplete="off"/>
-                    		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Vehicle</b></label>
-                                <select type="text" class="form-control form-control-sm custom-select select" id="vehicle_id" required  name="vehicle_id" autocomplete="off"></select>
-                    		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Driver</b></label>
-                                <select type="text" class="form-control form-control-sm custom-select select" id="driver_id" required  name="driver_id" autocomplete="off"></select>
-                    		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>PAO</b></label>
-                                <select type="text" class="form-control form-control-sm custom-select select" id="pao_id" required  name="pao_id" autocomplete="off"></select>
-                    		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>ODO Reading</b></label>
-                                <input type="text" class="form-control form-control-sm pl-2" id="odo_reading" required  name="odo_reading" autocomplete="off"/>
-                    		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Gas Station</b></label>
-                                <select type="text" class="form-control form-control-sm custom-select select" id="gas_station" required  name="gas_station" autocomplete="off"></select>
-                    		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>No. of Liter(s)</b></label>
-                                <input type="text" class="form-control form-control-sm pl-2" id="no_liters" required  name="no_liters" autocomplete="off"/>
-                    		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Unit Price</b></label>
-                                <input type="text" class="form-control form-control-sm pl-2" id="unit_price" required  name="unit_price" autocomplete="off"/>
-                    		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Refuel Amount</b></label>
-                                <input type="text" class="form-control form-control-sm pl-2" id="refuel_amount" required  name="refuel_amount" autocomplete="off"/>
-                    		</div>
-                    	</div>
-                    	<div class="row">
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">   
-                                <button id="submit" type="submit" class="btn btn-primary btn-sm waves-effect waves-themed" title="Save">
-                                    <i class="far fa-save"></i> Save
-                                </button>
-                            </div>
+        <div class="panel-hdr">
+            <div class="d-flex w-100">
+                <!--<div class="mr-auto">-->
+                <!--    <button type="button" class="btn btn-primary btn-sm" id="btnNew"><i class="far fa-plus"></i> New</button>-->
+                <!--</div>-->
+                <div class="">
+                    <div class="input-group input-group-sm bg-white shadow-inset-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-transparent border-right-0 py-1 px-3 text-success">
+                                Date :
+                            </span>
                         </div>
-                    </form>
+                        <input type="text" class="form-control border-left-0 bg-transparent pl-0" id="filterDate">
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-transparent border-right-0 py-1 px-3 text-success">
+                                Gas Station :
+                            </span>
+                        </div>
+                        <select class="form-control border-left-0 bg-transparent pl-0" placeholder="Select Gas Station" id="filterGasStation"></select>
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary waves-effect waves-themed"  title="Filter" id="btnFilter"><i class="far fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-content">  
+            <div role="content" id="table" >  
+                <div class="widget-body"  id="panel-1"> 
+                    <div class="row" id="divRefuel">
+                        <div class="col-12 col-sm-12 mb-2"> 
+                            <div class="zGrid" id="gridRefuel"></div>
+                        </div>
+                        <div class="col-12 col-sm-12">
+                            <button type="button" class="btn btn-primary btn-sm waves-effect waves-themed" title="Save" id="btnSave">
+                                <i class="far fa-save"></i> Save
+                            </button>
+                        </div>
+                    </div>
+               <!--     <form id="formRefuel" class="needs-validation" novalidate>  -->
+            			<!--<input type="hidden" name="refuel_id" id="refuel_id">-->
+               <!--         <div class="row mb-2"> -->
+               <!--             <div class="col-sm-6 col-md-4 col-xs-12">-->
+               <!--     		    <label for="" class="col-form-label control-label"><b>Document #</b></label>  -->
+               <!--                 <input type="text" class="form-control form-control-sm pl-2" id="doc_no" required  name="doc_no" autocomplete="off"/>-->
+               <!--     		</div>-->
+               <!--         	<div class="col-sm-6 col-md-4 col-xs-12">-->
+               <!--     		    <label for="" class="col-form-label control-label"><b>Document Date</b></label>  -->
+               <!--                 <input type="text" class="form-control form-control-sm pl-2" id="doc_date" required  name="doc_date" autocomplete="off"/>-->
+               <!--     		</div>-->
+               <!--     		<div class="col-sm-6 col-md-4 col-xs-12">-->
+               <!--     		    <label for="" class="col-form-label control-label"><b>Vehicle</b></label>-->
+               <!--                 <select type="text" class="form-control form-control-sm custom-select select" id="vehicle_id" required  name="vehicle_id" autocomplete="off"></select>-->
+               <!--     		</div>-->
+               <!--     		<div class="col-sm-6 col-md-4 col-xs-12">-->
+               <!--     		    <label for="" class="col-form-label control-label"><b>Driver</b></label>-->
+               <!--                 <select type="text" class="form-control form-control-sm custom-select select" id="driver_id" required  name="driver_id" autocomplete="off"></select>-->
+               <!--     		</div>-->
+               <!--     		<div class="col-sm-6 col-md-4 col-xs-12">-->
+               <!--     		    <label for="" class="col-form-label control-label"><b>PAO</b></label>-->
+               <!--                 <select type="text" class="form-control form-control-sm custom-select select" id="pao_id" required  name="pao_id" autocomplete="off"></select>-->
+               <!--     		</div>-->
+               <!--     		<div class="col-sm-6 col-md-4 col-xs-12">-->
+               <!--     		    <label for="" class="col-form-label control-label"><b>ODO Reading</b></label>-->
+               <!--                 <input type="text" class="form-control form-control-sm pl-2" id="odo_reading" required  name="odo_reading" autocomplete="off"/>-->
+               <!--     		</div>-->
+               <!--     		<div class="col-sm-6 col-md-4 col-xs-12">-->
+               <!--     		    <label for="" class="col-form-label control-label"><b>Gas Station</b></label>-->
+               <!--                 <select type="text" class="form-control form-control-sm custom-select select" id="gas_station" required  name="gas_station" autocomplete="off"></select>-->
+               <!--     		</div>-->
+               <!--     		<div class="col-sm-6 col-md-4 col-xs-12">-->
+               <!--     		    <label for="" class="col-form-label control-label"><b>No. of Liter(s)</b></label>-->
+               <!--                 <input type="text" class="form-control form-control-sm pl-2" id="no_liters" required  name="no_liters" autocomplete="off"/>-->
+               <!--     		</div>-->
+               <!--     		<div class="col-sm-6 col-md-4 col-xs-12">-->
+               <!--     		    <label for="" class="col-form-label control-label"><b>Unit Price</b></label>-->
+               <!--                 <input type="text" class="form-control form-control-sm pl-2" id="unit_price" required  name="unit_price" autocomplete="off"/>-->
+               <!--     		</div>-->
+               <!--     		<div class="col-sm-6 col-md-4 col-xs-12">-->
+               <!--     		    <label for="" class="col-form-label control-label"><b>Refuel Amount</b></label>-->
+               <!--                 <input type="text" class="form-control form-control-sm pl-2" id="refuel_amount" required  name="refuel_amount" autocomplete="off"/>-->
+               <!--     		</div>-->
+               <!--     	</div>-->
+               <!--     	<div class="row">-->
+               <!--             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">   -->
+               <!--                 <button id="submit" type="submit" class="btn btn-primary btn-sm waves-effect waves-themed" title="Save">-->
+               <!--                     <i class="far fa-save"></i> Save-->
+               <!--                 </button>-->
+               <!--             </div>-->
+               <!--         </div>-->
+               <!--     </form>-->
                 </div>  
             </div>     
         </div>
