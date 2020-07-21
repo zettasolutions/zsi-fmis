@@ -1,22 +1,15 @@
 CREATE PROCEDURE [dbo].[dd_vehicle_sel]
 (
    @user_id  int = null
-  ,@is_active varchar(1)='Y'
+  ,@client_id int = null
 )
 AS
 BEGIN
-	SET NOCOUNT ON
-	DECLARE @client_id nvarchar(20)=null
-	DECLARE @stmt NVARCHAR(MAX)
-
-	select @client_id = client_id FROM dbo.users where user_id=@user_id;
- 	SET @stmt = 'SELECT vehicle_id, plate_no FROM dbo.vehicles WHERE client_id=''' + @client_id + '''';
-
-	IF @is_active <> ''
-		SET @stmt = @stmt + ' AND is_active='''+ @is_active + '''';
-
+	SET NOCOUNT ON 
+	DECLARE @stmt NVARCHAR(MAX) 
+     SELECT vehicle_id, vehicle_plate_no FROM dbo.vehicles WHERE company_id= @client_id ; 
 	exec(@stmt);
 END
+ 
 
-
-
+ 

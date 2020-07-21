@@ -14,7 +14,7 @@ BEGIN
 	DECLARE @stmt NVARCHAR(MAX)
 
 	select @client_id = client_id FROM dbo.users where user_id=@user_id;
- 	SET @stmt = 'SELECT * FROM dbo.vehicles WHERE client_id=''' + @client_id + '''';
+ 	SET @stmt = 'SELECT * FROM dbo.vehicles WHERE company_id=''' + @client_id + '''';
 
 	IF @is_active <> ''
 		SET @stmt = @stmt + ' AND is_active='''+ @is_active + '''';

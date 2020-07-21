@@ -1,6 +1,7 @@
 CREATE TABLE vehicles(
 vehicle_id	INT IDENTITY(1,1)	NOT NULL
-,plate_no	NVARCHAR(100)	NULL
+,company_id	INT	NULL
+,vehicle_plate_no	NVARCHAR(100)	NULL
 ,conduction_no	NVARCHAR(100)	NULL
 ,chassis_no	NVARCHAR(100)	NULL
 ,engine_no	NVARCHAR(100)	NULL
@@ -9,10 +10,13 @@ vehicle_id	INT IDENTITY(1,1)	NOT NULL
 ,exp_insurance_date	DATE	NULL
 ,vehicle_maker_id	INT	NULL
 ,odometer_reading	INT	NULL
+,route_id	INT	NULL
+,vehicle_type_id	INT	NULL
+,vehicle_img_filename	NVARCHAR(150)	NULL
 ,is_active	CHAR(1)	NULL
 ,status_id	INT	NULL
 ,hash_key	NTEXT(2147483646)	NULL
-,client_id	INT	NULL
+,or_no	INT	NULL
 ,created_by	INT	NULL
 ,created_date	DATETIME	NULL
 ,updated_by	INT	NULL
