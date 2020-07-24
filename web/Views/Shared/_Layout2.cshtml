@@ -25,7 +25,7 @@
     @Html.Raw(ViewBag.GetScriptLinkCurrentVersion("zsiLib"))
     @{
         string userId = "";
-        if ( zsi.web.SessionHandler.CurrentUser != null){ userId = "var userId=" + zsi.web.SessionHandler.CurrentUser.userId + ";"; }
+        userId = "var userId=" + webCM.SessionHandler.getUserProp("userId") + ";";
     }
     <script>
         var base_url = '@Url.Content("~/")';
@@ -166,7 +166,7 @@
                             <div class="info-card-text">
                                 <a href="#" class="d-flex align-items-center text-white">
                                     <span class="text-truncate text-truncate-sm d-inline-block">
-                                        @zsi.web.SessionHandler.CurrentUser.userFullName.ToUpper()
+                                        @webCM.SessionHandler.getUserProp("userFullName").ToUpper()
                                     </span>
                                 </a>
                                 <span class="d-inline-block text-truncate text-truncate-sm">Cebu City</span>
@@ -544,7 +544,7 @@
                                                 <img src="@Url.Content("~/")img/demo/avatars/avatar-admin.png" class="rounded-circle profile-image" alt="Dr. Codex Lantern">
                                             </span>
                                             <div class="info-card-text">
-                                                <div class="fs-lg text-truncate text-truncate-lg">@zsi.web.SessionHandler.CurrentUser.userFullName.ToUpper()</div>
+                                                <div class="fs-lg text-truncate text-truncate-lg">@webCM.SessionHandler.getUserProp("userFullName").ToUpper()</div>
                                                 <span class="text-truncate text-truncate-md opacity-80">(@role)</span>
                                             </div>
                                         </div>
@@ -581,7 +581,7 @@
                                     <div class="dropdown-divider m-0"></div>
                                     <a class="dropdown-item fw-500 pt-3 pb-3" href="@Url.Content("~/")page/signin">
                                         <span data-i18n="drpdwn.page-logout">Logout</span>
-                                        <span class="float-right fw-n">&commat;@zsi.web.SessionHandler.CurrentUser.userName.ToUpper()</span>
+                                        <span class="float-right fw-n">&commat;@webCM.SessionHandler.getUserProp("userName").ToUpper()</span>
                                     </a>
                                 </div>
                             </div>

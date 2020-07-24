@@ -25,8 +25,8 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all">
     @Html.Raw(ViewBag.GetScriptLinkCurrentVersion("zsiLib"))
     @{
-        string userId = "";
-        if ( zsi.web.SessionHandler.CurrentUser != null){ userId = "var userId=" + zsi.web.SessionHandler.CurrentUser.userId + ";"; }
+         string userId = "";
+        userId = "var userId=" + webCM.SessionHandler.getUserProp("userId") + ";"; 
     }
     <script>
         var base_url = '@Url.Content("~/")';
@@ -170,7 +170,7 @@
                             <div class="info-card-text">
                                 <a href="#" class="d-flex align-items-center text-white">
                                     <span class="text-truncate text-truncate-sm d-inline-block autoCaps">
-                                        @zsi.web.SessionHandler.CurrentUser.userFullName.ToLower()
+                                        @webCM.SessionHandler.getUserProp("userFullName").ToLower()
                                     </span>
                                 </a>
                                 <span class="d-inline-block text-truncate text-truncate-sm"><small>@role</small></span>
@@ -544,7 +544,7 @@
                                                 <img src="@Url.Content("~/")img/avatar-m.png" class="rounded-circle profile-image" alt="">
                                             </span>
                                             <div class="info-card-text">
-                                                <div class="fs-lg text-truncate text-truncate-lg autoCaps">@zsi.web.SessionHandler.CurrentUser.userFullName.ToLower()</div>
+                                                <div class="fs-lg text-truncate text-truncate-lg autoCaps">@webCM.SessionHandler.getUserProp("userFullName").ToLower()</div>
                                                 <span class="text-truncate text-truncate-md opacity-80">(@role)</span>
                                             </div>
                                         </div>
@@ -581,7 +581,7 @@
                                     <div class="dropdown-divider m-0"></div>
                                     <a class="dropdown-item fw-500 pt-3 pb-3" href="@Url.Content("~/")page/signout">
                                         <span>Logout</span>
-                                        <span class="float-right fw-n">&commat;@zsi.web.SessionHandler.CurrentUser.userName.ToUpper()</span>
+                                        <span class="float-right fw-n">&commat;@webCM.SessionHandler.getUserProp("userName").ToUpper()</span>
                                     </a>
                                 </div>
                             </div>
