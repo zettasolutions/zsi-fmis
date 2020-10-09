@@ -31,7 +31,16 @@ var users = (function(){
         displayRecords("");
         getTemplates();
         $(".page-title").html("Users");
-        $(".panel").css("height", $(".page-content").height()); 
+        //$(".panel").css("height", $(".page-content").height()); 
+        
+        $("#btnDeleteUser").click(function(){
+            zsi.form.deleteData({
+                 code       : "ref-00022"
+                ,onComplete : function(data){
+                    $('#modalWindowInactive').modal('toggle');
+                }
+            });     
+        });
     };
    
     $.fn.clearValue = function(){
@@ -59,6 +68,7 @@ var users = (function(){
             $("#gridNewUsers").jsonSubmit({
                      procedure  : "users_upd"
                      ,optionalItems: ["is_active","is_contact"]
+                     ,notIncludes: ["employee"]
                      ,onComplete : function (data) {
                          if(data.isSuccess===true){
                             zsi.form.showAlert("alert");
@@ -68,7 +78,7 @@ var users = (function(){
                          }
                     }
             });        
-            $('#' + mdlAddNewUser).modal('hide');
+            //$('#' + mdlAddNewUser).modal('hide');
         } else {
             alert("Enter " + res.inputName);
         }
@@ -131,7 +141,6 @@ var users = (function(){
         _$row.find("#is_edited").val("Y");        
         _info.anchor.text = _oems;
         _$li.remove();
-        //if(_oem_ids===""){ console.log(_oem_ids); $("#frm_modalWindowOEM").find("#btnSaveUsersOEM").addClass("d-none"); }
     };
     
     pub.saveUsersOEM = function(o){
@@ -154,7 +163,7 @@ var users = (function(){
         var $form = g$mdl.find("form");
         g$mdl.find(".modal-title").text("OEM") ;
         g$mdl.modal({ show: true, keyboard: false, backdrop: 'static' });
-        $form.find("[name='oem_filter_id']").dataBind("oem");
+        $form.find("#oem_filter_id").dataBind("oem");
         displayOEMList($form,_info);
         
     };
@@ -166,7 +175,7 @@ var users = (function(){
         g$mdl.find(".modal-title").text("OEM") ;
         g$mdl.modal({ show: true, keyboard: false, backdrop: 'static' });
         
-        $form.find("[name='oem_filter_id']").dataBind("oem");
+        $form.find("#oem_filter_id").dataBind("oem");
         
         //requirements for new parameters.
         if( isUD(obj.info) )  { 
@@ -198,10 +207,9 @@ var users = (function(){
             ,function(data){
                 m.find('.modal-body').html(data);
                 m.find("#prefixKey").val("user.");
-                //initChangeEvent();
             }
         ); 
-    }
+    };
     
     pub.uploadImageUser = function(){
         var frm = $("#frm_" + mdlImageUser);
@@ -224,7 +232,6 @@ var users = (function(){
                                     + ",@img_filename='user." +  fileOrg.files[0].name + "'"
                     ,function(data){
                         zsi.form.showAlert("alert");
-                        //$("#userImgBox").attr("src",  base_url + "file/viewImage?fileName=user." + fileOrg.files[0].name + "&isthumbnail=n" );
                         $('#' + mdlImageUser).modal('toggle');
                         
                         //refresh latest records:
@@ -243,22 +250,22 @@ var users = (function(){
             contentType: false,
             processData: false
         }, 'json');
-    }
+    };
     
     pub.mouseover = function(filename){
      $("#user-box").css("display","block");
      $("#user-box img").attr("src",base_url + "file/viewImage?fileName=" +  filename + "&isThumbNail=n");
-    }
+    };
     
     pub.mouseout = function (){
         $("#user-box").css("display","none");
-    } 
+    }; 
     
     function getTemplates(){
-        new zsi.easyJsTemplateWriter("body")
+        new zsi.easyJsTemplateWriter($("#generatedComponents").empty())
         .bsModalBox({
               id        : mdlInactive
-            , sizeAttr  : "modal-lg"
+            , sizeAttr  : "modal-md"
             , title     : "Inactive Users"
             , body      : gTw.new().modalBodyInactive({grid:"gridInactiveUsers",onClickSaveInactive:"users.submitInactive();"}).html()  
         })
@@ -326,23 +333,21 @@ var users = (function(){
         $(form).find("input[name='is_edited']").each(function(e){
             if($.trim(this.value) === "Y"){
                 var $zRow = $(this).closest(".zRow");
-                var logon = $zRow.find("input#logon").val();
-                var lastName = $zRow.find("input#last_name").val();
-                var firstName = $zRow.find("input#first_name").val();
-                var roleID = $zRow.find("select#role_id").val();
+                var logon = $zRow.find("[name='logon']").val();
+                var roleID = $zRow.find("[name='role_id']").val();
                 
                 if ($.trim(logon) === ""){
                     result = true;
                     inputName = "Logon";
                 }
-                if ($.trim(firstName) === ""){
-                    result = true;
-                    inputName = "First Name";
-                }
-                if ($.trim(lastName) === ""){
-                    result = true;
-                    inputName = "Last Name";
-                }
+                //if ($.trim(firstName) === ""){
+                //    result = true;
+                //    inputName = "First Name";
+                //}
+                //if ($.trim(lastName) === ""){
+                //    result = true;
+                //    inputName = "Last Name";
+                //}
                 if ($.trim(roleID) === ""){
                     result = true;
                     inputName = "Role";
@@ -357,13 +362,13 @@ var users = (function(){
         zsi.form.markMandatory({       
           "groupNames":[
                 {
-                     "names" : ["logon","first_name","last_name"]
+                     "names" : ["logon"]
                     ,"type":"M"
                 }             
               
           ]      
           ,"groupTitles":[ 
-                 {"titles" : ["Logon","First Name","Last Name"]}
+                 {"titles" : ["Logon"]}
           ]
         });    
     }
@@ -434,7 +439,6 @@ var users = (function(){
         $("#gridInactiveUsers").dataBind({
              sqlCode    : "U77"
             ,parameters : {is_active: "N"}
-     	    ,width      : $("#frm_modalWindowInactive").width() - 15
     	    ,height     : 360
             ,dataRows   : [
                 
@@ -442,26 +446,24 @@ var users = (function(){
                     ,onRender :function(d){
                                     return     app.bs({name:"user_id"   ,type:"hidden"  ,value: d.user_id})
                                              + app.bs({name:"is_edited" ,type:"hidden"})
-                                             + app.bs({name:"oem_ids"   ,type:"hidden"  ,value:d.oem_ids })
+                                             + app.bs({name:"client_id" ,type:"hidden"  ,value: d.client_id})
                                              + (d !==null ? app.bs({name:"cb",type:"checkbox"}) : "" );                          
                                 } 
                 }
                 
                 
-        	   ,{text  : "Corplear logon "     , width : 200           , style : "text-align:center;"          ,type:"input"      ,name:"logon"}
-               ,{text  : "First Name"          , width : 150           , style : "text-align:left;"            ,type:"input"       ,name:"first_name"   }
-               ,{text  : "Last Name"           , width : 150           , style : "text-align:left;"            ,type:"input"       ,name:"last_name"    }
-               ,{text  : "Middle Initial"      , width : 100           , style : "text-align:center;"           
-                   ,onRender: function(d){
-                        return  app.bs({name:"middle_name"   ,type:"input"   ,value: d.middle_name})  
+        	   ,{text  : "Logon"              ,width: 250           ,style: "text-align:left;"            
+        	       ,onRender: function(d){
+                        return  app.bs({name:"logon"         ,type:"input"   ,value: d.logon})
+                              + app.bs({name:"first_name"    ,type:"hidden"  ,value: d.first_name}) 
+                              + app.bs({name:"last_name"     ,type:"hidden"  ,value: d.last_name}) 
+                              + app.bs({name:"middle_name"   ,type:"input"   ,value: d.middle_name          ,style: "text-align:center;" })  
                               + app.bs({name:"name_suffix"   ,type:"hidden"  ,value: d.name_suffix})   
                               + app.bs({name:"role_id"       ,type:"hidden"  ,value: d.role_id})
-                              + app.bs({name:"is_admin"      ,type:"hidden"  ,value: d.is_admin })
-                              +  app.bs({name:"plant_id"     ,type:"hidden"  ,value: d.plant_id})
-                              +  app.bs({name:"warehouse_id" ,type:"hidden"  ,value: d.warehouse_id});
+                              + app.bs({name:"is_admin"      ,type:"hidden"  ,value: d.is_admin });
                    }
-               }
-               ,{text  : "Active?"  , width : 70    , style : "text-align:center;"  ,type:"yesno"  ,name:"is_active"    ,defaultValue:"N"}
+        	   }
+               ,{text  : "Active?"  , width : 50    , style : "text-align:center;"  ,type:"yesno"  ,name:"is_active"    ,defaultValue:"N"}
             ]
             ,onComplete: function(o){
                 this.find("[name='cbFilter']").setCheckEvent("#gridInactiveCustomers input[name='cb']");
@@ -478,45 +480,64 @@ var users = (function(){
     	    ,selectorType   : "checkbox"
             ,blankRowsLimit : 5
             ,dataRows       : [
-        		{text  : "Corplear logon "     , width : 155           , style : "text-align:center;"         ,sortColNo:3
+        		{text  : "Logon "     , width : 155           , style : "text-align:center;"         ,sortColNo:3
                     ,onRender : function(d){ 
                         ctr++;
-                        return app.bs({name:"user_id"  ,type:"hidden"  ,value: app.svn(d,"user_id")})
-                            +  app.bs({name:"is_edited",type:"hidden"})
-                            +  app.bs({name:"oem_ids"  ,type:"hidden"  ,value:app.svn(d,"oem_ids") })
-                            +  app.bs({name:"logon"    ,type:"input"   ,value:app.svn(d,"logon")});
+                        return app.bs({name:"user_id"       ,type:"hidden"   ,value: app.svn(d,"user_id")})
+                            +  app.bs({name:"is_edited"     ,type:"hidden"})
+                            +  app.bs({name:"client_id"     ,type:"hidden"   ,value: app.userInfo.client_id})
+                            +  app.bs({name:"logon"         ,type:"input"    ,value: app.svn(d,"logon")});
                     }
         		}
-                ,{text  : "First Name"          , width : 150           , style : "text-align:left;"            ,type:"input"       ,name:"first_name"      ,sortColNo:4}
-                ,{text  : "Last Name"           , width : 150           , style : "text-align:left;"            ,type:"input"       ,name:"last_name"       ,sortColNo:6}
-                ,{text  : "Middle Initial"      , width : 130           , style : "text-align:center;"          ,type:"input"       ,name:"middle_name" }
-                ,{text  : "Name Suffix"         , width : 100           , style : "text-align:center;"          ,type:"input"       ,name:"name_suffix" }
-                ,{text  : "Role"                , width : 160           , style : "text-align:center;"          ,type:"select"      ,name:"role_id"         ,displayText:"role_name"}
-                ,{text  : "Admin?"              , width : 60            , style : "text-align:center;"          
-                    ,onRender: function(d){
-                        return app.bs({name:"is_admin"      ,type:"yesno"  ,value:app.svn(d,"is_admin") })
-                            +  app.bs({name:"plant_id"      ,type:"hidden" ,value: app.svn(d,"plant_id")})
-                            +  app.bs({name:"warehouse_id"  ,type:"hidden" ,value: app.svn(d,"warehouse_id")});
+        		,{text  : "Employee"                ,width: 200           ,style: "text-align:center;"          ,type:"select"      ,name:"employee"
+        		    ,onRender: function(d){
+                        return app.bs({name:"employee"      ,type:"select"})
+                            +  app.bs({name:"first_name"    ,type:"hidden"})
+                            +  app.bs({name:"last_name"     ,type:"hidden"})
+                            +  app.bs({name:"middle_name"   ,type:"hidden"})
+                            +  app.bs({name:"name_suffix"   ,type:"hidden"});
                     }
-                }
-                ,{text  : "OEM"                 , width : 300           , style : "text-align:center;"          ,type:"input"       ,name:"oem" 
-                    , onRender      : function(d) {
-                        var _oems = (svn(d,"oems") ? svn(d,"oems") : '<i class="fa fa-plus" aria-hidden="true" ></i>');
-                        return "<a style='text-decoration:underline !important;' href='javascript:void(0)'  onclick='users.showModalAddNewOEM(this," + ctr + ");'>" + _oems + "</a>";
-                    }
-                }    
-                ,{text  : "Active?"             , width : 60            , style : "text-align:center;"          ,type:"yesno"       ,name:"is_active"       ,defaultValue: "Y"}
+        		}
+                //,{text  : "First Name"          ,width: 150           ,style: "text-align:left;"            ,type:"input"       ,name:"first_name"      ,sortColNo:4}
+                //,{text  : "Last Name"           ,width: 150           ,style: "text-align:left;"            ,type:"input"       ,name:"last_name"       ,sortColNo:6}
+                //,{text  : "Middle Initial"      ,width: 130           ,style: "text-align:center;"          ,type:"input"       ,name:"middle_name" }
+                //,{text  : "Name Suffix"         ,width: 100           ,style: "text-align:center;"          ,type:"input"       ,name:"name_suffix" }
+                ,{text  : "Role"                ,width: 160             ,style: "text-align:center;"            ,type: "select"      ,name: "role_id"}
+                ,{text  : "Admin?"              ,width: 60              ,style : "text-align:center;"           ,type: "yesno"       ,name: "is_admin"          ,defaultValue: "N"}
+                ,{text  : "Active?"             ,width: 60              ,style : "text-align:center;"           ,type: "yesno"       ,name: "is_active"         ,defaultValue: "Y"}
                 
             ]
             ,onComplete: function(){
+                var _zRow = this.find(".zRow");
                 this.find("input, select").on("change keyup ", function(){
                             $(this).closest(".zRow").find("[name='is_edited']").val("Y");
                 });       
-    
-                this.find("[name='cbFilter1']").setCheckEvent("#grid input[name='cb']");
-    
-                this.find("[name='role_id']").dataBind("roles");
-    
+                
+                this.find("[name='employee']").dataBind({
+                     sqlCode : "D293"
+                    ,text    : "fullname"
+                    ,value   : "id"
+                    ,onChange: function(d){
+                        var  _info   = d.data[d.index - 1]
+                            ,_firstName = _info.first_name
+                            ,_lastName = _info.last_name
+                            ,_middleName = _info.middle_name
+                            ,_nameSuffix = _info.name_suffix;
+                            
+                        $(this).closest(".zRow").find("[name='first_name']").val(_firstName);
+                        $(this).closest(".zRow").find("[name='last_name']").val(_lastName);
+                        $(this).closest(".zRow").find("[name='middle_name']").val(_middleName);
+                        $(this).closest(".zRow").find("[name='name_suffix']").val(_nameSuffix);
+                    }
+                });
+                
+                this.find("[name='cbFilter1']").setCheckEvent("#grid input[name='cb']"); 
+                this.find("[name='role_id']").dataBind({
+                     sqlCode : "D295"
+                    ,text    : "role_name"
+                    ,value   : "role_id"
+                
+                });
                 markNewUserMandatory();
                 
             }
@@ -532,9 +553,10 @@ var users = (function(){
                                  searchOption   : gSearchOption 
                                 ,searchValue    : gSearchValue 
                                 ,role_id        : gRoleId 
+                                ,client_id      : app.userInfo.company_id
             }
      	    ,width          : $("#frm").width()
-    	    ,height         : $(document).height() - 260 
+    	    ,height         : $(window).height() - 302 
     	    ,selectorType   : "checkbox"
             ,rowsPerPage    : 50
             ,isPaging : true
@@ -547,31 +569,27 @@ var users = (function(){
                         return (d!==null ? html : "");
                     }
     		    }
-        		,{text  : "Corplear logon "     , width : 155           , style : "text-align:center;"         ,sortColNo:3
+        		,{text  : "Logon "     , width : 155           , style : "text-align:center;"         ,sortColNo:3
                     ,onRender : function(d){ 
                         ctr++;
                         return app.bs({name:"user_id"   ,type:"hidden"  ,value:app.svn(d,"user_id") })
-                            +  app.bs({name:"is_edited" ,type:"hidden"                              })
-                            +  app.bs({name:"oem_ids"   ,type:"hidden"  ,value:app.svn(d,"oem_ids") })
+                            +  app.bs({name:"is_edited" ,type:"hidden"})
+                            +  app.bs({name:"client_id" ,type:"hidden"  ,value:app.svn(d,"client_id")})
                             +  app.bs({name:"logon"     ,type:"input"   ,value:app.svn(d,"logon")   });
                                                  
                     }
         		}
-                ,{text  : "First Name"          , width : 150           , style : "text-align:left;"            ,type:"input"       ,name:"first_name"      ,sortColNo:4}
-                ,{text  : "Last Name"           , width : 150           , style : "text-align:left;"            ,type:"input"       ,name:"last_name"       ,sortColNo:6}
-                ,{text  : "Middle Initial"      , width : 130           , style : "text-align:center;"          ,type:"input"       ,name:"middle_name" }
-                ,{text  : "Name Suffix"         , width : 100           , style : "text-align:center;"          ,type:"input"       ,name:"name_suffix" }
-                ,{text  : "Role"                , width : 160           , style : "text-align:center;"          ,type:"select"      ,name:"role_id"         ,displayText:"role_name"}
-                ,{text  : "Admin?"              , width : 60            , style : "text-align:center;"          ,type:"yesno"       ,name:"is_admin" }
-                ,{text  : "OEM"                 , width : 300           , style : "text-align:center;"          ,type:"input"       ,name:"oem" 
-                    , onRender      : function(d) {
-                        var _oems = (svn(d,"oems") ? svn(d,"oems") : '<i class="fa fa-plus" aria-hidden="true" ></i>');
-                        return "<a style='text-decoration:underline !important;' href='javascript:void(0)'  onclick='users.showModalOEM(this," + ctr + ");'>" + _oems + "</a>";
+                ,{text  : "First Name"          ,width: 150           ,style: "text-align:left;"            ,type:"input"       ,name:"first_name"      ,sortColNo:4}
+                ,{text  : "Last Name"           ,width: 150           ,style: "text-align:left;"            ,type:"input"       ,name:"last_name"       ,sortColNo:6}
+                ,{text  : "Middle Initial"      ,width: 130           ,style: "text-align:center;"          ,type:"input"       ,name:"middle_name" }
+                ,{text  : "Name Suffix"         ,width: 100           ,style: "text-align:center;"          ,type:"input"       ,name:"name_suffix" }
+                ,{text  : "Role"                ,width: 160           ,style: "text-align:center;"          ,type:"select"      ,name:"role_id"         ,displayText:"role_name"}
+                ,{text  : "Admin?"              ,width: 60            ,style: "text-align:center;"          ,type:"yesno"       ,name:"is_admin" }
+                ,{text  : "Active?"             ,width: 60            ,style: "text-align:center;"             ,defaultValue: "Y"
+                    ,onRender : function(d){ 
+                        return app.bs({name:"is_active"     ,type:"yesno"  ,value:app.svn(d,"is_active", "Y") ,defaultValue: "Y"});
                     }
-                }    
-                ,{text  : "Plant"               , width : 100           , style : "text-align:center;"          ,type:"select"      ,name:"plant_id"        ,displayText:"plant_name"}
-                ,{text  : "Warehouse"           , width : 100           , style : "text-align:center;"          ,type:"select"      ,name:"warehouse_id"    ,displayText:"warehouse_name"}
-                ,{text  : "Active?"             , width : 60            , style : "text-align:center;"          ,type:"yesno"       ,name:"is_active"       ,defaultValue: "Y"}
+                }
             ]
             ,onPageChange : function(){
                 ctr=-1;
@@ -580,12 +598,16 @@ var users = (function(){
                 gUsersData = o.data.rows;
                 $('.has-tooltip').tooltip();
                 if ($("[name='oem_ids']").filter(function() { return $(this).val(); }).length > 0) {
-                    $(this).closest(".zRow").find("[name='is_edited']").val("Y");
-                    
+                    $(this).closest(".zRow").find("[name='is_edited']").val("Y"); 
                 }
             
                 this.find("[name='cbFilter1']").setCheckEvent("#grid input[name='cb']");
-                this.find("select[name='role_id']").dataBind("roles");
+                this.find("[name='role_id']").dataBind({
+                     sqlCode : "D295"
+                    ,text    : "role_name"
+                    ,value   : "role_id"
+                
+                });
                 this.find("select[name='plant_id']").dataBind("plants");
                 this.find("select[name='warehouse_id']").dataBind("warehouse");
 
@@ -600,7 +622,6 @@ var users = (function(){
     
     function displayOEMList($frm,info){
         var _h = "";
-        //if( isUD(info.keyValue) ) 
         info.keyValue = [];
         if( info.oem_ids  !== ""){
             $.each(info.oems.split(","), function(i,y){ 
@@ -708,10 +729,12 @@ var users = (function(){
     
     $("#btnNactive").click(function () {
         var g$mdl = $("#" + mdlInactive);
-        g$mdl.find(".modal-title").text("Inactive Users") ;
+        g$mdl.find(".modal-title").text("Inactive User(s)") ;
         g$mdl.modal({ show: true, keyboard: false, backdrop: 'static' });
         displayInactiveUsers();
     });
+    
+    
     
     $("#btnAdd").click(function () {
         var _$mdl = $('#' + mdlAddNewUser);
@@ -764,4 +787,4 @@ var users = (function(){
     
     return pub;
 })();
-                                  
+                                                 

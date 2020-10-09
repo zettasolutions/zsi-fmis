@@ -1,84 +1,25 @@
-<style>
-    .was-validated .custom-select:invalid + .select2 .select2-selection{
-    border-color: #f30000!important;
-    }
-    .was-validated .custom-select:valid + .select2 .select2-selection{
-        border-color: #1dc9b7!important;
-    }
-    *:focus{
-      outline:0px;
-    }
-</style>
 <div class="panel">
     <div class="panel-container">
-        <div class="panel-content">  
-            <div role="content" id="tablePSN" >  
-                <div class="widget-body"  id="panel-1"> 
-                    <form id="form" class="needs-validation" novalidate>  
-            			<input type="hidden" name="accident_id" id="accident_id">
-                        <div class="row mb-2"> 
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Vehicle</b></label>
-                                <select type="text" class="form-control form-control-sm custom-select select" id="vehicle_id" required  name="vehicle_id" autocomplete="off"></select>
-                    		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Insurance #</b></label>
-                                <input type="text" class="form-control form-control-sm pl-2" id="insurance_no" required  name="insurance_no" autocomplete="off"/>
-                    		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Insurance Date</b></label>  
-                                <input type="text" class="form-control form-control-sm pl-2" id="insurance_date" required  name="insurance_date" autocomplete="off"/>
-                    		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Insurance Company</b></label>
-                                <select type="text" class="form-control form-control-sm custom-select select" id="insurance_company_id" required  name="insurance_company_id" autocomplete="off"></select>
-                    		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Expiry Date</b></label>  
-                                <input type="text" class="form-control form-control-sm pl-2" id="expiry_date" required  name="expiry_date" autocomplete="off"/>
-                    		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Insurance Type</b></label>
-                                <select type="text" class="form-control form-control-sm custom-select select" id="insurance_type_id" required  name="insurance_type_id" autocomplete="off"></select>
-                    		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Insured Amount</b></label>  
-                                <input type="text" class="form-control form-control-sm pl-2" id="insured_amount" required  name="insured_amount" autocomplete="off"/>
-                    		</div>
-                    		<div class="col-sm-6 col-md-4 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>Paid Amount</b></label>  
-                                <input type="text" class="form-control form-control-sm pl-2" id="paid_amount" required  name="paid_amount" autocomplete="off"/>
-                    		</div>
-                    	</div>
-                    	<div class="row">
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">   
-                                <button id="submit" type="submit" class="btn btn-primary btn-sm waves-effect waves-themed" title="Save">
-                                    <i class="far fa-save"></i> Save
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+        <div class="panel-content">     
+            <div class="zContainer">  
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div id="gridInsurances" class="zGrid"></div>
+                    </div>
+                    <div class="col-12 col-sm-12 mt-2">
+                        <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left" title="Save" id="btnSave">
+                            <i class="far fa-save"></i> Save
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left" title="Save" id="btnPost">
+                            <i class="far fa-post"></i> Post
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left" title="Save" id="btnDeleteInsurance">
+                            <i class="far fa-trash"></i> Delete
+                        </button>
+                    </div>
                 </div>  
-            </div>     
-        </div>
-    </div>
-</div> 
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body panel" style="margin-bottom:0">
-                <p id="msg">Are you sure you want to save this data?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="btnSave" class="btn btn-primary btn-sm">Yes</button>
-                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">No</button>
             </div>
         </div>
     </div>
 </div>
+ 

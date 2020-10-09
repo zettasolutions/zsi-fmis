@@ -72,8 +72,8 @@ var refuel = (function(){
                             ,value  : "gas_station_id"
                         });
                         _zRow.find("[name='vehicle_id']").dataBind({
-                             sqlCode    : "D231" // dd_vehicle_sel
-                            ,text   : "plate_no"
+                             sqlCode    : "V229" // vehicle_sel
+                            ,text   : "vehicle_plate_no"
                             ,value  : "vehicle_id"
                         });
                         _zRow.find("[name='driver_id']").dataBind({
@@ -113,4 +113,4 @@ var refuel = (function(){
     
 })();
 
-                         
+                        

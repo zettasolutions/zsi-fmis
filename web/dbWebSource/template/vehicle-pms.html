@@ -19,27 +19,20 @@
                 <div class="widget-body"  id="panel-1"> 
                     <form id="formPMS" class="needs-validation" novalidate>  
             			<input type="hidden" name="pms_id" id="pms_id">
+            			<input type="hidden" name="total_pms_amount" id="total_pms_amount">
                         <div class="row mb-2" id="divVehiclePMS"> 
-                        	<div class="col-sm-4 col-md-2 col-xs-12">
+                        	<div class="col-sm-4 col-md-3 col-xs-12">
                     		    <label for="" class="col-form-label control-label"><b>PM Date</b><span class="text-danger">*</span></label>  
                                 <input type="text" class="form-control form-control-sm pl-2" id="pms_date" required  name="pms_date" autocomplete="off"/>
-                    		</div>
-                        	<div class="col-sm-4 col-md-3 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>PMS Type</b><span class="text-danger">*</span></label>  
-                                <select class="form-control form-control-sm pl-2" id="pms_type_id" required  name="pms_type_id" autocomplete="off"></select> 
-                    		</div>
+                    		</div> 
                     		<div class="col-sm-4 col-md-3 col-xs-12">
                     		    <label for="" class="col-form-label control-label"><b>Vehicle</b><span class="text-danger">*</span></label>
-                                <select class="form-control form-control-sm pl-2" id="vehicle_id" required  name="vehicle_id" autocomplete="off"></select>
+                                <select class="form-control form-control-sm custom-select select" id="vehicle_id" required  name="vehicle_id" autocomplete="off"></select>
                     		</div>
-                    		<div class="col-sm-6 col-md-2 col-xs-12">
+                    		<div class="col-sm-6 col-md-3 col-xs-12">
                     		    <label for="" class="col-form-label control-label"><b>ODO Reading</b><span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm pl-2 integer" id="odo_reading" required  name="odo_reading" autocomplete="off"/>
-                    		</div>
-                    		<div class="col-sm-6 col-md-2 col-xs-12">
-                    		    <label for="" class="col-form-label control-label"><b>PM Amount</b></label>
-                                <input type="text" class="form-control form-control-sm pl-2 numeric" id="pm_amount" name="pm_amount" autocomplete="off"/>
-                    		</div>
+                                <input type="text" class="form-control form-control-sm pl-2 " id="odo_reading" required  name="odo_reading" autocomplete="off"/>
+                    		</div> 
                     		<div class="col-sm-6 col-md-6 col-xs-12">
                     		    <label for="" class="col-form-label control-label"><b>PM Location</b></label>  
                                 <textarea type="text" class="form-control form-control-sm pl-2" id="pm_location" name="pm_location" autocomplete="off"></textarea>
@@ -51,30 +44,29 @@
                         	</div>
                         	<div class="col-sm-6 col-md-3 col-xs-12">
                     		    <label for="" class="col-form-label control-label"><b>Service Amount</b></label>
-                    		    <input type="text" class="form-control form-control-sm pl-2 numeric" id="service_amount" name="service_amount" autocomplete="off"/>
+                    		    <input type="text" class="form-control form-control-sm pl-2" id="service_amount" name="service_amount" autocomplete="off"/>
                     		</div>
                         	<div class="col-sm-6 col-md-3 col-xs-12 hide">
                     		    <label for="" class="col-form-label control-label"><b>Status</b></label>
                     		    <select class="form-control form-control-sm pl-2" id="status_id" name="status_id" autocomplete="off"></select>
                     		</div>
                     	</div>
+                    </form>
                     	<div class="row">
                             <div class="col-12 col-sm-12">   
-                                <div class="panel mb-2">
+                                <div class="panel mb-1">
                                     <div class="panel-hdr">
                                         <h2>
                                             Replacement <span class="fw-300"><i>Parts</i></span>
                                         </h2>
                                         <div class="panel-toolbar">
-                                            <button class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
-                                            <!--<button class="btn btn-panel waves-effect waves-themed" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>-->
-                                            <!--<button class="btn btn-panel waves-effect waves-themed" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>-->
+                                            <button class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button> 
                                         </div>
                                     </div>
                                     <div class="panel-container show panel-container-grid">
                                         <div class="panel-content">
                                             <div class="row" id="divReplacementParts">
-                                                <div class="col-12 col-sm-12"> 
+                                                <div class="col-12 col-sm-12 col-md-12 col-xl-12"> 
                                                     <div id="gridReplacementParts" class="zGrid"></div>
                                                 </div>
                                             </div>
@@ -85,18 +77,14 @@
                         </div>
                     	<div class="row">
                             <div class="col-12 col-sm-12">   
-                                <button type="button" class="btn btn-primary btn-sm waves-effect waves-themed hide" title="Save" id="btnNew">
+                                <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left hide" title="Save" id="btnNew">
                                     <i class="far fa-plus"></i> New
                                 </button>
-                                <button type="button" class="btn btn-primary btn-sm waves-effect waves-themed" title="Save" id="btnSave">
+                                <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left" title="Save" id="btnSave">
                                     <i class="far fa-save"></i> Save
-                                </button>
-                                <!--<button id="submit" type="submit" class="btn btn-primary btn-sm waves-effect waves-themed" title="Save">-->
-                                <!--    <i class="far fa-save"></i> Save-->
-                                <!--</button>-->
+                                </button> 
                             </div>
-                        </div>
-                    </form>
+                        </div> 
                 </div>  
             </div>     
         </div>
@@ -115,8 +103,8 @@
                 <p id="msg">Are you sure you want to save this data?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" id="btnSavePMS" class="btn btn-primary btn-sm">Yes</button>
-                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">No</button>
+                <button type="button" id="btnSavePMS" class="btn btn-primary btn-sm hvr-sweep-to-left">Yes</button>
+                <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left" data-dismiss="modal">No</button>
             </div>
         </div>
     </div>

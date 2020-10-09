@@ -38,6 +38,11 @@
                         <div class="input-group-append">
                             <button type="button" class="btn btn-primary waves-effect waves-themed"  title="Filter" id="btnFilter"><i class="far fa-search"></i></button>
                         </div>
+                        <div class="input-group-append ml-1">
+                            <button id="btnResetVal" class="btn-sm btn btn-primary btn-outline-default text-white hvr-icon-spin" type="button" title="Reset">
+                               <i class="far fa-refresh hvr-icon"></i> Reset
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,8 +55,11 @@
                             <div class="zGrid" id="gridRefuel"></div>
                         </div>
                         <div class="col-12 col-sm-12">
-                            <button type="button" class="btn btn-primary btn-sm waves-effect waves-themed" title="Save" id="btnSave">
+                            <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left" title="Save" id="btnSave">
                                 <i class="far fa-save"></i> Save
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left" title="Post" id="btnPost">
+                                <i class="far fa-post"></i> Post
                             </button>
                         </div>
                     </div>
@@ -125,8 +133,8 @@
                 <p id="msg">Are you sure you want to save this data?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" id="btnSaveRefuel" class="btn btn-primary btn-sm">Yes</button>
-                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">No</button>
+                <button type="button" id="btnSaveRefuel" class="btn btn-primary btn-sm hvr-sweep-to-left">Yes</button>
+                <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left" data-dismiss="modal">No</button>
             </div>
         </div>
     </div>

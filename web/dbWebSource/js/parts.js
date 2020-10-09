@@ -15,23 +15,22 @@
         $("#partTypeId").select2({placeholder: "PART TYPES",allowClear: true});
         $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
             var target = $(e.target).attr("href"); 
-            switch(target){
-                case "#nav-part_types":
-                    gActiveTab = "part-types";
-                    $("#searchVal").val("");
-                    $("#partTypeDiv").addClass("hide");
-                    $("#dummyDiv").removeClass("hide");
-                    displayParts(gPartTypeId);
-                    break;
-                case "#nav-parts":
-                    gActiveTab = "parts";
-                    $("#searchVal").val("");
-                    $("#partTypeDiv").removeClass("hide");
-                    $("#dummyDiv").addClass("hide");
-                    $("#assetId").val(gPartTypeId).trigger('change');
-                    break;
-              default:break;
-            } 
+            
+            console.log("target",target);
+            
+            if(target === "#nav-part-types"){
+                gActiveTab = "part-types";
+                $("#searchVal").val("");
+                $("#partTypeDiv").addClass("hide");
+                $("#dummyDiv").removeClass("hide");
+                displayParts(gPartTypeId);
+            }else{
+                gActiveTab = "parts";
+                $("#searchVal").val("");
+                $("#partTypeDiv").removeClass("hide");
+                $("#dummyDiv").addClass("hide");
+                $("#assetId").val(gPartTypeId).trigger('change');
+            }
         }); 
         
         console.log("client",app.userInfo);
@@ -54,7 +53,7 @@
         $("#gridPartTypes").dataBind({
              sqlCode        : "P251" //part_types_sel
             ,parameters     : {search_val:(searchVal ? searchVal : "")}
-            ,height         : $(window).height() - 273 
+            ,height         : $(window).height() - 340 
             ,blankRowsLimit : 5
             ,dataRows   : [
                      {text: cb                                                                          ,width:25           ,style:"text-align:left"
@@ -72,7 +71,7 @@
                     var _dRows = o.data.rows;
                     var _this  = this;
         	        var _zRow  = _this.find(".zRow");
-        	        if(_dRows.length < 1) $("#nav-tab").find("[aria-controls='nav-parts']").hide();
+        	        if(_dRows.length < 1) $(".nav-tabs").find(".nav-item").find("[aria-controls='nav-parts']").parent(".nav-item").hide();
         	        _zRow.unbind().click(function(){
         	            var _self=this;
         	            setTimeout(function(){ 
@@ -81,7 +80,7 @@
             	            var _partTypeId  = _data.part_type_id;
             	            gPartTypeId = _partTypeId;
             	            displaySelects();
-            	            $("#nav-tab").find("[aria-controls='nav-parts']").show();
+            	            $(".nav-tabs").find(".nav-item").find("[aria-controls='nav-parts']").parent(".nav-item").show();
             	            setTimeout(function(){
             	                $("#partTypeId").val(_partTypeId).trigger('change');
             	            }, 200);
@@ -102,7 +101,7 @@
         $("#gridParts").dataBind({
              sqlCode            : "P252" //parts_sel
             ,parameters         : {part_type_id: part_type_id,search_val:(searchVal ? searchVal : "")}
-	        ,height             : $(window).height() - 273 
+	        ,height             : $(window).height() - 340 
             ,blankRowsLimit     : 5
             ,dataRows           : [
                     {text: cb                                                                          ,width:25           ,style:"text-align:left"
@@ -205,4 +204,4 @@
         $("#nav-tab").find("[aria-controls='nav-vehicles']").hide();
     });
     
-})();      
+})();        

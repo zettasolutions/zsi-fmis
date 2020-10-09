@@ -1,216 +1,114 @@
-<div class="panel">
-    <div class="panel-container">
-        <div class="panel-content">
-            <div class="row">
-                <div class="col-12 col-xl-12 col-md-9 col-sm-12">
-                    <nav>
-                      <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active"      data-toggle="tab" href="#nav-vehicles" role="tab" aria-controls="nav-vehicles">Vehicles</a>
-                        <a class="nav-item nav-link hide"        data-toggle="tab" href="#nav-fuel" role="tab" aria-controls="nav-fuel">Fuel</a>
-                        <a class="nav-item nav-link hide"        data-toggle="tab" href="#nav-pms" role="tab" aria-controls="nav-pms">PMS</a>
-                        <a class="nav-item nav-link hide"        data-toggle="tab" href="#nav-accidents" role="tab" aria-controls="nav-accidents">Accidents</a>
-                        <a class="nav-item nav-link hide"        data-toggle="tab" href="#nav-repairs" role="tab" aria-controls="nav-repairs">Repairs</a>
-                        <a class="nav-item nav-link hide"        data-toggle="tab" href="#nav-safety-problems" role="tab" aria-controls="nav-safety-problems">Safety Problems</a>
-                        <a class="nav-item nav-link hide"        data-toggle="tab" href="#nav-parts-replacements" role="tab" aria-controls="nav-parts-replacements">Parts Replacements</a>
-                      </div>
-                    </nav>
-                </div>
-                <div id="searchDiv" class="col-md-3 col-xl-3 col-sm-4 col-12">
-                    <div class="input-group" id="searchGroup">
-                        <input type="text" class="form-control form-control-sm desc-prop-group pl-2" id="searchVal" name="searchVal" autocomplete="off" placeholder="Search.....">
-                        <div class="input-group-append">
-                            <button id="btnSearchVal" class="btn-sm btn btn-primary btn-outline-default text-white" type="button" title="Search">
-                               <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                        <!--<div class="input-group-append ml-1">
-                            <button id="btnResetVal" class="btn-sm btn btn-primary btn-outline-default text-white hvr-icon-spin" type="button" title="Reset">
-                               <i class="far fa-refresh hvr-icon"></i> Reset
-                            </button>
-                        </div>-->
-                    </div>
-                </div>
-                <div id="dummyDiv" class="col-sm-10 col-md-10 col-xl-10"></div>
-                <div id="dummyDivSearch" class="col-sm-5 col-md-6 col-xl-8 hide"></div>
-                <div id="vehicleDiv" class="col-sm-3 col-md-3 col-xl-2 col-12 hide"> 
-                    <div class="input-group" style="flex-wrap: inherit !important;">
-                        <select class="form-control form-control-sm" name="vehicleId" id="vehicleId"></select>
-                        <!--<div class="input-group-append">
-                            <button id="btnFilterVehicle" class="btn-sm btn btn-primary btn-outline-default text-white" type="button" title="Filter"><i class="fas fa-filter"></i></button>
-                        </div> -->
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3 col-xl-2 col-12 mb-2 hide date-range">
-                    <div class="input-group">
-                        <input type="number" class="form-control form-control-sm pl-2" id="date_frm" name="date_frm" autocomplete="off"/>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3 col-xl-2 col-12 mb-2 hide date-range">
-                    <div class="input-group">
-                        <input type="number" class="form-control form-control-sm pl-2" id="date_to" name="date_to" autocomplete="off"/>
-                    </div>
-                    <small id="ermsgId" class="ml-2 hide" style="color:red;"></small>
-                </div>
-                <div id="filterBtns" class="col-sm-4 col-md-3 col-xl-2 col-12 mb-2 hide">
-                    <div class="input-group">
-                        <button id="filterCol" type="button" class="btn btn-primary form-control text-white btn-sm dropdown-toggle bg-brand-gradient waves-effect waves-themed" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Date Range
-                        </button>
-                        <div class="dropdown-menu fadeinright dropdown-menu-right" x-placement="bottom-start" style="position: absolute; will-change: top, left; top: 37px; left: 0px;">
-                            <div class="list-group list-group-flush" id="filterColumns">
-                                <div class="list-group-item py-1"><label><input id="weakly" type="radio" name="filter" value="weekly" disabled="disabled"/> Weekly</label></div>
-                                <div class="list-group-item py-1"><label><input id="monthly" type="radio" name="filter" value="monthly"/> Monthly</label></div>
-                                <div class="list-group-item py-1"><label><input id="yearly" type="radio" name="filter" value="yearly"/> Yearly</label></div>
-                            </div>
-                        </div>
-                        <div class="input-group-append ml-1">
-                            <button id="btnFilterVal" class="btn-sm btn btn-primary btn-outline-default text-white" type="button" title="Filter">
-                              <i class="fas fa-filter"></i>
-                            </button>
-                        </div>
-                        <div class="input-group-append ml-1">
-                            <button id="btnResetVal" class="btn-sm btn btn-primary btn-outline-default text-white hvr-icon-spin" type="button" title="Reset">
-                               <i class="far fa-refresh hvr-icon"></i> Reset
-                            </button>
-                        </div>
-                    </div>
-                </div>
-           </div>   
-            <div class="tab-content" id="nav-tabContent">
-                <div role="tabpanel" class="tab-pane fade show active" id="nav-vehicles">
-                    <div class="zContainer">
-                        <div class="row"> 
-                            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-                                <div id="gridVehicles" class="zGrid mb-1"></div> 
-                            </div>
-                            <!--<div class="col-12 col-sm-12 col-md-12 col-xl-12">
-                                <div class="button-group">   
-                                    <button type="button" class="btn btn-primary btn-sm" id="btnSaveVehicleMaker">
-                                        <i class="far fa-save"></i> Save
-                                    </button>
-                                    <button type="button" class="btn btn-primary btn-sm" id="btnDeleteVehicleMaker">
-                                    	<i class="fas fa-trash-alt"></i> Delete
-                                    </button>    
+<!--Dashboard-->
+<div id="dashboard">
+    <style type="text/css" media="all"> 
+        #graphs .panel-content{
+            min-height: 300px;
+        }
+        .zGraph {
+            min-height: 245px
+        } 
+    </style>
+    <div class="panel main">
+        <div class="panel-container">
+            <div class="panel-content">
+                <div class="col-md-12 col-sm-12 col-xs-12">    
+                    <div class="row mt-3"> 
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <div class="panel mb-0">
+                                <div class="panel-hdr text-primary">
+                                    <h2>
+                                        <span class="mr-2"><i class="far fa-chart-pie"></i></span>Refuel Expenses
+                                    </h2>
+                                    <div class="panel-toolbar"> 
+                                        <button class="btn btn-panel waves-effect waves-themed fal fa-window-minimize" data-action="panel-collapse" data-offset="0,10" data-original-title="Collapse" data-toggle="tooltip" title="Collapse"></button>
+                                        <button class="btn btn-panel waves-effect waves-themed fal fa-expand" data-action="panel-fullscreen" data-offset="0,10" data-original-title="Fullscreen" data-toggle="tooltip" title="Expand"></button>
+                                        <button class="btn btn-panel waves-effect waves-themed fal fa-trash" data-action="panel-close"  data-offset="0,10" data-original-title="Close" data-toggle="tooltip" title="Delete"></button>
+                                    </div>
                                 </div>
-                            </div>-->
-                        </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="nav-fuel">
-                    <div class="zContainer">
-                        <div class="row"> 
-                            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-                                <div id="gridRefuel" class="zGrid mb-1"></div> 
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-                                <div class="button-group">
-                                    <!--<button type="button" class="btn btn-primary btn-sm" id="btnSaveFuel" title="Save">
-                                        <i class="far fa-save"></i> Save
-                                    </button>-->
-                                     <!--<button type="button" class="btn btn-primary btn-sm" id="btnDeleteRefuel" data-toggle="tooltip" title="Delete">
-                                    	  <i class="fas fa-trash"></i> Delete
-                                    </button>--> 
+                                <div class="panel-container show">
+                                    <div class="panel-content">
+                                        <div class="panel-container collapse show">
+                                            <div class="panel-content">
+                                                <div class="zGraph" id="graph1"></div>
+                                            </div>
+                                        </div> 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="nav-pms">
-                    <div class="zContainer">
-                        <div class="row"> 
-                            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-                                <div id="gridPMS" class="zGrid mb-1"></div> 
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-                                <div class="button-group">   
-                                    <!--<button type="button" class="btn btn-primary btn-sm" id="btnSavePMS">
-                                        <i class="far fa-save"></i> Save
-                                    </button>
-                                     <button type="button" class="btn btn-primary btn-sm" id="btnInactive" data-toggle="tooltip" title="Inactive">
-                                    	  <i class="fas fa-ban"></i> Inactive
-                                    </button>   -->
+                        <div class="col-md-12 col-sm-12 col-12 mt-3 ">
+                            <div class="panel mb-0">
+                                <div class="panel-hdr text-primary">
+                                    <h2>
+                                        <span class="mr-2"><i class="far fa-chart-pie"></i></span>Preventive Maintenance Expenses
+                                    </h2>
+                                    <div class="panel-toolbar"> 
+                                        <button class="btn btn-panel waves-effect waves-themed fal fa-window-minimize" data-action="panel-collapse"  data-offset="0,10" data-original-title="Collapse" data-toggle="tooltip" title="Collapse"></button>
+                                        <button class="btn btn-panel waves-effect waves-themed fal fa-expand" data-action="panel-fullscreen"  data-offset="0,10" data-original-title="Fullscreen" data-toggle="tooltip" title="Expand"></button>
+                                        <button class="btn btn-panel waves-effect waves-themed fal fa-trash" data-action="panel-close" data-offset="0,10" data-original-title="Close" data-toggle="tooltip" title="Delete"></button>
+                                    </div>
+                                </div>
+                                <div class="panel-container show">
+                                    <div class="panel-content">
+                                        <div class="panel-container collapse show">
+                                            <div class="panel-content">
+                                                <div class="zGraph" id="graph2"></div>
+                                            </div>
+                                        </div> 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="nav-accidents">
-                    <div class="zContainer">
-                        <div class="row"> 
-                            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-                                <div id="gridAccidents" class="zGrid mb-1"></div> 
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-                                <div class="button-group">   
-                                    <!--<button type="button" class="btn btn-primary btn-sm" id="btnSaveAccidents" title="Save">
-                                        <i class="far fa-save"></i> Save
-                                    </button>-->
-                                     <!--<button type="button" class="btn btn-primary btn-sm" id="btnDeleteAccidents" data-toggle="tooltip" title="Delete">
-                                    	  <i class="fas fa-trash"></i> Delete
-                                    </button>  --> 
+                        <div class="col-md-12 col-sm-12 col-12 mt-3 ">
+                            <div class="panel mb-0">
+                                <div class="panel-hdr text-primary">
+                                    <h2>
+                                        <span class="mr-2"><i class="far fa-chart-pie"></i></span>Accidents Recorded
+                                    </h2>
+                                    <div class="panel-toolbar"> 
+                                        <button class="btn btn-panel waves-effect waves-themed fal fa-window-minimize" data-action="panel-collapse"  data-offset="0,10" data-original-title="Collapse" data-toggle="tooltip" title="Collapse"></button>
+                                        <button class="btn btn-panel waves-effect waves-themed fal fa-expand" data-action="panel-fullscreen"  data-offset="0,10" data-original-title="Fullscreen" data-toggle="tooltip" title="Expand"></button>
+                                        <button class="btn btn-panel waves-effect waves-themed fal fa-trash" data-action="panel-close"  data-offset="0,10" data-original-title="Close" data-toggle="tooltip" title="Delete"></button>
+                                    </div>
+                                </div>
+                                <div class="panel-container show">
+                                    <div class="panel-content">
+                                        <div class="panel-container collapse show">
+                                            <div class="panel-content">
+                                                <div class="zGraph" id="graph3"></div>
+                                            </div>
+                                        </div> 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="nav-repairs">
-                    <div class="zContainer">
-                        <div class="row"> 
-                            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-                                <div id="gridRepairs" class="zGrid mb-1"></div> 
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-                                <div class="button-group">   
-                                    <!--<button type="button" class="btn btn-primary btn-sm" id="btnSaveRepairs" title="Save">
-                                        <i class="far fa-save"></i> Save
-                                    </button>-->
-                                     <!--<button type="button" class="btn btn-primary btn-sm" id="btnDeleteRepairs" data-toggle="tooltip" title="Delete">
-                                    	  <i class="fas fa-trash"></i> Delete
-                                    </button>-->      
+                        <div class="col-md-12 col-sm-12 col-12 mt-3 ">
+                            <div class="panel mb-0">
+                                <div class="panel-hdr text-primary">
+                                    <h2>
+                                        <span class="mr-2"><i class="far fa-chart-pie"></i></span>Repair Expenses
+                                    </h2>
+                                    <div class="panel-toolbar"> 
+                                        <button class="btn btn-panel waves-effect waves-themed fal fa-window-minimize" data-action="panel-collapse" data-offset="0,10" data-original-title="Collapse" data-toggle="tooltip" title="Collapse"></button>
+                                        <button class="btn btn-panel waves-effect waves-themed fal fa-expand" data-action="panel-fullscreen"  data-offset="0,10" data-original-title="Fullscreen" data-toggle="tooltip" title="Expand"></button>
+                                        <button class="btn btn-panel waves-effect waves-themed fal fa-trash" data-action="panel-close" data-offset="0,10" data-original-title="Close" data-toggle="tooltip" title="Delete"></button>
+                                    </div>
+                                </div>
+                                <div class="panel-container show">
+                                    <div class="panel-content">
+                                        <div class="panel-container collapse show">
+                                            <div class="panel-content">
+                                                <div class="zGraph" id="graph4"></div>
+                                            </div>
+                                        </div> 
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="nav-safety-problems">
-                    <div class="zContainer">
-                        <div class="row"> 
-                            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-                                <div id="gridSafetyProblems" class="zGrid mb-1"></div> 
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-                                <div class="button-group">   
-                                    <!--<button type="button" class="btn btn-primary btn-sm" id="btnSaveRepairs" title="Save">
-                                        <i class="far fa-save"></i> Save
-                                    </button>-->
-                                     <!--<button type="button" class="btn btn-primary btn-sm" id="btnDeleteSafetyProblems" data-toggle="tooltip" title="Delete">
-                                    	  <i class="fas fa-trash"></i> Delete
-                                    </button>-->      
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="nav-parts-replacements">
-                    <div class="zContainer">
-                        <div class="row"> 
-                            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-                                <div id="gridPartsReplacements" class="zGrid mb-1"></div> 
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
-                                <div class="button-group">   
-                                    <!--<button type="button" class="btn btn-primary btn-sm" id="btnSaveRepairs" title="Save">
-                                        <i class="far fa-save"></i> Save
-                                    </button>-->
-                                     <!--<button type="button" class="btn btn-primary btn-sm" id="btnDeletePartsReplacements" data-toggle="tooltip" title="Delete">
-                                    	  <i class="fas fa-trash"></i> Delete
-                                    </button>-->      
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        </div> 
+                    </div> 
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
+    <!--- i transfered amchats4 libs to views/shared/_layout.cshmtl : gf -->
 </div>

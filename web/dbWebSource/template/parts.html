@@ -1,41 +1,40 @@
 <div class="panel">
     <div class="panel-container">
         <div class="panel-content">
-            <div class="row">
-                <div class="col-12 col-xl-7 col-md-5 col-sm-5">
-                    <nav>
-                      <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" data-toggle="tab" href="#nav-part-types" role="tab" aria-controls="nav-part-types">Part Types</a>
-                        <a class="nav-item nav-link hide"        data-toggle="tab" href="#nav-parts" role="tab" aria-controls="nav-parts">Parts</a>
-                      </div>
-                    </nav>
-                </div>
-                <div id="dummyDiv" class="col-sm-3 col-md-3 col-xl-2"></div>
-                <div id="partTypeDiv" class="col-sm-3 col-md-3 col-xl-2 col-12 mt-1 hide"> 
-                    <div class="input-group" style="flex-wrap: inherit !important;">
-                        <select class="form-control form-control-sm filter-oem" name="partTypeId" id="partTypeId"></select>
-                        <div class="input-group-append">
-                            <button id="btnFilterAsset" class="btn-sm btn btn-primary btn-outline-default text-white" type="button" title="filter"><i class="fas fa-filter"></i></button>
-                        </div> 
-                    </div>
-                </div>
-                <div class="col-md-4 col-xl-3 col-sm-4 col-12 mt-1">
-                    <div class="input-group" id="searchGroup">
-                        <input type="text" class="form-control form-control-sm desc-prop-group pl-2" id="searchVal" name="searchVal" autocomplete="off" placeholder="Search.....">
-                        <div class="input-group-append">
-                            <button id="btnSearchVal" class="btn-sm btn btn-primary btn-outline-default text-white" type="button" title="Search">
-                               <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                        <div class="input-group-append ml-1">
-                            <button id="btnResetVal" class="btn-sm btn btn-primary btn-outline-default text-white hvr-icon-spin" type="button" title="Reset">
-                               <i class="far fa-refresh hvr-icon"></i> Reset
-                            </button>
+            <ul class="nav nav-tabs main-nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#nav-part-types" role="tab" aria-controls="nav-part-types">Part Types</a>
+                </li>
+                <li class="nav-item hide">
+                    <a class="nav-link" data-toggle="tab" href="#nav-parts" role="tab" aria-controls="nav-parts">Parts</a>
+                </li>
+            </ul>
+            <div class="tab-content border border-top-0 p-3">
+                <div class="row mb-1">
+                    <div id="partTypeDiv" class="col-sm-3 col-md-3 col-xl-2 col-12 mt-1 hide"> 
+                        <div class="input-group" style="flex-wrap: inherit !important;">
+                            <select class="form-control form-control-sm filter-oem" name="partTypeId" id="partTypeId"></select>
+                            <div class="input-group-append">
+                                <button id="btnFilterAsset" class="btn-sm btn btn-primary btn-outline-default text-white hvr-sweep-to-left" type="button" title="Filter"><i class="fas fa-filter"></i></button>
+                            </div> 
                         </div>
                     </div>
+                    <div class="col-md-4 col-xl-3 col-sm-4 col-12 mt-1">
+                        <div class="input-group" id="searchGroup">
+                            <input type="text" class="form-control form-control-sm desc-prop-group pl-2" id="searchVal" name="searchVal" autocomplete="off" placeholder="Search.....">
+                            <div class="input-group-append">
+                                <button id="btnSearchVal" class="btn-sm btn btn-primary btn-outline-default text-white hvr-sweep-to-left" type="button" title="Search">
+                                   <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="input-group-append ml-1">
+                                <button id="btnResetVal" class="btn-sm btn btn-primary btn-outline-default text-white hvr-icon-spin hvr-sweep-to-left" type="button" title="Reset">
+                                   <i class="far fa-refresh hvr-icon"></i> Reset
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-           </div>   
-            <div class="tab-content" id="nav-tabContent">
                 <div role="tabpanel" class="tab-pane fade show active" id="nav-part-types">
                     <div class="zContainer">
                         <div class="row"> 
@@ -44,10 +43,10 @@
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-xl-12">
                                 <div class="button-group">   
-                                    <button type="button" class="btn btn-primary btn-sm" id="btnSavePartTypes">
+                                    <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left" id="btnSavePartTypes">
                                         <i class="far fa-save"></i> Save
                                     </button>
-                                    <button type="button" class="btn btn-primary btn-sm" id="btnDeletePartTypes">
+                                    <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left" id="btnDeletePartTypes">
                                     	<i class="fas fa-trash-alt"></i> Delete
                                     </button>    
                                 </div>
@@ -63,10 +62,10 @@
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-xl-12">
                                 <div class="button-group">   
-                                    <button type="button" class="btn btn-primary btn-sm" id="btnSaveParts">
+                                    <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left" id="btnSaveParts">
                                         <i class="far fa-save"></i> Save
                                     </button>
-                                     <button type="button" class="btn btn-primary btn-sm" id="btnDeleteParts">
+                                     <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left" id="btnDeleteParts">
                                     	<i class="fas fa-trash-alt"></i> Delete
                                     </button>
                                 </div>
@@ -94,8 +93,8 @@
                             <div id="gridInactiveVehicles" class="zGrid"> </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                            <button type="button" id="btnSaveInactive" class="btn btn-primary btn-sm"><i class="far fa-save"></i> Save</button>
-                            <button type="button" class="btn btn-primary btn-sm" id="btnDeleteVehicles" data-toggle="tooltip" title="Delete">
+                            <button type="button" id="btnSaveInactive" class="btn btn-primary btn-sm hvr-sweep-to-left"><i class="far fa-save"></i> Save</button>
+                            <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left" id="btnDeleteVehicles" data-toggle="tooltip" title="Delete">
                             	<i class="fas fa-trash-alt"></i> Delete
                             </button>   
                         </div>

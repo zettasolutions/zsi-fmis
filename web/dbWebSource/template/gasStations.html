@@ -1,0 +1,37 @@
+<div class="panel">
+    <div class="panel-container">
+        <div class="panel-content">     
+            <div class="zContainer">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-1">
+                        <div id="gridStation" class="zGrid"></div>    
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left" id="btnSave">
+                        	<span class="fas fa-save"></span> Save
+                        </button>   
+                        <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left" id="btnInactive">
+                        	<span class="fas fa-ban"></span> Inactive
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ul name="localTemplates">
+    <li name="modalBodyInactive">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-1">
+                <div id="{{grid}}" class="zGrid"> </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <button type="button" id="btnSave1" onclick="{{onClickSaveInactive}}" class="btn btn-primary btn-sm hvr-sweep-to-left"><i class="far fa-save"></i> Save</button>
+                 <button type="button" class="btn btn-primary btn-sm hvr-sweep-to-left" id="btnInactiveStations" onclick="{{onClickDeleteInactive}}" data-toggle="tooltip" title="Delete">
+                	<i class="fas fa-trash-alt"></i> Delete
+                </button>
+            </div>
+        </div>
+    </li>
+</ul>

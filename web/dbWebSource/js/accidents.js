@@ -6,74 +6,7 @@
     zsi.ready = function(){
         $(".page-title").html("Accident");
         $(".panel-container").css("min-height", $(window).height() - 160);
-        validations();
-        $('#pao_id').select2({placeholder: "SELECT PAO",allowClear: true});
-        $('#driver_id').select2({placeholder: "SELECT DRIVER",allowClear: true});
-        $('#vehicle_id').select2({placeholder: "SELECT VEHICLE",allowClear: true});
-        $('#gas_station').select2({placeholder: "SELECT GAS STATION",allowClear: true});
-        //$("#client_phone_no").inputmask({"mask": "(99) 9999 - 9999"});
-        $("#accident_date").datepicker({todayHighlight:true}).datepicker("setDate",new Date());
-        $("#pms_type_id").dataBind({
-            sqlCode      : "D235" //dd_pms_type_sel
-           ,text         : "pms_desc"
-           ,value        : "pms_type_id"
-           ,onChange     : function(d){
-               var _info           = d.data[d.index - 1]
-                   pms_type_id     = isUD(_info) ? "" : _info.pms_type_id;
-               
-           }
-        });
-        $("#vehicle_id").dataBind({
-            sqlCode      : "D231" //dd_vehicle_sel
-           ,text         : "plate_no"
-           ,value        : "vehicle_id"
-           ,onChange     : function(d){
-               var _info           = d.data[d.index - 1]
-                   vehicle_id     = isUD(_info) ? "" : _info.vehicle_id;
-               
-           }
-        });
-        
-        $("#driver_id").dataBind({
-            sqlCode      : "D227" //drivers_sel
-           ,text         : "full_name"
-           ,value        : "user_id"
-           ,onChange     : function(d){
-               var _info           = d.data[d.index - 1]
-                   _driver_id         = isUD(_info) ? "" : _info.user_id;
-                //gDriverId = _driver_id;
-           }
-        });
-        
-        $("#pao_id").dataBind({
-            sqlCode      : "P228" //pao_sel
-           ,text         : "full_name"
-           ,value        : "user_id"
-           ,onChange     : function(d){
-               var _info           = d.data[d.index - 1]
-                   _driver_id         = isUD(_info) ? "" : _info.user_id;
-                //gDriverId = _driver_id;
-           }
-        });
-        
-        $("#gas_station").dataBind({
-             sqlCode    : "G215" // gas_station_sel
-            ,text       : "gas_station_name"
-            ,value      : "gas_station_id"
-        });
-        
-        $("#accident_type_id").dataBind({
-             sqlCode    : "D243" // dd_accident_types_sel
-            ,text       : "accident_type"
-            ,value      : "accident_type_id"
-        });
-        
-        $("#error_type_id").dataBind({
-             sqlCode    : "D244" // dd_error_types_sel
-            ,text       : "error_type"
-            ,value      : "error_type_id"
-        });
-        
+        displaySelects();
     };
     
     $("#btnSaveAccident").click(function () {
@@ -102,6 +35,60 @@
         }); 
     });
     
+    function displaySelects(){
+        $('#pao_id').select2({placeholder: "",allowClear: true});
+        $('#driver_id').select2({placeholder: "",allowClear: true});
+        $('#vehicle_id').select2({placeholder: "",allowClear: true});
+        $('#gas_station').select2({placeholder: "",allowClear: true});
+        $('#error_type_id').select2({placeholder: "",allowClear: true});
+        $('#accident_type_id').select2({placeholder: "",allowClear: true});
+        $("#accident_date").datepicker({todayHighlight:true,endDate:new Date()}).datepicker("setDate","0");
+        
+        $("#pms_type_id").dataBind({
+            sqlCode      : "D235"
+           ,text         : "pms_desc"
+           ,value        : "pms_type_id"
+        });
+        $("#vehicle_id").dataBind({
+            sqlCode      : "D272"
+           ,parameters   : {client_id:app.userInfo.company_id}
+           ,text         : "vehicle_plate_no"
+           ,value        : "vehicle_id"
+        });
+        
+        $("#driver_id").dataBind({
+            sqlCode      : "D270" 
+           ,parameters   : {client_id:app.userInfo.company_id}
+           ,text         : "emp_lfm_name"
+           ,value        : "id"
+        });
+        
+        $("#pao_id").dataBind({
+            sqlCode      : "D271" 
+           ,parameters   : {client_id:app.userInfo.company_id}
+           ,text         : "emp_lfm_name"
+           ,value        : "id"
+        });
+        
+        $("#gas_station").dataBind({
+             sqlCode    : "G215"
+            ,text       : "gas_station_name"
+            ,value      : "gas_station_id"
+        });
+        
+        $("#accident_type_id").dataBind({
+             sqlCode    : "D243"
+            ,text       : "accident_type"
+            ,value      : "accident_type_id"
+        });
+        
+        $("#error_type_id").dataBind({
+             sqlCode    : "D244" 
+            ,text       : "error_type"
+            ,value      : "error_type_id"
+        });
+    }
+    
     function modalTxt(){
         setTimeout(function(){
            $("#myModal").find("#msg").text("Are you sure you want to save this data?");
@@ -109,24 +96,17 @@
         },1000);
     }
 
-    function validations(){
-        var forms = document.getElementsByClassName('needs-validation');
-    	// Loop over them and prevent submission
-    	var validation = Array.prototype.filter.call(forms, function(form) {
-		form.addEventListener('submit', function(event) {
-			if (form.checkValidity() === false) {
-				event.preventDefault();
-				event.stopPropagation();
-			    $("form").addClass('was-validated');
-			}else{
-    			event.preventDefault();
-    			event.stopPropagation();
-			    $('#myModal').modal('show');
-			    $("form").addClass('was-validated');
-			}
-		}, false);
-	});
-  }
+    $("#submit").click(function () {
+        var _$frm = $("#formAccident");
+        var _frm = _$frm[0];
+        var _formData = new FormData(_frm);  
+        if( ! _frm.checkValidity() ){
+            _$frm.addClass('was-validated');
+        }else{   
+            _$frm.removeClass('was-validated');
+            $('#myModal').modal('show');
+        }
+    });
 
    
     
@@ -134,4 +114,4 @@
     
     
     
-})();             
+})();                     

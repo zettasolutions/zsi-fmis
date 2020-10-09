@@ -526,10 +526,14 @@ var  ud='undefined'
                 return this;
             };
             $.fn.checkValueExists   = function(o){
-                var _self   =   this;
-                var _cls    =   "zDataExist";
-                var _msg    =   "data already exist";
-                var _time   =   1500;
+                var _self   =   this
+                    ,_cls    =   "zDataExist"
+                    ,_msg    =   "data already exist"
+                    ,_time   =   1500
+                    ,_ctrlDown  = false
+                    ,_ctrlKey   = 17
+                    ,_cmdKey    = 91
+                ;
                 if( ! isUD(o.keyInputDelay) ) _time = o.keyInputDelay;
                 $("." + _cls).remove();
                 if(o.message) _msg = o.message;
@@ -537,22 +541,34 @@ var  ud='undefined'
                 $("body").append(_h);
                 var _panel =$("." + _cls);
                 if( isUD(o.isNotExistShow) ) o.isNotExistShow = false;
+
+                this.keydown(function(e) {
+                   if (e.keyCode == _ctrlKey || e.keyCode == _cmdKey) _ctrlDown = true;
+                });
+                
                 if(typeof _self.tmr === ud) _self.tmr = null;
-                this.on("keyup change",function(){
-                  var _obj=$(this);
-                  if($.trim(this.value)===""){
-                     _panel.hide();
-                     return false;
-                  }
-                  var l_value=$.trim(this.value);
-                  if(zsi.timer) clearTimeout(zsi.timer);
-                  zsi.timer = setTimeout(function(){              
+                this.on("keyup change",function(e){
+
+                    if (_ctrlDown ) {
+                        if ( [65,67,88,86].includes(e.keyCode) ) //a,c,x,v 
+                            _ctrlDown = false;
+                        if( [17,65,67].includes(e.keyCode) ) //ctrl,a,c
+                            return false;
+                    }
+                    var _obj=$(this);
+                    if($.trim(this.value)===""){
+                        _panel.hide();
+                        return false;
+                    }
+                    var l_value=$.trim(this.value);
+                    
+                    if(zsi.timer) clearTimeout(zsi.timer);
+                    zsi.timer = setTimeout(function(){              
                      var _opts  = {
                         left : _obj.offset().left
                         , top  : _obj.offset().top - _panel.innerHeight() - 3
                         , onHide : function(){
-                            _obj.val(""); 
-                              if( ! isUD(o.onHide) ) o.onHide(_obj.closest(".zRow"));
+                            if( ! isUD(o.onHide) ) o.onHide(_obj.closest(".zRow"));
                           }
                       };
                       
@@ -564,14 +580,15 @@ var  ud='undefined'
                           for(var i=0;i<_self.length;i++){
                               var input =_self[i];
                               if(_lineIndex !==i && $.trim(input.value) !==""  ){
-                                  if(input.value.toLowerCase() === l_value.toLowerCase()){
+                                  if($.trim(input.value.toLowerCase()) === $.trim(l_value.toLowerCase())){
                                        $("." + _cls).css({"z-index"      : zsi.getHighestZindex() + 1}).showAlert(_opts);    
                                   }
+                                  
                               }
                               
                           }
                           _obj.removeClass("loadIconR" );
-    
+                    
                       }
                        
                       if( ! isUD(o.isCheckOnDb) ) { 
@@ -586,11 +603,11 @@ var  ud='undefined'
                               if(data.rows[0].isExists.toUpperCase() === (o.isNotExistShow ? "N" : "Y")) {
                                  $("." + _cls).css({"z-index"      : zsi.getHighestZindex() + 1}).showAlert(_opts);           
                               }
-            
+
                           }
                      );
-
-                  }, _time);         
+                    
+                    }, _time); 
                });
             };
             $.fn.checkMandatory     = function(){
@@ -1043,7 +1060,7 @@ var  ud='undefined'
                             }
                             else{
                                 if(typeof _info.type === ud){
-                                     _content =$('<span class="text" value="' + svn(o.data,_info.name) + '"></span>');  
+                                     _content ='<span class="text" >'+ svn(o.data,_info.name) + ' </span>';  
                                 }
                                 else{ 
                                     if(typeof _info.displayText !== ud ){
@@ -1184,6 +1201,26 @@ var  ud='undefined'
                             }
                         } 
                     }
+                    ,createRowsFormat   = function(d){    
+                        var hInfo           = d[0];
+                        var keys            = Object.keys(hInfo);
+                        var colsLength      = keys.length;
+                        var _dr             = [];
+                        var _defaultWidth   = 100;
+                        for (var i = 0; i < colsLength; i++) {
+                            if(o.rowsFormat){
+                                var _rf     = o.rowsFormat;
+                                var _info = {name:keys[i], text  : _rf.texts[i] || keys[i], width : _rf.widths[i] || _defaultWidth };
+                                if(_rf.styles && _rf.styles[i]) _info.style = _rf.styles[i];  
+                                if(_rf.types && _rf.types[i]) _info.type = _rf.types[i];  
+                                _dr.push(_info);
+                            }
+                            else 
+                                  _dr.push({ text  :  keys[i], width : _defaultWidth,  name:keys[i]});
+                            
+                        }
+                        return _dr;
+                    }
                     ,rowsCompleted      = function(){
                         //setRowsKeyUpChange();
                         createBlankRows(_gp);
@@ -1206,6 +1243,7 @@ var  ud='undefined'
                             fixWidth();
                         }, 10);
                     }
+            
                 ;
 
                 $.fn.setRowHighlights = function(){
@@ -1367,7 +1405,7 @@ var  ud='undefined'
                 };
 
 
-            
+                if( ! _gp.dataRows && o.rows) _gp.dataRows = createRowsFormat(o.rows);
                 $.each(_gp.dataRows,function(){
                     if(this.groupId > 0 || typeof this.groupId ===ud){ 
                         if(typeof this.groupId !==ud){ if(_isGroup===false) {_isGroup=true;}}
@@ -1553,23 +1591,51 @@ var  ud='undefined'
             
                 }
                 
-            };
+            };   
             $.fn.deleteData         = function(o){
                 var ids = "";
                 var cb = this.find("input[name='cb']:checked");
                 var data = cb.getCheckBoxesValues();
-                var procedure = (o.procedure ? o.procedure : "deleteData");  
                 for (var x = 0; x < data.length; x++) {
                     if (ids !== "") ids += "/";
                     ids += data[x];
                 }
                 if (ids !== "") {
                     if (confirm("Are you sure you want to delete selected items?")) {
-                        $.post(base_url + "sql/exec?p=" + procedure + " @pkey_ids='" + ids + "',@table_code='" + o.code + "'", function (d) {
-                            o.onComplete(d);
-                        }).fail(function (d) {
+                        var _data = {};
+                        if( ! o.sqlCode) {
+                            _data = { 
+                                 procedure :  (o.procedure ? o.procedure : "deleteData")
+                                ,parameters : {
+                                         pkey_ids : ids 
+                                        ,table_code:o.tableCode
+                                    
+                                }
+                            };
+                        }else{
+                            _data = { sqlCode : o.sqlCode};
+                            if( ! o.parameters) o.parameters = {};
+                            o.parameters.ids = ids;
+                            _data.parameters = o.parameters;
+                        }
+                        
+                        var p = {
+                                 type: 'POST'
+                                ,url: base_url + "data/update"
+                                ,data: JSON.stringify( _data)
+                                ,contentType: 'application/json'
+                                ,dataType : "json"
+                                ,cache : false
+                                ,success : function(d) {
+                                    if (o.onComplete) o.onComplete(d);
+                                }          
+                        };
+                       $.ajax(p)
+                        .fail(function( jqXHR, status ) {
                             alert("Sorry, the curent transaction is not successfull.");
                         });
+            
+                            
                     }
             
                 }
@@ -1621,7 +1687,6 @@ var  ud='undefined'
                 }
 
             };
-            
             $.fn.fillSelect         = function(o){
                 var $ddl = this;
                 if(typeof o.isRequired ===ud )  o.isRequired = false;
@@ -1706,7 +1771,6 @@ var  ud='undefined'
                 }
                 return _v;
             }
-
             $.fn.convertToTable       = function(cb){
                 var _$self  = this;
                 var _tableId = _$self.attr("id");
@@ -1763,7 +1827,6 @@ var  ud='undefined'
                 }
                return this;
             }; 
-            
             $.fn.loadData           = function(o){
                 var __obj = this;
                 zsi.__setTableObjectsHistory(__obj,o);
@@ -3104,7 +3167,7 @@ var  ud='undefined'
                 return result;
             }
         }
-        ,collectData                : function(o){
+        ,executeCmd                 : function(o){
             $.ajax({
                 method : "POST"
                 ,url : zsi.config.getDataURL 
@@ -3494,19 +3557,29 @@ var  ud='undefined'
         ,htmlToExcel                : function(o){
             var _h=""
                 ,id="#frmTmp"
-                ,_action = (o.version && o.version == 2 ? "HtmlToExcel2" : "HtmlToExcel")
                 ,_formatStyle=function(html){
                     return "<html><head><meta charset='utf-8' /><style> table, td {border:thin solid black}table {border-collapse:collapse;font-family:Tahoma;font-size:10pt;}</style></head><body>" + html + "</body></html>";
                 }
             ;
-            if($(id).length > 0) $(id).remove();
-            _h +='<form accept-charset="utf-8" style="display:none;" id="frmTmp" method="post" action="' + base_url  + 'excel/' + _action+ '">';   
-            _h +='<input name ="html" value="' + encodeURI( _formatStyle(o.html)) + '" >'; 
-            _h +='<input  name="filename" value="' +  (o.fileName || 'download') + '">';
-            _h +='</form>';
-            $("body").append(_h); 
-            $(id).submit();
-        }     
+            
+            if(o.version && o.version == 2){
+                if($(id).length > 0) $(id).remove();
+                _h +='<form accept-charset="utf-8" style="display:none;" id="frmTmp" method="post" action="' + base_url  + 'excel/HtmlToExcel2">';   
+                _h +='<input name ="html" value="' + encodeURI( _formatStyle(o.html)) + '" >'; 
+                _h +='<input  name="filename" value="' +  (o.fileName || 'download') + '">';
+                _h +='</form>';
+                $("body").append(_h); 
+                $(id).submit();
+            }else{
+                var e = document.createElement('a');
+                e.setAttribute('href', 'data:application/vnd.ms-excel,' + encodeURIComponent(_formatStyle(o.html)));
+                e.setAttribute('download', o.fileName);
+                e.style.display = 'none';
+                document.body.appendChild(e);
+                e.click();
+                document.body.removeChild(e);    
+            }
+        }        
         /*initialize configuration settings*/
         ,init                       : function(o){
             
@@ -3744,4 +3817,4 @@ var  ud='undefined'
     }
 ;  
 
-                                    
+                                          
